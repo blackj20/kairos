@@ -3,18 +3,19 @@
 from __future__ import annotations
 
 import re
-from difflib import get_close_matches
+import urllib.parse
 from collections.abc import Callable
+from difflib import get_close_matches
 from pathlib import Path
 
-from .comprendre import Comprendre
 from .cognition import Reflechir
+from .comprendre import Comprendre
 from .connaissances import Connaissances
 from .corrections import MemoireCorrections
 from .decision import EvenementExperience, MoteurDecision
 from .modeles import Analyse, Decision
-from .repondre import Repondre
 from .relations_verbes import MemoireRelationsVerbes
+from .repondre import Repondre
 from .soi import ConnaissanceDeSoi
 
 Competence = Callable[[Analyse], str]
@@ -101,8 +102,8 @@ class Kernel:
         processus = self.moteur_decision.decider(analyse, acteur)
         verdict = processus.verdict
         route_interne = verdict.route.value
-        # Tant que GrowUp n'existe pas, ETUDIER produit extérieurement une
-        # clarification tout en créant son événement d'apprentissage.
+        # ETUDIER reste présenté comme une clarification tant que GrowUp ne
+        # conduit pas encore automatiquement toute la consolidation.
         route = (
             "clarification"
             if route_interne == "etudier"
@@ -158,28 +159,43 @@ class Kernel:
         sources: tuple[str, ...],
         acteur: str = "creator",
     ) -> None:
-        """Ajoute une équivalence depuis le créateur ou des sources vérifiées.
+        """Ajoute une relation seulement depuis des sources conformes.
 
-        Une relation Internet exige au moins deux références distinctes afin
-        qu'une page isolée ne modifie jamais seule la compréhension.
+        Une provenance locale explicite peut être unique. Dès qu'une URL est
+        fournie, toutes les sources doivent être HTTPS et provenir d'au moins
+        deux domaines distincts.
         """
 
         if acteur != "creator":
             raise PermissionError(
                 "Seul le créateur peut confirmer une relation verbale."
             )
-        sources_uniques = tuple(dict.fromkeys(source.strip() for source in sources if source.strip()))
+        sources_uniques = tuple(
+            dict.fromkeys(source.strip() for source in sources if source.strip())
+        )
         if not sources_uniques:
             raise ValueError("L'enseignement exige au moins une source.")
-        sources_internet = tuple(
-            source
-            for source in sources_uniques
-            if source.startswith(("https://", "http://"))
-        )
-        if sources_internet and len(sources_internet) < 2:
-            raise ValueError(
-                "Une relation Internet exige au moins deux sources."
-            )
+
+        analyses = tuple(urllib.parse.urlparse(source) for source in sources_uniques)
+        contient_url = any(analyse.scheme or analyse.netloc for analyse in analyses)
+        if contient_url:
+            if any(
+                analyse.scheme != "https" or not analyse.hostname
+                for analyse in analyses
+            ):
+                raise ValueError(
+                    "Les relations Internet exigent uniquement des URLs HTTPS valides."
+                )
+            domaines = {
+                str(analyse.hostname).casefold()
+                for analyse in analyses
+                if analyse.hostname
+            }
+            if len(sources_uniques) < 2 or len(domaines) < 2:
+                raise ValueError(
+                    "Une relation Internet exige deux domaines HTTPS distincts."
+                )
+
         self.comprendre.connaissances.enseigner_relation_verbe(
             alias,
             cible,
@@ -242,14 +258,14 @@ class Kernel:
         return competence(analyse)
 
     def _corriger_sujet_pedagogique(self, topic: str) -> tuple[str, bool]:
-        """Corrige une faute évidente sans transformer un mot inconnu en certitude."""
+        """Corrige une faute évidente avec le vocabulaire réellement connu."""
 
-        candidats = tuple(self.comprendre.connaissances.conversations["salutations"])
+        candidats = tuple(sorted(self.comprendre.connaissances.vocabulaire_connu()))
         correspondance = get_close_matches(
             topic.casefold(),
             candidats,
             n=1,
-            cutoff=0.82,
+            cutoff=0.86,
         )
         if correspondance and correspondance[0] != topic.casefold():
             return correspondance[0], True

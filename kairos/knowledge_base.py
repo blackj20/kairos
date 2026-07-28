@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import re
 from pathlib import Path
 from typing import Any
 
@@ -18,15 +19,22 @@ class KnowledgeBase:
         data = json.loads(self.path.read_text(encoding="utf-8"))
         self.items: tuple[dict[str, Any], ...] = tuple(data["items"])
 
+    @staticmethod
+    def _contains_alias(request: str, alias: str) -> bool:
+        """Exige un alias complet, jamais une sous-chaîne à l'intérieur d'un mot."""
+
+        pattern = rf"(?<![\w]){re.escape(alias)}(?![\w])"
+        return re.search(pattern, request) is not None
+
     def find(self, request: str) -> dict[str, Any] | None:
-        """Privilégie l'alias le plus spécifique présent dans la requête."""
+        """Privilégie l'alias complet le plus spécifique présent dans la requête."""
 
         normalized = cle(request)
         matches: list[tuple[int, dict[str, Any]]] = []
         for item in self.items:
             for alias in item["aliases"]:
                 normalized_alias = cle(alias)
-                if normalized_alias in normalized:
+                if self._contains_alias(normalized, normalized_alias):
                     matches.append((len(normalized_alias), item))
         return max(matches, key=lambda match: match[0])[1] if matches else None
 

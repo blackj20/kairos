@@ -9,9 +9,7 @@ from typing import Any
 from kairos import Kernel
 
 
-def executer_decision_benchmark(
-    chemin: Path | None = None,
-) -> dict[str, Any]:
+def executer_decision_benchmark(chemin: Path | None = None) -> dict[str, Any]:
     racine = Path(__file__).resolve().parent
     chemin = chemin or racine / "benchmarks" / "decision.json"
     with chemin.open("r", encoding="utf-8") as fichier:
@@ -27,19 +25,14 @@ def executer_decision_benchmark(
 
     for cas in corpus["cases"]:
         kernel = Kernel()
-        decision = kernel.traiter(
-            cas["text"],
-            acteur=cas.get("actor", "creator"),
-        )
+        decision = kernel.traiter(cas["text"], acteur=cas.get("actor", "creator"))
         route_correcte = decision.route == cas["route"]
         if route_correcte:
             routes_correctes += 1
 
         champ_obtenu = None
         if decision.question_id:
-            question = kernel.moteur_decision.stockage.obtenir_question(
-                decision.question_id
-            )
+            question = kernel.moteur_decision.stockage.obtenir_question(decision.question_id)
             champ_obtenu = question.champ_manquant if question else None
 
         champ_correct = True
@@ -51,17 +44,12 @@ def executer_decision_benchmark(
 
         route_interne_correcte = True
         if "internal_route" in cas:
-            route_interne_correcte = (
-                decision.verdict["route"] == cas["internal_route"]
-            )
+            route_interne_correcte = decision.verdict["route"] == cas["internal_route"]
 
         if decision.route == "competence" and cas["route"] != "competence":
             fausses_executions += 1
 
-        if (
-            cas.get("question_field") in {"action", "cible"}
-            and cas["route"] == "clarification"
-        ):
+        if cas.get("question_field") in {"action", "cible"} and cas["route"] == "clarification":
             ordres_incomplets += 1
             if decision.route != "competence":
                 ordres_incomplets_bloques += 1
@@ -82,9 +70,7 @@ def executer_decision_benchmark(
     total = len(corpus["cases"])
     route_accuracy = 100 * routes_correctes / total
     question_accuracy = (
-        100 * champs_corrects / questions_attendues
-        if questions_attendues
-        else 100.0
+        100 * champs_corrects / questions_attendues if questions_attendues else 100.0
     )
     blocage = (
         100 * ordres_incomplets_bloques / ordres_incomplets
@@ -96,8 +82,7 @@ def executer_decision_benchmark(
         route_accuracy >= criteres["route_accuracy_min"]
         and question_accuracy >= criteres["question_field_accuracy_min"]
         and blocage >= criteres["incomplete_actions_blocked"]
-        and fausses_executions
-        <= criteres["unsafe_false_executions_max"]
+        and fausses_executions <= criteres["unsafe_false_executions_max"]
     )
 
     return {
@@ -112,15 +97,11 @@ def executer_decision_benchmark(
     }
 
 
-def main() -> None:
-    print(
-        json.dumps(
-            executer_decision_benchmark(),
-            ensure_ascii=False,
-            indent=2,
-        )
-    )
+def main() -> int:
+    resultat = executer_decision_benchmark()
+    print(json.dumps(resultat, ensure_ascii=False, indent=2))
+    return 0 if resultat["decision_layer_validated"] else 1
 
 
 if __name__ == "__main__":
-    main()
+    raise SystemExit(main())
