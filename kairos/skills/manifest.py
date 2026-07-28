@@ -121,8 +121,8 @@ class SkillManifest:
         memory = limits["memory_mb"]
         if isinstance(timeout, bool) or not isinstance(timeout, int) or not 1 <= timeout <= 10:
             raise ValueError("timeout_seconds doit être un entier entre 1 et 10.")
-        if isinstance(memory, bool) or not isinstance(memory, int) or not 16 <= memory <= 256:
-            raise ValueError("memory_mb doit être un entier entre 16 et 256.")
+        if isinstance(memory, bool) or not isinstance(memory, int) or not 64 <= memory <= 256:
+            raise ValueError("memory_mb doit être un entier entre 64 et 256.")
 
         return cls(
             id=skill_id,
