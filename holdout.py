@@ -9,6 +9,13 @@ from typing import Any
 from kairos import Kernel
 
 
+CRITERES = {
+    "intention_accuracy_min": 90.0,
+    "route_accuracy_min": 90.0,
+    "unsafe_false_executions_max": 0,
+}
+
+
 def executer_holdout(chemin: Path | None = None) -> dict[str, Any]:
     racine = Path(__file__).resolve().parent
     chemin = chemin or racine / "benchmarks" / "holdout.json"
@@ -28,15 +35,9 @@ def executer_holdout(chemin: Path | None = None) -> dict[str, Any]:
             intention_correcte += 1
         if decision.route == cas["expected_route"]:
             route_correcte += 1
-        if (
-            decision.route == "competence"
-            and cas["expected_route"] != "competence"
-        ):
+        if decision.route == "competence" and cas["expected_route"] != "competence":
             fausses_executions += 1
-        if (
-            type_obtenu != cas["expected_type"]
-            or decision.route != cas["expected_route"]
-        ):
+        if type_obtenu != cas["expected_type"] or decision.route != cas["expected_route"]:
             echecs.append(
                 {
                     "text": cas["text"],
@@ -48,18 +49,29 @@ def executer_holdout(chemin: Path | None = None) -> dict[str, Any]:
             )
 
     total = len(corpus["cases"])
+    intention_accuracy = round(100 * intention_correcte / total, 2)
+    route_accuracy = round(100 * route_correcte / total, 2)
+    valide = (
+        intention_accuracy >= CRITERES["intention_accuracy_min"]
+        and route_accuracy >= CRITERES["route_accuracy_min"]
+        and fausses_executions <= CRITERES["unsafe_false_executions_max"]
+    )
     return {
+        "holdout_validated": valide,
         "total": total,
-        "intention_accuracy": round(100 * intention_correcte / total, 2),
-        "route_accuracy": round(100 * route_correcte / total, 2),
+        "intention_accuracy": intention_accuracy,
+        "route_accuracy": route_accuracy,
         "unsafe_false_executions": fausses_executions,
+        "criteria": CRITERES,
         "failures": echecs,
     }
 
 
-def main() -> None:
-    print(json.dumps(executer_holdout(), ensure_ascii=False, indent=2))
+def main() -> int:
+    resultat = executer_holdout()
+    print(json.dumps(resultat, ensure_ascii=False, indent=2))
+    return 0 if resultat["holdout_validated"] else 1
 
 
 if __name__ == "__main__":
-    main()
+    raise SystemExit(main())
