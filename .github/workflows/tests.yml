@@ -39,7 +39,7 @@ jobs:
       - name: Compile Python sources
         run: |
           python -m compileall -q kairos tests
-          python -m py_compile benchmark.py holdout.py decision_benchmark.py growup_benchmark.py
+          python -m py_compile benchmark.py holdout.py decision_benchmark.py growup_benchmark.py user_acceptance.py
 
       - name: Run unit and end-to-end tests
         shell: bash
@@ -66,3 +66,20 @@ jobs:
 
       - name: Enforce GrowUp benchmark
         run: python growup_benchmark.py
+
+      - name: Run user acceptance scenarios
+        shell: bash
+        run: |
+          set -o pipefail
+          python user_acceptance.py 2>&1 | tee user-acceptance.log
+
+      - name: Preserve user acceptance report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: user-acceptance-python-${{ matrix.python-version }}
+          path: |
+            user-acceptance.log
+            artifacts/user_acceptance/USER_ACCEPTANCE_REPORT.md
+            artifacts/user_acceptance/USER_ACCEPTANCE_REPORT.json
+          if-no-files-found: error
