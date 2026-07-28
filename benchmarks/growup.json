@@ -1,0 +1,128 @@
+{
+  "description": "Corpus indépendant pour mesurer le regroupement GrowUp.",
+  "criteria": {
+    "pairwise_grouping_accuracy_min": 90,
+    "traceability_accuracy_min": 100,
+    "occurrence_accuracy_min": 100,
+    "expected_group_count": 5
+  },
+  "observations": [
+    {
+      "id": "exp_deploy_python",
+      "cluster": "deploy",
+      "source_type": "experience",
+      "requete": "deploie python",
+      "champ": "sens",
+      "focus": "deploie",
+      "occurrences": 1,
+      "resolution": {"candidate_semantic_relation": {"source": "deploie", "target": "installer"}}
+    },
+    {
+      "id": "exp_deploy_docker",
+      "cluster": "deploy",
+      "source_type": "experience",
+      "requete": "deploie docker",
+      "champ": "sens",
+      "focus": "deploie",
+      "occurrences": 1,
+      "resolution": {"candidate_semantic_relation": {"source": "deploie", "target": "installer"}}
+    },
+    {
+      "id": "exp_deploy_git",
+      "cluster": "deploy",
+      "source_type": "experience",
+      "requete": "deploie git",
+      "champ": "sens",
+      "focus": "deploie",
+      "occurrences": 1,
+      "resolution": {"candidate_semantic_relation": {"source": "deploie", "target": "installer"}}
+    },
+    {
+      "id": "event_deploy",
+      "cluster": "deploy",
+      "source_type": "learning_event",
+      "requete": "deploie logiciel",
+      "champ": "sens",
+      "focus": "deploie",
+      "occurrences": 3,
+      "resolution": {}
+    },
+    {
+      "id": "exp_provision_python",
+      "cluster": "provision",
+      "source_type": "experience",
+      "requete": "provisionne python",
+      "champ": "sens",
+      "focus": "provisionne",
+      "occurrences": 1,
+      "resolution": {"candidate_semantic_relation": {"source": "provisionne", "target": "installer"}}
+    },
+    {
+      "id": "exp_provision_docker",
+      "cluster": "provision",
+      "source_type": "experience",
+      "requete": "provisionne docker",
+      "champ": "sens",
+      "focus": "provisionne",
+      "occurrences": 1,
+      "resolution": {"candidate_semantic_relation": {"source": "provisionne", "target": "installer"}}
+    },
+    {
+      "id": "event_provision",
+      "cluster": "provision",
+      "source_type": "learning_event",
+      "requete": "provisionne logiciel",
+      "champ": "sens",
+      "focus": "provisionne",
+      "occurrences": 2,
+      "resolution": {}
+    },
+    {
+      "id": "exp_archive_zip",
+      "cluster": "archive_conflict",
+      "source_type": "experience",
+      "requete": "archive dossier",
+      "champ": "sens",
+      "focus": "archive",
+      "occurrences": 1,
+      "resolution": {"candidate_semantic_relation": {"source": "archive", "target": "compresser"}}
+    },
+    {
+      "id": "exp_archive_extract",
+      "cluster": "archive_conflict",
+      "source_type": "experience",
+      "requete": "archive fichier",
+      "champ": "sens",
+      "focus": "archive",
+      "occurrences": 1,
+      "resolution": {"candidate_semantic_relation": {"source": "archive", "target": "extraire"}}
+    },
+    {
+      "id": "event_alpha",
+      "cluster": "alpha",
+      "source_type": "learning_event",
+      "requete": "motalpha inconnu",
+      "champ": "sens",
+      "focus": "motalpha",
+      "occurrences": 1,
+      "resolution": {}
+    },
+    {
+      "id": "event_beta",
+      "cluster": "beta",
+      "source_type": "learning_event",
+      "requete": "motbeta inconnu",
+      "champ": "sens",
+      "focus": "motbeta",
+      "occurrences": 1,
+      "resolution": {}
+    }
+  ],
+  "expected_occurrences": {
+    "deploy": 3,
+    "provision": 2,
+    "archive_conflict": 2,
+    "alpha": 1,
+    "beta": 1
+  }
+}
