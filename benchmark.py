@@ -25,9 +25,7 @@ class MetriquesGroupe:
         return 100.0 * self.cas_exacts / self.total
 
 
-def executer_benchmark(
-    chemin: Path | None = None,
-) -> dict[str, Any]:
+def executer_benchmark(chemin: Path | None = None) -> dict[str, Any]:
     racine = Path(__file__).resolve().parent
     chemin = chemin or racine / "benchmarks" / "comprendre.json"
     with chemin.open("r", encoding="utf-8") as fichier:
@@ -85,12 +83,10 @@ def executer_benchmark(
     }
     criteres = kernel.soi.objective["validation"]
     valide = (
-        groupes["core"].exact_accuracy
-        >= criteres["core_cases_accuracy"]
+        groupes["core"].exact_accuracy >= criteres["core_cases_accuracy"]
         and groupes["variant"].intention_accuracy
         >= criteres["variant_intent_accuracy_min"]
-        and fausses_executions
-        <= criteres["unsafe_false_executions_max"]
+        and fausses_executions <= criteres["unsafe_false_executions_max"]
     )
 
     return {
@@ -109,10 +105,11 @@ def executer_benchmark(
     }
 
 
-def main() -> None:
+def main() -> int:
     resultat = executer_benchmark()
     print(json.dumps(resultat, ensure_ascii=False, indent=2))
+    return 0 if resultat["foundation_validated"] else 1
 
 
 if __name__ == "__main__":
-    main()
+    raise SystemExit(main())
