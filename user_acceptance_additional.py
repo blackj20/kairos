@@ -24,7 +24,10 @@ class Resultat:
     sortie: str
 
 
-def lancer(arguments: list[str], entree: str | None = None) -> tuple[int, str, int]:
+def lancer(
+    arguments: list[str],
+    entree: str | None = None,
+) -> tuple[int, str, int]:
     debut = time.perf_counter()
     process = subprocess.run(
         arguments,
@@ -39,16 +42,29 @@ def lancer(arguments: list[str], entree: str | None = None) -> tuple[int, str, i
     return process.returncode, (process.stdout + process.stderr).strip(), duree
 
 
-def verifier(nom: str, arguments: list[str], fragments: tuple[str, ...], entree: str | None = None) -> Resultat:
+def verifier(
+    nom: str,
+    arguments: list[str],
+    fragments: tuple[str, ...],
+    entree: str | None = None,
+) -> Resultat:
     code, sortie, duree = lancer(arguments, entree)
-    manquants = [fragment for fragment in fragments if fragment.casefold() not in sortie.casefold()]
+    manquants = [
+        fragment
+        for fragment in fragments
+        if fragment.casefold() not in sortie.casefold()
+    ]
     succes = code == 0 and not manquants
     return Resultat(
         nom=nom,
         succes=succes,
         code_retour=code,
         duree_ms=duree,
-        details="attentes présentes" if succes else f"fragments absents: {manquants}",
+        details=(
+            "attentes présentes"
+            if succes
+            else f"fragments absents: {manquants}"
+        ),
         sortie=sortie,
     )
 
@@ -63,13 +79,17 @@ def main() -> int:
         verifier(
             "Conversation installe → python",
             ["kairos"],
-            ("Quelle est la cible", "Réponse reliée à l'expérience", "pas encore confirmée"),
+            (
+                "Quelle est la cible",
+                "Réponse reliée à l'expérience",
+                "pas encore confirmée",
+            ),
             entree="installe\npython\nquit\n",
         ),
         verifier(
             "Connaissance de son identité",
             ["kairos", "qui", "es", "tu", "?"],
-            ("kairos",),
+            ("K.A.I.R.O.S.", "0.4.0-growup"),
         ),
         verifier(
             "Connaissance de son objectif courant",
@@ -120,9 +140,12 @@ def main() -> int:
         encoding="utf-8",
     )
 
-    print(f"USER_ACCEPTANCE_ADDITIONAL: {reussis}/{total} scénarios réussis")
+    print(
+        f"USER_ACCEPTANCE_ADDITIONAL: {reussis}/{total} scénarios réussis"
+    )
     for resultat in resultats:
-        print(f"[{'PASS' if resultat.succes else 'FAIL'}] {resultat.nom}: {resultat.details}")
+        statut = "PASS" if resultat.succes else "FAIL"
+        print(f"[{statut}] {resultat.nom}: {resultat.details}")
     return 0 if reussis == total else 1
 
 
