@@ -109,7 +109,12 @@ class StockageMemoire:
 
 
 class StockageJson:
-    """Stockage persistant limité aux trois fichiers autorisés de la V0.3."""
+    """Stockage persistant limité aux trois fichiers autorisés de la V0.3.
+
+    Le premier démarrage crée automatiquement une mémoire vide. Un fichier déjà
+    présent mais invalide reste une erreur : Kairos ne doit jamais effacer ou
+    remplacer silencieusement une mémoire potentiellement corrompue.
+    """
 
     FICHIERS = {
         "questions": "pending_questions.json",
@@ -121,18 +126,30 @@ class StockageJson:
         racine = Path(__file__).resolve().parent.parent.parent
         self.dossier = dossier or racine / "memory"
         self._verrou = threading.RLock()
-        for nom in self.FICHIERS.values():
+        self.dossier.mkdir(parents=True, exist_ok=True)
+        for categorie, nom in self.FICHIERS.items():
             chemin = self.dossier / nom
-            if not chemin.is_file():
-                raise FileNotFoundError(f"Fichier mémoire absent : {chemin}")
+            if chemin.exists() and not chemin.is_file():
+                raise ValueError(f"Chemin mémoire invalide : {chemin}")
+            if not chemin.exists():
+                self._ecrire_items(categorie, [])
+            # Valide dès le démarrage afin que l'erreur indique le vrai fichier.
+            self._lire_items(categorie)
 
     def _lire_items(self, categorie: str) -> list[dict[str, Any]]:
         chemin = self.dossier / self.FICHIERS[categorie]
-        with chemin.open("r", encoding="utf-8") as fichier:
-            donnees = json.load(fichier)
-        items = donnees.get("items")
-        if not isinstance(items, list):
+        try:
+            with chemin.open("r", encoding="utf-8") as fichier:
+                donnees = json.load(fichier)
+        except (OSError, json.JSONDecodeError) as erreur:
+            raise ValueError(f"Mémoire illisible : {chemin} ({erreur})") from erreur
+        if not isinstance(donnees, dict):
             raise ValueError(f"Format mémoire invalide : {chemin}")
+        items = donnees.get("items")
+        if donnees.get("version") != 1 or not isinstance(items, list):
+            raise ValueError(f"Format mémoire invalide : {chemin}")
+        if not all(isinstance(item, dict) for item in items):
+            raise ValueError(f"Éléments mémoire invalides : {chemin}")
         return items
 
     def _ecrire_items(
@@ -144,6 +161,8 @@ class StockageJson:
         with temporaire.open("w", encoding="utf-8") as fichier:
             json.dump(contenu, fichier, ensure_ascii=False, indent=2)
             fichier.write("\n")
+            fichier.flush()
+            os.fsync(fichier.fileno())
         os.replace(temporaire, chemin)
 
     def sauvegarder_question(self, question: QuestionEnAttente) -> None:
