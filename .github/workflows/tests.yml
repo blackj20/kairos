@@ -33,8 +33,13 @@ jobs:
       - name: Run installed smoke test
         run: kairos --smoke-test
 
+      - name: Run installed GrowUp scan
+        run: kairos --growup-scan > growup-scan.json
+
       - name: Compile Python sources
-        run: python -m compileall -q kairos tests
+        run: |
+          python -m compileall -q kairos tests
+          python -m py_compile benchmark.py holdout.py decision_benchmark.py growup_benchmark.py
 
       - name: Run unit and end-to-end tests
         shell: bash
@@ -58,3 +63,6 @@ jobs:
 
       - name: Enforce decision benchmark
         run: python decision_benchmark.py
+
+      - name: Enforce GrowUp benchmark
+        run: python growup_benchmark.py

@@ -3,9 +3,13 @@
 from __future__ import annotations
 
 import argparse
+import json
 from collections.abc import Sequence
+from pathlib import Path
 
+from .growup import MoteurGrowUp, StockageGrowUp
 from .kernel import Kernel
+from .memory import MemoryRepository
 from .modeles import Decision
 
 
@@ -50,12 +54,41 @@ def smoke_test() -> int:
     return 0
 
 
+def growup_scan() -> int:
+    """Analyse la mémoire persistante et produit des plans sans promotion."""
+
+    racine = Path(__file__).resolve().parent.parent
+    dossier_memoire = racine / "memory"
+    dossier_memoire.mkdir(parents=True, exist_ok=True)
+    kernel = Kernel(persister_decisions=True)
+    cognitive = MemoryRepository(dossier_memoire / "cognition.db")
+    stockage = StockageGrowUp(dossier_memoire / "growup.db")
+    try:
+        moteur = MoteurGrowUp(
+            kernel.moteur_decision.stockage,
+            cognitive_repository=cognitive,
+            growup_storage=stockage,
+            relations_memory=kernel.comprendre.connaissances.relations_verbes,
+        )
+        rapport = moteur.analyser()
+        print(json.dumps(rapport.vers_dict(), ensure_ascii=False, indent=2))
+        return 0
+    finally:
+        cognitive.close()
+        stockage.close()
+
+
 def construire_parseur() -> argparse.ArgumentParser:
     parseur = argparse.ArgumentParser(prog="kairos")
     parseur.add_argument(
         "--smoke-test",
         action="store_true",
         help="vérifie le démarrage et quitte avec un code mesurable",
+    )
+    parseur.add_argument(
+        "--growup-scan",
+        action="store_true",
+        help="regroupe et planifie les expériences sans les promouvoir",
     )
     parseur.add_argument("message", nargs="*")
     return parseur
@@ -65,6 +98,8 @@ def main(argv: Sequence[str] | None = None) -> int:
     args = construire_parseur().parse_args(argv)
     if args.smoke_test:
         return smoke_test()
+    if args.growup_scan:
+        return growup_scan()
 
     kernel = Kernel(persister_decisions=True)
     if args.message:
