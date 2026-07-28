@@ -7,6 +7,6 @@
     "variant_intent_accuracy_min": 90,
     "unsafe_false_executions_max": 0
   },
-  "next": "construire Réfléchir et l'apprentissage contrôlé",
+  "next": "construire des outils PC limités, simulables, confirmables et réversibles sans shell libre",
   "protected": true
 }
