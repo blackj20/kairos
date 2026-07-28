@@ -14,11 +14,7 @@ from ..comprendre import Comprendre
 class Experience:
     """Enregistre un épisode sans promouvoir de connaissance."""
 
-    def __init__(
-        self,
-        stockage: StockageDecision,
-        comprendre: Comprendre,
-    ) -> None:
+    def __init__(self, stockage: StockageDecision, comprendre: Comprendre) -> None:
         self.stockage = stockage
         self.comprendre = comprendre
 
@@ -43,26 +39,27 @@ class Experience:
             reponse,
             analyse,
         )
-        # Une réponse positive à une confirmation est le seul passage qui
-        # transforme les ressemblances orthographiques en relations réutilisables.
+        # Une réponse positive à une confirmation orthographique peut confirmer
+        # la graphie proposée, car elle ne crée pas une nouvelle connaissance
+        # sémantique : elle valide seulement la forme explicitement affichée.
         if (
             question.champ_manquant == "confirmation"
             and resolution.get("value") is True
         ):
-            relations = (
-                self.comprendre.connaissances.confirmer_corrections_de(
-                    question.requete_originale
-                )
+            relations = self.comprendre.connaissances.confirmer_corrections_de(
+                question.requete_originale
             )
             if relations:
                 resolution["learned_relations"] = relations
-        # Une explication courte du créateur peut relier un mot inconnu à un
-        # verbe canonique. L'épisode reste conservé, mais la relation est
-        # immédiatement réutilisable car sa source est explicitement le créateur.
+
+        # Une explication du créateur ne devient jamais immédiatement une
+        # relation confirmée. Elle est conservée comme candidate afin que
+        # Réfléchir, Tester puis SECAU puissent la traiter.
         if question.champ_manquant == "sens" and acteur == "creator":
-            relation = self._apprendre_relation_verbe(question, reponse, analyse)
-            if relation is not None:
-                resolution["learned_semantic_relation"] = relation
+            candidate = self._proposer_relation_verbe(question, analyse)
+            if candidate is not None:
+                resolution["candidate_semantic_relation"] = candidate
+
         maintenant = datetime.now(timezone.utc).isoformat()
         question_resolue = replace(
             question,
@@ -87,13 +84,8 @@ class Experience:
         self.stockage.sauvegarder_experience(evenement)
         return evenement
 
-    def _apprendre_relation_verbe(
-        self,
-        question,
-        reponse: str,
-        analyse,
-    ) -> dict[str, str] | None:
-        """Relie le mot inconnu à un verbe connu cité dans la réponse."""
+    def _proposer_relation_verbe(self, question, analyse) -> dict[str, str] | None:
+        """Prépare une relation candidate sans modifier le lexique confirmé."""
 
         inconnus = question.analyse.get("jetons_inconnus", [])
         if not inconnus:
@@ -107,30 +99,18 @@ class Experience:
                 break
         if cible is None or alias == cible:
             return None
-        provenance = f"creator_answer:{question.id}"
-        self.comprendre.connaissances.enseigner_relation_verbe(
-            alias,
-            cible,
-            provenance,
-        )
         return {
             "source": alias,
-            "relation": "equivalent_appris",
+            "relation": "equivalent_candidat",
             "target": cible,
-            "provenance": provenance,
+            "provenance": f"creator_answer:{question.id}",
+            "status": "candidate",
         }
 
-    def _resoudre_champ(
-        self,
-        champ: str,
-        reponse: str,
-        analyse,
-    ) -> dict[str, object]:
+    def _resoudre_champ(self, champ: str, reponse: str, analyse) -> dict[str, object]:
         if champ == "cible":
             for jeton in analyse.decoupage.mots if analyse.decoupage else ():
-                entite = self.comprendre.connaissances.trouver_entite(
-                    jeton.normalise
-                )
+                entite = self.comprendre.connaissances.trouver_entite(jeton.normalise)
                 if entite:
                     valeur, categorie = entite
                     return {
@@ -154,9 +134,7 @@ class Experience:
                     "score": analyse.action.score,
                 }
             for jeton in analyse.decoupage.mots if analyse.decoupage else ():
-                verbe = self.comprendre.connaissances.trouver_verbe(
-                    jeton.normalise
-                )
+                verbe = self.comprendre.connaissances.trouver_verbe(jeton.normalise)
                 if verbe:
                     return {
                         "field": "action",
@@ -173,12 +151,7 @@ class Experience:
 
         if champ == "confirmation":
             valeur = analyse.texte_normalise.casefold()
-            positive = valeur in {
-                "exact",
-                "exactement",
-                "oui",
-                "ouais",
-            }
+            positive = valeur in {"exact", "exactement", "oui", "ouais"}
             return {
                 "field": "confirmation",
                 "value": positive,
