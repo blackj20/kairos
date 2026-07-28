@@ -2,17 +2,22 @@
 
 ## Statut
 
-**V0.4 — prototype opérationnel de compréhension, décision et apprentissage supervisé orchestré par GrowUp.**
+**V0.5 — prototype opérationnel de compréhension, décision, apprentissage supervisé et génération contrôlée de skills pures.**
 
 Ce statut signifie que le projet est installable depuis un clone propre,
 démarre même lorsque la mémoire mutable n’existe pas encore, analyse une
-requête, bloque les actions incomplètes, relie une réponse à une question,
-conserve l’expérience après redémarrage, regroupe les difficultés similaires et
-produit des plans d’apprentissage traçables.
+requête, conserve les expériences, organise leur consolidation avec GrowUp et
+peut transformer une relation déjà promue en skill candidate versionnée.
 
-Il ne signifie pas que Kairos est une intelligence générale, qu’il apprend sans
-source, ni qu’il peut exécuter librement du code ou naviguer sans contrôle dans
-le PC.
+Une candidate V0.5 reste inactive pendant sa génération et sa validation. Son
+activation exige un rapport réussi lié à son empreinte exacte et une approbation
+humaine déclarée. Une version précédente peut ensuite être restaurée avec son
+chemin, son rapport et son empreinte.
+
+Ce statut ne signifie pas que Kairos est une intelligence générale, qu’il invente
+librement du code, qu’il installe un logiciel ou qu’il peut naviguer sans
+contrôle dans le PC. Le sandbox V0.5 limite un processus local ; il ne remplace
+pas un conteneur, une machine virtuelle ou une politique système forte.
 
 ## Commandes reproductibles
 
@@ -20,113 +25,145 @@ le PC.
 python -m pip install -e .
 kairos --smoke-test
 kairos --growup-scan
+kairos --skill-factory-scan
 python -m unittest discover -s tests -v
 python benchmark.py
 python holdout.py
 python decision_benchmark.py
 python growup_benchmark.py
+python skill_factory_benchmark.py
 python user_acceptance.py
 python user_acceptance_additional.py
+python user_acceptance_v05.py
 ```
 
 ## Portes validées
+
+### Fondation V0.4 conservée
 
 - installation depuis un checkout propre ;
 - commande `kairos` disponible ;
 - création automatique d’une mémoire mutable vide au premier démarrage ;
 - refus d’écraser silencieusement une mémoire invalide ou corrompue ;
-- smoke test du kernel, des connaissances, de la décision et de la réponse ;
-- scan GrowUp installé et exécutable ;
-- 96 tests automatisés réussis ;
-- 18 scénarios d’acceptation utilisateur réussis ;
-- validation CI sous Python 3.11, 3.12 et 3.13 ;
-- persistance `question → réponse → expérience → redémarrage` ;
+- compréhension et décision symboliques ;
+- blocage des ordres incomplets ou contradictoires ;
+- liaison `question → réponse → expérience → redémarrage` ;
 - aucune promotion automatique d’une expérience ;
-- regroupement des expériences et événements décrivant le même manque ;
-- comptage sans doublement des occurrences ;
-- priorité expliquée par fréquence, impact, risque et vérifiabilité ;
-- plans GrowUp persistants et audités ;
-- conflit de sens envoyé au créateur pour clarification ;
-- consolidation `Réfléchir → Tester → SECAU` ;
-- deux preuves, trois exemples et deux contre-exemples obligatoires ;
-- rapports liés à leur propre hypothèse ;
-- activation d’une relation seulement après verdict `promote` ;
+- collecte, regroupement, priorité et plans GrowUp persistants ;
+- consolidation protégée par `Réfléchir → Tester → SECAU` ;
 - sources Internet limitées à deux domaines HTTPS distincts ;
-- réponses sur l’identité et l’objectif issues des fichiers protégés `self/` ;
-- formes historiques `atom` et `atoms` reliées à la connaissance confirmée de
-  l’atome ;
-- benchmarks transformés en barrières avec code de sortie non nul ;
 - zéro fausse exécution exigée par les seuils.
 
-## Boucle d’apprentissage démontrée
+### Skill Factory V0.5
+
+- génération autorisée uniquement depuis un plan GrowUp `promoted` ;
+- relation contradictoire refusée avant génération ;
+- seul le template déterministe `relation_mapper` est autorisé ;
+- candidate créée avec toutes les permissions externes fermées ;
+- manifeste strict : aucun champ implicite ou inconnu ;
+- version sémantique, identifiant et entrypoint validés ;
+- timeout de 1 à 10 secondes et mémoire de 64 à 256 Mo ;
+- empreinte SHA-256 sur l’ensemble de l’artefact ;
+- liens symboliques, fichiers inattendus et volume excessif refusés ;
+- scan AST récursif du handler et des tests ;
+- imports système, réseau, processus et chargement dynamique refusés ;
+- tests exécutés avec `python -I`, sans shell, dans un dossier temporaire ;
+- limites CPU, mémoire, taille de fichier et fichiers ouverts appliquées lorsque
+  le système les supporte ;
+- scan négatif bloquant toute exécution des tests ;
+- rapport persistant lié à une candidate et à son empreinte ;
+- modification après génération détectée et mise en quarantaine ;
+- modification après rapport bloquant l’activation ;
+- rapport d’une autre candidate refusé ;
+- approbateur inconnu refusé ;
+- activation explicite par `Jps` ;
+- version précédente marquée `superseded` lorsqu’une nouvelle version devient
+  active ;
+- registre conservant chemin, rapport, empreinte et approbateur par version ;
+- rollback complet et traçable ;
+- bases, candidates et artefacts actifs exclus de Git.
+
+## Cycle démontré
 
 ```text
 incompréhension
 → question ciblée
 → réponse du créateur
 → expérience non confirmée
-→ GrowUp collecte
-→ GrowUp regroupe
-→ GrowUp calcule la priorité
-→ GrowUp produit un plan
+→ GrowUp collecte et regroupe
 → preuves + exemples + contre-exemples
 → Réfléchir crée l’hypothèse
-→ Tester produit un rapport
-→ SECAU promeut, rejette ou met en quarantaine
-→ relation confirmée éventuellement réutilisée
+→ Tester produit le rapport
+→ SECAU promeut ou rejette
+→ plan GrowUp promoted
+→ Skill Factory génère une candidate inactive
+→ manifeste + permissions + empreinte + scan AST
+→ tests dans le sandbox local
+→ rapport lié à l’artefact exact
+→ approbation humaine
+→ activation versionnée
+→ rollback possible
 ```
 
 ## Invariants
 
 ```text
+Une expérience seule n’est jamais une vérité confirmée.
 GrowUp.analyser() ne modifie jamais une connaissance confirmée.
-Une expérience n’est jamais une preuve suffisante à elle seule.
-Un rapport ne peut valider qu’une hypothèse correspondante.
-Une relation conflictuelle ne peut pas atteindre Tester.
-Une relation non promue ne peut pas entrer dans le lexique actif.
-Une mémoire absente peut être initialisée ; une mémoire invalide n’est jamais écrasée.
-Les réponses sur Kairos proviennent de sa mémoire de soi protégée.
+Un plan non promoted ne génère aucune skill.
+Une relation conflictuelle ne génère aucune skill.
+Une candidate générée ou validée reste inactive.
+La V0.5 n’accorde ni réseau, ni shell, ni processus, ni fichiers.
+Le scanner inspecte aussi les tests.
+Un scan négatif empêche l’exécution.
+Un rapport ne couvre qu’une candidate et une empreinte.
+Une modification après rapport bloque l’activation.
+Seul un approbateur déclaré peut activer ou rollback.
+Chaque version active possède son chemin, rapport, digest et approbateur.
+Le rollback restaure toutes les métadonnées de la version précédente.
 ```
 
-## Résultats de validation
+## Résultats attendus par la CI V0.5
 
-| Porte | Résultat |
+Le dernier commit n’est accepté que si toutes les portes suivantes restent
+vertes sous Python 3.11, 3.12 et 3.13 :
+
+| Porte | Seuil |
 |---|---:|
-| Tests automatisés | 96/96 |
-| Acceptation utilisateur | 18/18 |
-| Python | 3.11, 3.12, 3.13 |
-| Installation propre | réussie |
-| Premier démarrage sans mémoire | réussi |
+| Tests automatisés | 110/110 |
+| Acceptation historique et V0.4 | 18/18 |
+| Acceptation CLI Skill Factory | 11/11 |
+| Acceptation totale | 29/29 |
 | Smoke test | réussi |
-| Scan GrowUp | réussi |
+| Scan GrowUp installé | réussi |
+| Scan Skill Factory installé | réussi |
 | Benchmark Comprendre | réussi |
 | Benchmark holdout | réussi |
 | Benchmark Décision | réussi |
 | Benchmark GrowUp | réussi |
+| Benchmark Skill Factory | réussi |
 | Fausses exécutions | 0 autorisée |
 
-## Parcours utilisateur acceptés
+## Parcours V0.5 acceptés
 
-Les scénarios couvrent notamment :
+Les commandes utilisateur couvrent :
 
-- `salut cv ?` ;
-- `c’est quoi un atome ?` ;
-- une question inconnue sans invention ;
-- `installe` puis `python` ;
-- `installe python` sans compétence d’installation active ;
-- `ne ferme pas` sans exécution ;
-- une séance pédagogique ;
-- `deploie python` transformé en expérience non confirmée ;
-- redémarrage sans promotion automatique ;
-- collecte et planification GrowUp ;
-- second scan sans groupe dupliqué ;
-- `c’est quoi un atoms ?` ;
-- `qui es tu ?` ;
-- `quel est ton objectif ?`.
+```text
+kairos --skill-factory-scan
+kairos --skill-generate PLAN_ID --skill-version 0.1.0
+kairos --skill-validate CANDIDATE_ID
+kairos --skill-activate CANDIDATE_ID --report-id RAPPORT --approved-by intrus
+kairos --skill-activate CANDIDATE_ID --report-id RAPPORT --approved-by Jps
+kairos --skill-generate PLAN_ID --skill-version 0.2.0
+kairos --skill-rollback learned.deploie --approved-by Jps
+```
+
+Le parcours démontre également qu’une candidate n’est pas activée
+implicitement et qu’une altération après le rapport est refusée.
 
 ## Prochaine porte
 
-La prochaine étape est la V0.5 : génération de **skills candidates** à partir
-d’un plan validé. La candidate devra rester inactive jusqu’à la réussite de
-l’analyse statique, du sandbox, des tests, du contrôle des permissions et du
-rollback.
+La prochaine étape doit introduire des **outils PC limités**, jamais un shell
+libre. Chaque outil devra posséder : permission explicite, simulation, journal,
+confirmation humaine, timeout, périmètre de fichiers strict et rollback. Une
+skill pourra demander un outil, mais ne devra jamais contourner son contrôleur.
