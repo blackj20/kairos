@@ -21,11 +21,17 @@ memory/*.db
 memory/*.db-*
 memory/*.tmp
 memory/checkpoints/
+memory/skill_registry.json
 skills/candidates/*/
 skills/quarantined/*/
+skills/active/*/
 
 # Conserver les fichiers de structure
 !memory/.gitkeep
 !memory/*.json
 !skills/candidates/.gitkeep
 !skills/quarantined/.gitkeep
+!skills/active/.gitkeep
+
+# Le registre d'activation reste local malgré l'exception JSON ci-dessus
+memory/skill_registry.json
