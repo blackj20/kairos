@@ -253,6 +253,23 @@ class SkillFactory:
                 shutil.rmtree(target, ignore_errors=True)
             raise
 
+        if previous and previous != candidate.version:
+            for autre in self.store.candidates():
+                if (
+                    autre.id != candidate.id
+                    and autre.skill_id == candidate.skill_id
+                    and autre.version == previous
+                    and autre.status == "activated"
+                ):
+                    self.store.change_candidate_status(
+                        autre.id,
+                        "superseded",
+                        {
+                            "replaced_by": candidate.version,
+                            "approved_by": approbateur,
+                        },
+                    )
+
         self.store.change_candidate_status(
             candidate.id,
             "activated",
