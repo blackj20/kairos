@@ -1,0 +1,31 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Environnements
+.venv/
+venv/
+env/
+
+# IDE et système
+.vscode/
+.idea/
+.DS_Store
+
+# Mémoire et artefacts locaux de Kairos
+memory/*.db
+memory/*.db-*
+memory/*.tmp
+memory/checkpoints/
+skills/candidates/*/
+skills/quarantined/*/
+
+# Conserver les fichiers de structure
+!memory/.gitkeep
+!memory/*.json
+!skills/candidates/.gitkeep
+!skills/quarantined/.gitkeep
