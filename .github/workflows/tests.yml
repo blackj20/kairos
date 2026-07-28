@@ -36,10 +36,13 @@ jobs:
       - name: Run installed GrowUp scan
         run: kairos --growup-scan > growup-scan.json
 
+      - name: Run installed Skill Factory scan
+        run: kairos --skill-factory-scan > skill-factory-scan.json
+
       - name: Compile Python sources
         run: |
           python -m compileall -q kairos tests
-          python -m py_compile benchmark.py holdout.py decision_benchmark.py growup_benchmark.py user_acceptance.py user_acceptance_additional.py
+          python -m py_compile benchmark.py holdout.py decision_benchmark.py growup_benchmark.py skill_factory_benchmark.py user_acceptance.py user_acceptance_additional.py user_acceptance_v05.py
 
       - name: Run unit and end-to-end tests
         shell: bash
@@ -67,6 +70,9 @@ jobs:
       - name: Enforce GrowUp benchmark
         run: python growup_benchmark.py
 
+      - name: Enforce Skill Factory benchmark
+        run: python skill_factory_benchmark.py
+
       - name: Run user acceptance scenarios
         shell: bash
         run: |
@@ -79,6 +85,12 @@ jobs:
           set -o pipefail
           python user_acceptance_additional.py 2>&1 | tee user-acceptance-additional.log
 
+      - name: Run Skill Factory user acceptance
+        shell: bash
+        run: |
+          set -o pipefail
+          python user_acceptance_v05.py 2>&1 | tee user-acceptance-v05.log
+
       - name: Preserve user acceptance report
         if: always()
         uses: actions/upload-artifact@v4
@@ -87,8 +99,13 @@ jobs:
           path: |
             user-acceptance.log
             user-acceptance-additional.log
+            user-acceptance-v05.log
             artifacts/user_acceptance/USER_ACCEPTANCE_REPORT.md
             artifacts/user_acceptance/USER_ACCEPTANCE_REPORT.json
             artifacts/user_acceptance/USER_ACCEPTANCE_ADDITIONAL.md
             artifacts/user_acceptance/USER_ACCEPTANCE_ADDITIONAL.json
+            artifacts/user_acceptance/USER_ACCEPTANCE_V05.md
+            artifacts/user_acceptance/USER_ACCEPTANCE_V05.json
+            growup-scan.json
+            skill-factory-scan.json
           if-no-files-found: error
