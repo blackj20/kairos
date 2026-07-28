@@ -3,7 +3,7 @@
   "items": [
     {
       "id": "science.atom",
-      "aliases": ["atome", "c'est quoi un atome", "qu'est-ce qu'un atome"],
+      "aliases": ["atome", "atom", "atoms", "c'est quoi un atome", "c'est quoi un atom", "c'est quoi un atoms", "qu'est-ce qu'un atome"],
       "answer": "Un atome est la plus petite particule qui caractérise encore un élément chimique. Il possède un noyau chargé positivement, qui concentre presque toute sa masse, entouré d'électrons.",
       "examples": ["hydrogène", "carbone", "oxygène"],
       "counterexamples": ["une molécule contient plusieurs atomes", "un proton est une partie du noyau, pas un atome complet"],
@@ -39,7 +39,7 @@
       "id": "python.learning",
       "aliases": ["apprends python", "apprends-moi python", "apprends moi python", "apprendre python", "cours python"],
       "answer": "Pour apprendre Python concrètement, commence par : 1) valeurs et variables ; 2) conditions et boucles ; 3) fonctions ; 4) listes et dictionnaires ; 5) fichiers et exceptions ; 6) modules et classes. Premier exercice : crée une variable nom = \"Kairos\", puis affiche-la avec print(nom).",
-      "examples": ["nom = \"Kairos\"\\nprint(nom)", "age = 20\\nif age >= 18:\\n    print(\"majeur\")", "def saluer(nom):\\n    return f\"Bonjour {nom}\""],
+      "examples": ["nom = \"Kairos\"\nprint(nom)", "age = 20\nif age >= 18:\n    print(\"majeur\")", "def saluer(nom):\n    return f\"Bonjour {nom}\""],
       "counterexamples": ["lire sans pratiquer ne démontre pas la maîtrise", "installer Python ne signifie pas connaître le langage"],
       "relations": [
         ["variable", "stocke", "valeur"],
@@ -66,7 +66,7 @@
       "id": "python.exercise",
       "aliases": ["exercice python", "donne-moi un exercice python", "donne moi un exercice python"],
       "answer": "Exercice Python : demande un prénom avec input(), stocke-le dans une variable nom, puis affiche « Bonjour » suivi du prénom avec print(). Résultat attendu pour Ada : Bonjour Ada.",
-      "examples": ["nom = input(\"Prénom : \")\\nprint(\"Bonjour\", nom)", "nom = \"Ada\"\\nprint(f\"Bonjour {nom}\")", "print(\"Bonjour\", \"Kairos\")"],
+      "examples": ["nom = input(\"Prénom : \")\nprint(\"Bonjour\", nom)", "nom = \"Ada\"\nprint(f\"Bonjour {nom}\")", "print(\"Bonjour\", \"Kairos\")"],
       "counterexamples": ["input sans affectation perd la valeur saisie", "return n'affiche pas automatiquement une valeur dans un script"],
       "relations": [["input", "retourne", "texte saisi"], ["variable", "stocke", "prénom"], ["print", "affiche", "salutation"]],
       "sources": ["https://docs.python.org/3/library/functions.html#input", "https://docs.python.org/3/library/functions.html#print"]
@@ -75,7 +75,7 @@
       "id": "python.loop",
       "aliases": ["boucle python", "qu'est-ce qu'une boucle python", "faire une boucle en python"],
       "answer": "Une boucle répète un bloc. En Python, for parcourt les éléments d'une séquence : for nombre in [1, 2, 3]: print(nombre). while répète tant qu'une condition reste vraie.",
-      "examples": ["for x in [1, 2, 3]:\\n    print(x)", "for i in range(3):\\n    print(i)", "while compteur > 0:\\n    compteur -= 1"],
+      "examples": ["for x in [1, 2, 3]:\n    print(x)", "for i in range(3):\n    print(i)", "while compteur > 0:\n    compteur -= 1"],
       "counterexamples": ["if choisit une branche mais ne répète pas", "une fonction ne s'exécute pas en boucle sauf si elle est appelée plusieurs fois"],
       "relations": [["for", "parcourt", "séquence"], ["while", "répète tant que", "condition"], ["boucle", "répète", "bloc"]],
       "sources": ["https://docs.python.org/3/tutorial/controlflow.html#for-statements", "https://docs.python.org/3/reference/compound_stmts.html#the-while-statement"]
@@ -84,7 +84,7 @@
       "id": "python.function",
       "aliases": ["fonction python", "créer une fonction python", "comment créer une fonction python"],
       "answer": "Déclare une fonction Python avec def, son nom et ses paramètres, puis indente son corps. Exemple : def saluer(nom): return f\"Bonjour {nom}\". Appelle-la ensuite avec saluer(\"Ada\").",
-      "examples": ["def saluer(nom):\\n    return f\"Bonjour {nom}\"", "def addition(a, b):\\n    return a + b", "resultat = saluer(\"Ada\")"],
+      "examples": ["def saluer(nom):\n    return f\"Bonjour {nom}\"", "def addition(a, b):\n    return a + b", "resultat = saluer(\"Ada\")"],
       "counterexamples": ["écrire def sans bloc indenté est invalide", "définir une fonction ne l'appelle pas automatiquement"],
       "relations": [["def", "déclare", "fonction"], ["paramètre", "reçoit", "argument"], ["return", "renvoie", "résultat"]],
       "sources": ["https://docs.python.org/3/tutorial/controlflow.html#defining-functions", "https://docs.python.org/3/reference/compound_stmts.html#function-definitions"]
