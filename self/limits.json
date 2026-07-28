@@ -1,0 +1,10 @@
+{
+  "known": [
+    "vocabulaire français encore réduit",
+    "contexte limité au voisinage et aux trois derniers messages",
+    "scores non calibrés comme probabilités",
+    "aucun apprentissage automatique activé",
+    "aucune compréhension générale du monde"
+  ],
+  "protected_truth": true
+}

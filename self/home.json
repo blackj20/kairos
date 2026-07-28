@@ -1,0 +1,8 @@
+{
+  "root": ".",
+  "language_data": "data/fr",
+  "memory": "memory",
+  "relations": "relations",
+  "self": "self",
+  "protected_move": true
+}

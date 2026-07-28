@@ -1,0 +1,26 @@
+{
+  "action": {
+    "clarification": "Quelle action veux-tu que j'effectue ?",
+    "explanation": "Je ne reconnais pas l'action demandée. Que veux-tu faire exactement ?"
+  },
+  "cible": {
+    "clarification": "Quelle est la cible de l'action « {action} » ?",
+    "explanation": "Je comprends l'action « {action} », mais pas ce qu'elle doit viser. Peux-tu me l'expliquer ?"
+  },
+  "type_requete": {
+    "clarification": "Est-ce une question, un ordre, une information ou une correction ?",
+    "explanation": "Je ne comprends pas encore la nature de cette phrase. Que veux-tu exprimer ?"
+  },
+  "sens": {
+    "clarification": "Que signifie « {focus} » dans cette phrase ?",
+    "explanation": "Je ne connais pas encore le sens de « {focus} » ici. Peux-tu me l'expliquer ?"
+  },
+  "confirmation": {
+    "clarification": "Ai-je bien compris que tu veux suivre la route « {proposed_route} » ?",
+    "explanation": "Mon analyse reste incertaine. Peux-tu confirmer ce que tu attends de moi ?"
+  },
+  "contradiction": {
+    "clarification": "La demande contient plusieurs possibilités. Quelle action dois-je traiter en premier ?",
+    "explanation": "Les éléments de la demande se contredisent. Peux-tu préciser une seule intention ?"
+  }
+}

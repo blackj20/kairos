@@ -1,0 +1,14 @@
+{
+  "salutations": ["bonjour", "bonsoir", "coucou", "hey", "hello", "salut"],
+  "questions_etat": ["ça va", "ca va", "cv", "comment vas-tu", "comment allez-vous"],
+  "lecons": ["apprends-moi", "apprends moi", "c'est quoi", "définis", "enseigne-moi", "enseigne moi", "explique-moi", "explique moi"],
+  "interdictions": ["défense de", "interdit de", "interdit d"],
+  "retours_positifs": ["c'est correct", "ça marche", "cela marche", "tu as raison"],
+  "retours_negatifs": ["c'est faux", "c'est incorrect", "tu t'es trompé", "tu te trompes"],
+  "reponses": {
+    "salutation_etat": "Salut ! Ça va bien. Et toi ?",
+    "salutation": "Salut !",
+    "question_etat": "Ça va bien. Et toi ?",
+    "incompris": "Je n'ai pas encore assez d'indices pour répondre correctement."
+  }
+}

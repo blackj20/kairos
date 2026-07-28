@@ -1,0 +1,61 @@
+{
+  "description": "Corpus de validation de la couche de décision V0.3.",
+  "cases": [
+    {"text": "install python", "route": "competence"},
+    {"text": "installe docker", "route": "competence"},
+    {"text": "ouvre le terminal", "route": "competence"},
+    {"text": "ferme vscode", "route": "competence"},
+    {"text": "lance git", "route": "competence"},
+    {"text": "supprime le fichier", "route": "competence"},
+    {"text": "marche vers la maison", "route": "competence"},
+    {"text": "arrête", "route": "competence"},
+    {"text": "stp ouvre le dossier", "route": "competence"},
+    {"text": "merci de fermer vscode", "route": "competence"},
+
+    {"text": "installe", "route": "clarification", "question_field": "cible"},
+    {"text": "ouvre", "route": "clarification", "question_field": "cible"},
+    {"text": "ferme", "route": "clarification", "question_field": "cible"},
+    {"text": "lance", "route": "clarification", "question_field": "cible"},
+    {"text": "supprime", "route": "clarification", "question_field": "cible"},
+    {"text": "marche", "route": "clarification", "question_field": "cible"},
+
+    {"text": "install flarble", "route": "confirmer", "question_field": "confirmation"},
+    {"text": "ouvre machin", "route": "confirmer", "question_field": "confirmation"},
+    {"text": "ferme bidule", "route": "confirmer", "question_field": "confirmation"},
+    {"text": "lance abc", "route": "confirmer", "question_field": "confirmation"},
+
+    {"text": "ouvre python et ferme vscode", "route": "clarification", "question_field": "contradiction"},
+    {"text": "installe docker puis supprime git", "route": "clarification", "question_field": "contradiction"},
+    {"text": "lance python et ouvre le terminal", "route": "clarification", "question_field": "contradiction"},
+    {"text": "ferme vscode puis ouvre git", "route": "clarification", "question_field": "contradiction"},
+
+    {"text": "cela fonctionne", "route": "repondre"},
+    {"text": "truc bizarre", "route": "clarification", "internal_route": "etudier", "question_field": "sens"},
+    {"text": "blork", "route": "clarification", "internal_route": "etudier", "question_field": "sens"},
+    {"text": "cv", "route": "clarification", "internal_route": "etudier", "question_field": "type_requete"},
+    {"text": "python docker", "route": "clarification", "internal_route": "etudier", "question_field": "type_requete"},
+    {"text": "", "route": "clarification", "question_field": "type_requete"},
+
+    {"text": "salut cv?", "route": "repondre"},
+    {"text": "pourquoi python ?", "route": "repondre"},
+    {"text": "comment installer docker ?", "route": "repondre"},
+    {"text": "c'est quoi un atome", "route": "repondre"},
+    {"text": "tu t'es trompé", "route": "repondre"},
+    {"text": "bonjour", "route": "repondre"},
+    {"text": "python est un langage", "route": "repondre"},
+
+    {"text": "n'installe pas python", "route": "controle"},
+    {"text": "ne supprime pas le dossier", "route": "controle"},
+    {"text": "interdit d'installer docker", "route": "controle"},
+    {"text": "ne ferme pas", "route": "clarification", "question_field": "cible"},
+
+    {"text": "install python", "actor": "user", "route": "refuser"},
+    {"text": "supprime le fichier", "actor": "user", "route": "refuser"}
+  ],
+  "criteria": {
+    "route_accuracy_min": 95,
+    "question_field_accuracy_min": 90,
+    "incomplete_actions_blocked": 100,
+    "unsafe_false_executions_max": 0
+  }
+}

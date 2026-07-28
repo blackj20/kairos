@@ -1,0 +1,2150 @@
+{
+  "version": 1,
+  "items": [
+    {
+      "id": "question_f480e718f68e4021b39cf72b5e7d7c32",
+      "requete_originale": "cela fonctionne",
+      "champ_manquant": "sens",
+      "texte": "Je ne connais pas encore le sens de « fonctionne » ici. Peux-tu me l'expliquer ?",
+      "statut": "answered",
+      "score_initial": 25,
+      "route_proposee": "etudier",
+      "analyse": {
+        "texte_original": "cela fonctionne",
+        "texte_normalise": "cela fonctionne",
+        "type_requete": {
+          "valeur": "inconnu",
+          "score": 25
+        },
+        "demarche": {
+          "valeur": "clarification",
+          "score": 75
+        },
+        "action": {
+          "valeur": null,
+          "score": 0
+        },
+        "cible": {
+          "valeur": null,
+          "score": 0
+        },
+        "indices": [],
+        "jetons_inconnus": [
+          "fonctionne"
+        ],
+        "alternative_type": {
+          "valeur": null,
+          "score": 0
+        },
+        "decoupage": {
+          "texte_original": "cela fonctionne",
+          "texte_normalise": "cela fonctionne",
+          "jetons": [
+            {
+              "valeur": "cela",
+              "normalise": "cela",
+              "position": 0,
+              "debut": 0,
+              "fin": 4,
+              "ponctuation": false
+            },
+            {
+              "valeur": "fonctionne",
+              "normalise": "fonctionne",
+              "position": 1,
+              "debut": 5,
+              "fin": 15,
+              "ponctuation": false
+            }
+          ]
+        },
+        "sens_contextuels": [
+          {
+            "jeton": {
+              "valeur": "cela",
+              "normalise": "cela",
+              "position": 0,
+              "debut": 0,
+              "fin": 4,
+              "ponctuation": false
+            },
+            "choisi": {
+              "lemme": "cela",
+              "categorie": "expression:retours_positifs",
+              "sens": "cela",
+              "score": 85,
+              "source": "data/fr/expressions.json"
+            },
+            "alternatives": [],
+            "indices": []
+          },
+          {
+            "jeton": {
+              "valeur": "fonctionne",
+              "normalise": "fonctionne",
+              "position": 1,
+              "debut": 5,
+              "fin": 15,
+              "ponctuation": false
+            },
+            "choisi": {
+              "lemme": "fonctionne",
+              "categorie": "inconnu",
+              "sens": "inconnu",
+              "score": 0,
+              "source": "aucune"
+            },
+            "alternatives": [],
+            "indices": []
+          }
+        ],
+        "verification": {
+          "valide": false,
+          "route": "clarification",
+          "score": 25,
+          "raisons": [
+            "type de requête insuffisamment reconnu"
+          ]
+        }
+      },
+      "creee_le": "2026-07-28T15:22:43.701287+00:00",
+      "reponse": "foctionne est une action",
+      "resolue_le": "2026-07-28T15:23:43.548391+00:00"
+    },
+    {
+      "id": "question_2bbc5793dfbb4b629d3c37dca753da76",
+      "requete_originale": "kairos install kk",
+      "champ_manquant": "confirmation",
+      "texte": "Ai-je bien compris que tu veux suivre la route « clarification » ?",
+      "statut": "answered",
+      "score_initial": 67,
+      "route_proposee": "confirmer",
+      "analyse": {
+        "texte_original": "kairos install kk",
+        "texte_normalise": "kairos install kk",
+        "type_requete": {
+          "valeur": "ordre",
+          "score": 75
+        },
+        "demarche": {
+          "valeur": "execution",
+          "score": 66
+        },
+        "action": {
+          "valeur": "installer",
+          "score": 66
+        },
+        "cible": {
+          "valeur": "kk",
+          "score": 55
+        },
+        "indices": [
+          "verbe d'action directeur",
+          "forme directive",
+          "action contextualisée : installer",
+          "cible syntaxique non vérifiée : kk"
+        ],
+        "jetons_inconnus": [
+          "kairos",
+          "kk"
+        ],
+        "alternative_type": {
+          "valeur": "inconnu",
+          "score": 25
+        },
+        "decoupage": {
+          "texte_original": "kairos install kk",
+          "texte_normalise": "kairos install kk",
+          "jetons": [
+            {
+              "valeur": "kairos",
+              "normalise": "kairos",
+              "position": 0,
+              "debut": 0,
+              "fin": 6,
+              "ponctuation": false
+            },
+            {
+              "valeur": "install",
+              "normalise": "install",
+              "position": 1,
+              "debut": 7,
+              "fin": 14,
+              "ponctuation": false
+            },
+            {
+              "valeur": "kk",
+              "normalise": "kk",
+              "position": 2,
+              "debut": 15,
+              "fin": 17,
+              "ponctuation": false
+            }
+          ]
+        },
+        "sens_contextuels": [
+          {
+            "jeton": {
+              "valeur": "kairos",
+              "normalise": "kairos",
+              "position": 0,
+              "debut": 0,
+              "fin": 6,
+              "ponctuation": false
+            },
+            "choisi": {
+              "lemme": "kairos",
+              "categorie": "inconnu",
+              "sens": "inconnu",
+              "score": 0,
+              "source": "aucune"
+            },
+            "alternatives": [],
+            "indices": []
+          },
+          {
+            "jeton": {
+              "valeur": "install",
+              "normalise": "install",
+              "position": 1,
+              "debut": 7,
+              "fin": 14,
+              "ponctuation": false
+            },
+            "choisi": {
+              "lemme": "installer",
+              "categorie": "verbe_action",
+              "sens": "ajouter un logiciel au système",
+              "score": 60,
+              "source": "data/fr/verbes.json"
+            },
+            "alternatives": [],
+            "indices": []
+          },
+          {
+            "jeton": {
+              "valeur": "kk",
+              "normalise": "kk",
+              "position": 2,
+              "debut": 15,
+              "fin": 17,
+              "ponctuation": false
+            },
+            "choisi": {
+              "lemme": "kk",
+              "categorie": "inconnu",
+              "sens": "inconnu",
+              "score": 0,
+              "source": "aucune"
+            },
+            "alternatives": [],
+            "indices": []
+          }
+        ],
+        "verification": {
+          "valide": false,
+          "route": "clarification",
+          "score": 66,
+          "raisons": [
+            "action trop incertaine pour être exécutée"
+          ]
+        }
+      },
+      "creee_le": "2026-07-28T15:24:34.779348+00:00",
+      "reponse": "non",
+      "resolue_le": "2026-07-28T15:25:04.337868+00:00"
+    },
+    {
+      "id": "question_f33f89a8b8534766b16c49022f73b5ed",
+      "requete_originale": "pose tes question",
+      "champ_manquant": "sens",
+      "texte": "Je ne connais pas encore le sens de « question » ici. Peux-tu me l'expliquer ?",
+      "statut": "answered",
+      "score_initial": 25,
+      "route_proposee": "etudier",
+      "analyse": {
+        "texte_original": "pose tes question",
+        "texte_normalise": "pose tes question",
+        "type_requete": {
+          "valeur": "inconnu",
+          "score": 25
+        },
+        "demarche": {
+          "valeur": "clarification",
+          "score": 75
+        },
+        "action": {
+          "valeur": null,
+          "score": 0
+        },
+        "cible": {
+          "valeur": null,
+          "score": 0
+        },
+        "indices": [],
+        "jetons_inconnus": [
+          "pose",
+          "tes",
+          "question"
+        ],
+        "alternative_type": {
+          "valeur": null,
+          "score": 0
+        },
+        "decoupage": {
+          "texte_original": "pose tes question",
+          "texte_normalise": "pose tes question",
+          "jetons": [
+            {
+              "valeur": "pose",
+              "normalise": "pose",
+              "position": 0,
+              "debut": 0,
+              "fin": 4,
+              "ponctuation": false
+            },
+            {
+              "valeur": "tes",
+              "normalise": "tes",
+              "position": 1,
+              "debut": 5,
+              "fin": 8,
+              "ponctuation": false
+            },
+            {
+              "valeur": "question",
+              "normalise": "question",
+              "position": 2,
+              "debut": 9,
+              "fin": 17,
+              "ponctuation": false
+            }
+          ]
+        },
+        "sens_contextuels": [
+          {
+            "jeton": {
+              "valeur": "pose",
+              "normalise": "pose",
+              "position": 0,
+              "debut": 0,
+              "fin": 4,
+              "ponctuation": false
+            },
+            "choisi": {
+              "lemme": "pose",
+              "categorie": "inconnu",
+              "sens": "inconnu",
+              "score": 0,
+              "source": "aucune"
+            },
+            "alternatives": [],
+            "indices": []
+          },
+          {
+            "jeton": {
+              "valeur": "tes",
+              "normalise": "tes",
+              "position": 1,
+              "debut": 5,
+              "fin": 8,
+              "ponctuation": false
+            },
+            "choisi": {
+              "lemme": "tes",
+              "categorie": "inconnu",
+              "sens": "inconnu",
+              "score": 0,
+              "source": "aucune"
+            },
+            "alternatives": [],
+            "indices": []
+          },
+          {
+            "jeton": {
+              "valeur": "question",
+              "normalise": "question",
+              "position": 2,
+              "debut": 9,
+              "fin": 17,
+              "ponctuation": false
+            },
+            "choisi": {
+              "lemme": "question",
+              "categorie": "inconnu",
+              "sens": "inconnu",
+              "score": 0,
+              "source": "aucune"
+            },
+            "alternatives": [],
+            "indices": []
+          }
+        ],
+        "verification": {
+          "valide": false,
+          "route": "clarification",
+          "score": 25,
+          "raisons": [
+            "type de requête insuffisamment reconnu"
+          ]
+        }
+      },
+      "creee_le": "2026-07-28T15:27:04.263049+00:00",
+      "reponse": "un demende de ta part",
+      "resolue_le": "2026-07-28T15:27:33.962745+00:00"
+    },
+    {
+      "id": "question_d0662a31ecf3466d806f3868a629028c",
+      "requete_originale": "",
+      "champ_manquant": "type_requete",
+      "texte": "Je ne comprends pas encore la nature de cette phrase. Que veux-tu exprimer ?",
+      "statut": "answered",
+      "score_initial": 0,
+      "route_proposee": "clarification",
+      "analyse": {
+        "texte_original": "",
+        "texte_normalise": "",
+        "type_requete": {
+          "valeur": "inconnu",
+          "score": 0
+        },
+        "demarche": {
+          "valeur": "clarification",
+          "score": 100
+        },
+        "action": {
+          "valeur": null,
+          "score": 0
+        },
+        "cible": {
+          "valeur": null,
+          "score": 0
+        },
+        "indices": [
+          "requête vide"
+        ],
+        "jetons_inconnus": [],
+        "alternative_type": {
+          "valeur": null,
+          "score": 0
+        },
+        "decoupage": {
+          "texte_original": "",
+          "texte_normalise": "",
+          "jetons": []
+        },
+        "sens_contextuels": [],
+        "verification": {
+          "valide": false,
+          "route": "clarification",
+          "score": 0,
+          "raisons": [
+            "type de requête insuffisamment reconnu"
+          ]
+        }
+      },
+      "creee_le": "2026-07-28T15:31:28.650642+00:00",
+      "reponse": "moral",
+      "resolue_le": "2026-07-28T15:31:39.127267+00:00"
+    },
+    {
+      "id": "question_b19f6408685d41f5842a9f6139ee87c4",
+      "requete_originale": "clear",
+      "champ_manquant": "sens",
+      "texte": "Je ne connais pas encore le sens de « clear » ici. Peux-tu me l'expliquer ?",
+      "statut": "answered",
+      "score_initial": 25,
+      "route_proposee": "etudier",
+      "analyse": {
+        "texte_original": "clear",
+        "texte_normalise": "clear",
+        "type_requete": {
+          "valeur": "inconnu",
+          "score": 25
+        },
+        "demarche": {
+          "valeur": "clarification",
+          "score": 75
+        },
+        "action": {
+          "valeur": null,
+          "score": 0
+        },
+        "cible": {
+          "valeur": null,
+          "score": 0
+        },
+        "indices": [],
+        "jetons_inconnus": [
+          "clear"
+        ],
+        "alternative_type": {
+          "valeur": null,
+          "score": 0
+        },
+        "decoupage": {
+          "texte_original": "clear",
+          "texte_normalise": "clear",
+          "jetons": [
+            {
+              "valeur": "clear",
+              "normalise": "clear",
+              "position": 0,
+              "debut": 0,
+              "fin": 5,
+              "ponctuation": false
+            }
+          ]
+        },
+        "sens_contextuels": [
+          {
+            "jeton": {
+              "valeur": "clear",
+              "normalise": "clear",
+              "position": 0,
+              "debut": 0,
+              "fin": 5,
+              "ponctuation": false
+            },
+            "choisi": {
+              "lemme": "clear",
+              "categorie": "inconnu",
+              "sens": "inconnu",
+              "score": 0,
+              "source": "aucune"
+            },
+            "alternatives": [],
+            "indices": []
+          }
+        ],
+        "verification": {
+          "valide": false,
+          "route": "clarification",
+          "score": 25,
+          "raisons": [
+            "type de requête insuffisamment reconnu"
+          ]
+        }
+      },
+      "creee_le": "2026-07-28T15:34:02.550941+00:00",
+      "reponse": "code pour laver un termial",
+      "resolue_le": "2026-07-28T15:34:33.028359+00:00"
+    },
+    {
+      "id": "question_1b83dd662adf499382c6fd663ae9d281",
+      "requete_originale": "pose des question",
+      "champ_manquant": "sens",
+      "texte": "Je ne connais pas encore le sens de « question » ici. Peux-tu me l'expliquer ?",
+      "statut": "answered",
+      "score_initial": 25,
+      "route_proposee": "etudier",
+      "analyse": {
+        "texte_original": "pose des question",
+        "texte_normalise": "pose des question",
+        "type_requete": {
+          "valeur": "inconnu",
+          "score": 25
+        },
+        "demarche": {
+          "valeur": "clarification",
+          "score": 75
+        },
+        "action": {
+          "valeur": null,
+          "score": 0
+        },
+        "cible": {
+          "valeur": null,
+          "score": 0
+        },
+        "indices": [],
+        "jetons_inconnus": [
+          "pose",
+          "question"
+        ],
+        "alternative_type": {
+          "valeur": null,
+          "score": 0
+        },
+        "decoupage": {
+          "texte_original": "pose des question",
+          "texte_normalise": "pose des question",
+          "jetons": [
+            {
+              "valeur": "pose",
+              "normalise": "pose",
+              "position": 0,
+              "debut": 0,
+              "fin": 4,
+              "ponctuation": false
+            },
+            {
+              "valeur": "des",
+              "normalise": "des",
+              "position": 1,
+              "debut": 5,
+              "fin": 8,
+              "ponctuation": false
+            },
+            {
+              "valeur": "question",
+              "normalise": "question",
+              "position": 2,
+              "debut": 9,
+              "fin": 17,
+              "ponctuation": false
+            }
+          ]
+        },
+        "sens_contextuels": [
+          {
+            "jeton": {
+              "valeur": "pose",
+              "normalise": "pose",
+              "position": 0,
+              "debut": 0,
+              "fin": 4,
+              "ponctuation": false
+            },
+            "choisi": {
+              "lemme": "pose",
+              "categorie": "inconnu",
+              "sens": "inconnu",
+              "score": 0,
+              "source": "aucune"
+            },
+            "alternatives": [],
+            "indices": []
+          },
+          {
+            "jeton": {
+              "valeur": "des",
+              "normalise": "des",
+              "position": 1,
+              "debut": 5,
+              "fin": 8,
+              "ponctuation": false
+            },
+            "choisi": {
+              "lemme": "des",
+              "categorie": "articles:indefinis",
+              "sens": "des",
+              "score": 95,
+              "source": "data/fr/articles.json"
+            },
+            "alternatives": [],
+            "indices": []
+          },
+          {
+            "jeton": {
+              "valeur": "question",
+              "normalise": "question",
+              "position": 2,
+              "debut": 9,
+              "fin": 17,
+              "ponctuation": false
+            },
+            "choisi": {
+              "lemme": "question",
+              "categorie": "inconnu",
+              "sens": "inconnu",
+              "score": 0,
+              "source": "aucune"
+            },
+            "alternatives": [],
+            "indices": []
+          }
+        ],
+        "verification": {
+          "valide": false,
+          "route": "clarification",
+          "score": 25,
+          "raisons": [
+            "type de requête insuffisamment reconnu"
+          ]
+        }
+      },
+      "creee_le": "2026-07-28T15:35:13.969345+00:00",
+      "reponse": "un requette",
+      "resolue_le": "2026-07-28T15:35:34.618879+00:00"
+    },
+    {
+      "id": "question_5c0adadf9a5140c1b4dab13831cae91e",
+      "requete_originale": "python",
+      "champ_manquant": "type_requete",
+      "texte": "Je ne comprends pas encore la nature de cette phrase. Que veux-tu exprimer ?",
+      "statut": "answered",
+      "score_initial": 25,
+      "route_proposee": "etudier",
+      "analyse": {
+        "texte_original": "python",
+        "texte_normalise": "python",
+        "type_requete": {
+          "valeur": "inconnu",
+          "score": 25
+        },
+        "demarche": {
+          "valeur": "clarification",
+          "score": 75
+        },
+        "action": {
+          "valeur": null,
+          "score": 0
+        },
+        "cible": {
+          "valeur": null,
+          "score": 0
+        },
+        "indices": [],
+        "jetons_inconnus": [],
+        "alternative_type": {
+          "valeur": null,
+          "score": 0
+        },
+        "decoupage": {
+          "texte_original": "python",
+          "texte_normalise": "python",
+          "jetons": [
+            {
+              "valeur": "python",
+              "normalise": "python",
+              "position": 0,
+              "debut": 0,
+              "fin": 6,
+              "ponctuation": false
+            }
+          ]
+        },
+        "sens_contextuels": [
+          {
+            "jeton": {
+              "valeur": "python",
+              "normalise": "python",
+              "position": 0,
+              "debut": 0,
+              "fin": 6,
+              "ponctuation": false
+            },
+            "choisi": {
+              "lemme": "python",
+              "categorie": "entite:logiciels",
+              "sens": "python",
+              "score": 100,
+              "source": "data/fr/entites.json"
+            },
+            "alternatives": [],
+            "indices": []
+          }
+        ],
+        "verification": {
+          "valide": false,
+          "route": "clarification",
+          "score": 25,
+          "raisons": [
+            "type de requête insuffisamment reconnu"
+          ]
+        }
+      },
+      "creee_le": "2026-07-28T16:10:54.054181+00:00",
+      "reponse": "python et une langage de programation",
+      "resolue_le": "2026-07-28T16:11:13.383060+00:00"
+    },
+    {
+      "id": "question_6e9f7fda11574c63919cebed609080b3",
+      "requete_originale": "cherche des indice",
+      "champ_manquant": "confirmation",
+      "texte": "Ai-je bien compris que tu veux suivre la route « competence » ?",
+      "statut": "answered",
+      "score_initial": 74,
+      "route_proposee": "confirmer",
+      "analyse": {
+        "texte_original": "cherche des indice",
+        "texte_normalise": "cherche des indice",
+        "type_requete": {
+          "valeur": "ordre",
+          "score": 85
+        },
+        "demarche": {
+          "valeur": "execution",
+          "score": 76
+        },
+        "action": {
+          "valeur": "chercher",
+          "score": 76
+        },
+        "cible": {
+          "valeur": "indice",
+          "score": 55
+        },
+        "indices": [
+          "verbe d'action directeur",
+          "forme directive",
+          "action contextualisée : chercher",
+          "cible syntaxique non vérifiée : indice",
+          "position directive : sens verbal privilégié"
+        ],
+        "jetons_inconnus": [
+          "indice"
+        ],
+        "alternative_type": {
+          "valeur": "inconnu",
+          "score": 25
+        },
+        "decoupage": {
+          "texte_original": "cherche des indice",
+          "texte_normalise": "cherche des indice",
+          "jetons": [
+            {
+              "valeur": "cherche",
+              "normalise": "cherche",
+              "position": 0,
+              "debut": 0,
+              "fin": 7,
+              "ponctuation": false
+            },
+            {
+              "valeur": "des",
+              "normalise": "des",
+              "position": 1,
+              "debut": 8,
+              "fin": 11,
+              "ponctuation": false
+            },
+            {
+              "valeur": "indice",
+              "normalise": "indice",
+              "position": 2,
+              "debut": 12,
+              "fin": 18,
+              "ponctuation": false
+            }
+          ]
+        },
+        "sens_contextuels": [
+          {
+            "jeton": {
+              "valeur": "cherche",
+              "normalise": "cherche",
+              "position": 0,
+              "debut": 0,
+              "fin": 7,
+              "ponctuation": false
+            },
+            "choisi": {
+              "lemme": "chercher",
+              "categorie": "verbe_action",
+              "sens": "localiser une information ou un élément",
+              "score": 90,
+              "source": "data/fr/verbes.json"
+            },
+            "alternatives": [
+              {
+                "lemme": "chercher",
+                "categorie": "verbe_action",
+                "sens": "localiser une information ou un élément",
+                "score": 60,
+                "source": "data/fr/verbes.json"
+              }
+            ],
+            "indices": [
+              "position directive : sens verbal privilégié"
+            ]
+          },
+          {
+            "jeton": {
+              "valeur": "des",
+              "normalise": "des",
+              "position": 1,
+              "debut": 8,
+              "fin": 11,
+              "ponctuation": false
+            },
+            "choisi": {
+              "lemme": "des",
+              "categorie": "articles:indefinis",
+              "sens": "des",
+              "score": 95,
+              "source": "data/fr/articles.json"
+            },
+            "alternatives": [],
+            "indices": []
+          },
+          {
+            "jeton": {
+              "valeur": "indice",
+              "normalise": "indice",
+              "position": 2,
+              "debut": 12,
+              "fin": 18,
+              "ponctuation": false
+            },
+            "choisi": {
+              "lemme": "indice",
+              "categorie": "inconnu",
+              "sens": "inconnu",
+              "score": 0,
+              "source": "aucune"
+            },
+            "alternatives": [],
+            "indices": []
+          }
+        ],
+        "verification": {
+          "valide": true,
+          "route": "competence",
+          "score": 76,
+          "raisons": [
+            "ordre validé avec un écart de 60 points"
+          ]
+        }
+      },
+      "creee_le": "2026-07-28T16:38:38.713120+00:00",
+      "reponse": "oui",
+      "resolue_le": "2026-07-28T16:38:49.371128+00:00"
+    },
+    {
+      "id": "question_47efdb3614aa422dbff567b83481ea74",
+      "requete_originale": "met javascripts",
+      "champ_manquant": "confirmation",
+      "texte": "Ai-je bien compris que tu veux suivre la route « competence » ?",
+      "statut": "answered",
+      "score_initial": 74,
+      "route_proposee": "confirmer",
+      "analyse": {
+        "texte_original": "met javascripts",
+        "texte_normalise": "met javascripts",
+        "type_requete": {
+          "valeur": "ordre",
+          "score": 85
+        },
+        "demarche": {
+          "valeur": "execution",
+          "score": 76
+        },
+        "action": {
+          "valeur": "mettre",
+          "score": 76
+        },
+        "cible": {
+          "valeur": "javascripts",
+          "score": 55
+        },
+        "indices": [
+          "verbe d'action directeur",
+          "forme directive",
+          "action contextualisée : mettre",
+          "cible syntaxique non vérifiée : javascripts",
+          "position directive : sens verbal privilégié"
+        ],
+        "jetons_inconnus": [
+          "javascripts"
+        ],
+        "alternative_type": {
+          "valeur": "inconnu",
+          "score": 25
+        },
+        "decoupage": {
+          "texte_original": "met javascripts",
+          "texte_normalise": "met javascripts",
+          "jetons": [
+            {
+              "valeur": "met",
+              "normalise": "met",
+              "position": 0,
+              "debut": 0,
+              "fin": 3,
+              "ponctuation": false
+            },
+            {
+              "valeur": "javascripts",
+              "normalise": "javascripts",
+              "position": 1,
+              "debut": 4,
+              "fin": 15,
+              "ponctuation": false
+            }
+          ]
+        },
+        "sens_contextuels": [
+          {
+            "jeton": {
+              "valeur": "met",
+              "normalise": "met",
+              "position": 0,
+              "debut": 0,
+              "fin": 3,
+              "ponctuation": false
+            },
+            "choisi": {
+              "lemme": "mettre",
+              "categorie": "verbe_action",
+              "sens": "placer, ajouter ou changer l'état d'un élément selon le contexte",
+              "score": 90,
+              "source": "data/fr/verbes.json"
+            },
+            "alternatives": [
+              {
+                "lemme": "mettre",
+                "categorie": "verbe_action",
+                "sens": "placer, ajouter ou changer l'état d'un élément selon le contexte",
+                "score": 60,
+                "source": "data/fr/verbes.json"
+              }
+            ],
+            "indices": [
+              "position directive : sens verbal privilégié"
+            ]
+          },
+          {
+            "jeton": {
+              "valeur": "javascripts",
+              "normalise": "javascripts",
+              "position": 1,
+              "debut": 4,
+              "fin": 15,
+              "ponctuation": false
+            },
+            "choisi": {
+              "lemme": "javascripts",
+              "categorie": "inconnu",
+              "sens": "inconnu",
+              "score": 0,
+              "source": "aucune"
+            },
+            "alternatives": [],
+            "indices": []
+          }
+        ],
+        "verification": {
+          "valide": true,
+          "route": "competence",
+          "score": 76,
+          "raisons": [
+            "ordre validé avec un écart de 60 points"
+          ]
+        }
+      },
+      "creee_le": "2026-07-28T16:41:19.451561+00:00",
+      "reponse": "non",
+      "resolue_le": "2026-07-28T16:41:42.330685+00:00"
+    },
+    {
+      "id": "question_364db47baa9c42f987c1ce0ce1d795ba",
+      "requete_originale": "met npm a jour",
+      "champ_manquant": "confirmation",
+      "texte": "Ai-je bien compris que tu veux suivre la route « competence » ?",
+      "statut": "answered",
+      "score_initial": 74,
+      "route_proposee": "confirmer",
+      "analyse": {
+        "texte_original": "met npm a jour",
+        "texte_normalise": "met npm a jour",
+        "type_requete": {
+          "valeur": "ordre",
+          "score": 85
+        },
+        "demarche": {
+          "valeur": "execution",
+          "score": 76
+        },
+        "action": {
+          "valeur": "mettre",
+          "score": 76
+        },
+        "cible": {
+          "valeur": "npm jour",
+          "score": 55
+        },
+        "indices": [
+          "verbe d'action directeur",
+          "forme directive",
+          "action contextualisée : mettre",
+          "cible syntaxique non vérifiée : npm jour",
+          "position directive : sens verbal privilégié"
+        ],
+        "jetons_inconnus": [
+          "npm",
+          "jour"
+        ],
+        "alternative_type": {
+          "valeur": "inconnu",
+          "score": 25
+        },
+        "decoupage": {
+          "texte_original": "met npm a jour",
+          "texte_normalise": "met npm a jour",
+          "jetons": [
+            {
+              "valeur": "met",
+              "normalise": "met",
+              "position": 0,
+              "debut": 0,
+              "fin": 3,
+              "ponctuation": false
+            },
+            {
+              "valeur": "npm",
+              "normalise": "npm",
+              "position": 1,
+              "debut": 4,
+              "fin": 7,
+              "ponctuation": false
+            },
+            {
+              "valeur": "a",
+              "normalise": "a",
+              "position": 2,
+              "debut": 8,
+              "fin": 9,
+              "ponctuation": false
+            },
+            {
+              "valeur": "jour",
+              "normalise": "jour",
+              "position": 3,
+              "debut": 10,
+              "fin": 14,
+              "ponctuation": false
+            }
+          ]
+        },
+        "sens_contextuels": [
+          {
+            "jeton": {
+              "valeur": "met",
+              "normalise": "met",
+              "position": 0,
+              "debut": 0,
+              "fin": 3,
+              "ponctuation": false
+            },
+            "choisi": {
+              "lemme": "mettre",
+              "categorie": "verbe_action",
+              "sens": "placer, ajouter ou changer l'état d'un élément selon le contexte",
+              "score": 90,
+              "source": "data/fr/verbes.json"
+            },
+            "alternatives": [
+              {
+                "lemme": "mettre",
+                "categorie": "verbe_action",
+                "sens": "placer, ajouter ou changer l'état d'un élément selon le contexte",
+                "score": 60,
+                "source": "data/fr/verbes.json"
+              }
+            ],
+            "indices": [
+              "position directive : sens verbal privilégié"
+            ]
+          },
+          {
+            "jeton": {
+              "valeur": "npm",
+              "normalise": "npm",
+              "position": 1,
+              "debut": 4,
+              "fin": 7,
+              "ponctuation": false
+            },
+            "choisi": {
+              "lemme": "npm",
+              "categorie": "inconnu",
+              "sens": "inconnu",
+              "score": 0,
+              "source": "aucune"
+            },
+            "alternatives": [],
+            "indices": []
+          },
+          {
+            "jeton": {
+              "valeur": "a",
+              "normalise": "a",
+              "position": 2,
+              "debut": 8,
+              "fin": 9,
+              "ponctuation": false
+            },
+            "choisi": {
+              "lemme": "a",
+              "categorie": "grammaire:prepositions",
+              "sens": "a",
+              "score": 95,
+              "source": "data/fr/grammaire.json"
+            },
+            "alternatives": [],
+            "indices": []
+          },
+          {
+            "jeton": {
+              "valeur": "jour",
+              "normalise": "jour",
+              "position": 3,
+              "debut": 10,
+              "fin": 14,
+              "ponctuation": false
+            },
+            "choisi": {
+              "lemme": "jour",
+              "categorie": "inconnu",
+              "sens": "inconnu",
+              "score": 0,
+              "source": "aucune"
+            },
+            "alternatives": [],
+            "indices": []
+          }
+        ],
+        "verification": {
+          "valide": true,
+          "route": "competence",
+          "score": 76,
+          "raisons": [
+            "ordre validé avec un écart de 60 points"
+          ]
+        }
+      },
+      "creee_le": "2026-07-28T16:41:55.117709+00:00",
+      "reponse": "bojjour",
+      "resolue_le": "2026-07-28T16:56:44.471466+00:00"
+    },
+    {
+      "id": "question_8bc20b25e772456c825f88b95f311ecb",
+      "requete_originale": "bonjjour",
+      "champ_manquant": "sens",
+      "texte": "Je ne connais pas encore le sens de « bonjjour » ici. Peux-tu me l'expliquer ?",
+      "statut": "answered",
+      "score_initial": 25,
+      "route_proposee": "etudier",
+      "analyse": {
+        "texte_original": "bonjjour",
+        "texte_normalise": "bonjjour",
+        "type_requete": {
+          "valeur": "inconnu",
+          "score": 25
+        },
+        "demarche": {
+          "valeur": "clarification",
+          "score": 75
+        },
+        "action": {
+          "valeur": null,
+          "score": 0
+        },
+        "cible": {
+          "valeur": null,
+          "score": 0
+        },
+        "indices": [],
+        "jetons_inconnus": [
+          "bonjjour"
+        ],
+        "alternative_type": {
+          "valeur": null,
+          "score": 0
+        },
+        "decoupage": {
+          "texte_original": "bonjjour",
+          "texte_normalise": "bonjjour",
+          "jetons": [
+            {
+              "valeur": "bonjjour",
+              "normalise": "bonjjour",
+              "position": 0,
+              "debut": 0,
+              "fin": 8,
+              "ponctuation": false
+            }
+          ]
+        },
+        "sens_contextuels": [
+          {
+            "jeton": {
+              "valeur": "bonjjour",
+              "normalise": "bonjjour",
+              "position": 0,
+              "debut": 0,
+              "fin": 8,
+              "ponctuation": false
+            },
+            "choisi": {
+              "lemme": "bonjjour",
+              "categorie": "inconnu",
+              "sens": "inconnu",
+              "score": 0,
+              "source": "aucune"
+            },
+            "alternatives": [],
+            "indices": []
+          }
+        ],
+        "verification": {
+          "valide": false,
+          "route": "clarification",
+          "score": 25,
+          "raisons": [
+            "type de requête insuffisamment reconnu"
+          ]
+        }
+      },
+      "creee_le": "2026-07-28T16:56:55.306868+00:00",
+      "reponse": "je voulait dire bonjour c'est une erreur",
+      "resolue_le": "2026-07-28T16:57:21.706146+00:00"
+    },
+    {
+      "id": "question_251a6b1243234bb292ee4f50e5abf0de",
+      "requete_originale": "qui est tu",
+      "champ_manquant": "type_requete",
+      "texte": "Est-ce une question, un ordre, une information ou une correction ?",
+      "statut": "waiting_answer",
+      "score_initial": 85,
+      "route_proposee": "clarification",
+      "analyse": {
+        "texte_original": "qui est tu",
+        "texte_normalise": "qui est tu",
+        "type_requete": {
+          "valeur": "question",
+          "score": 75
+        },
+        "demarche": {
+          "valeur": "conversation",
+          "score": 60
+        },
+        "action": {
+          "valeur": null,
+          "score": 0
+        },
+        "cible": {
+          "valeur": null,
+          "score": 0
+        },
+        "indices": [
+          "forme interrogative détectée",
+          "énoncé affirmatif détecté"
+        ],
+        "jetons_inconnus": [],
+        "alternative_type": {
+          "valeur": "affirmation",
+          "score": 75
+        },
+        "decoupage": {
+          "texte_original": "qui est tu",
+          "texte_normalise": "qui est tu",
+          "jetons": [
+            {
+              "valeur": "qui",
+              "normalise": "qui",
+              "position": 0,
+              "debut": 0,
+              "fin": 3,
+              "ponctuation": false
+            },
+            {
+              "valeur": "est",
+              "normalise": "est",
+              "position": 1,
+              "debut": 4,
+              "fin": 7,
+              "ponctuation": false
+            },
+            {
+              "valeur": "tu",
+              "normalise": "tu",
+              "position": 2,
+              "debut": 8,
+              "fin": 10,
+              "ponctuation": false
+            }
+          ]
+        },
+        "sens_contextuels": [
+          {
+            "jeton": {
+              "valeur": "qui",
+              "normalise": "qui",
+              "position": 0,
+              "debut": 0,
+              "fin": 3,
+              "ponctuation": false
+            },
+            "choisi": {
+              "lemme": "qui",
+              "categorie": "grammaire:interrogatifs",
+              "sens": "qui",
+              "score": 95,
+              "source": "data/fr/grammaire.json"
+            },
+            "alternatives": [],
+            "indices": []
+          },
+          {
+            "jeton": {
+              "valeur": "est",
+              "normalise": "est",
+              "position": 1,
+              "debut": 4,
+              "fin": 7,
+              "ponctuation": false
+            },
+            "choisi": {
+              "lemme": "est",
+              "categorie": "grammaire:verbes_etat",
+              "sens": "est",
+              "score": 95,
+              "source": "data/fr/grammaire.json"
+            },
+            "alternatives": [
+              {
+                "lemme": "est",
+                "categorie": "expression:lecons",
+                "sens": "est",
+                "score": 85,
+                "source": "data/fr/expressions.json"
+              },
+              {
+                "lemme": "est",
+                "categorie": "expression:retours_positifs",
+                "sens": "est",
+                "score": 85,
+                "source": "data/fr/expressions.json"
+              },
+              {
+                "lemme": "est",
+                "categorie": "expression:retours_negatifs",
+                "sens": "est",
+                "score": 85,
+                "source": "data/fr/expressions.json"
+              }
+            ],
+            "indices": []
+          },
+          {
+            "jeton": {
+              "valeur": "tu",
+              "normalise": "tu",
+              "position": 2,
+              "debut": 8,
+              "fin": 10,
+              "ponctuation": false
+            },
+            "choisi": {
+              "lemme": "tu",
+              "categorie": "grammaire:pronoms_sujets",
+              "sens": "tu",
+              "score": 95,
+              "source": "data/fr/grammaire.json"
+            },
+            "alternatives": [
+              {
+                "lemme": "tu",
+                "categorie": "expression:retours_positifs",
+                "sens": "tu",
+                "score": 85,
+                "source": "data/fr/expressions.json"
+              },
+              {
+                "lemme": "tu",
+                "categorie": "expression:retours_negatifs",
+                "sens": "tu",
+                "score": 85,
+                "source": "data/fr/expressions.json"
+              }
+            ],
+            "indices": []
+          }
+        ],
+        "verification": {
+          "valide": false,
+          "route": "clarification",
+          "score": 75,
+          "raisons": [
+            "écart insuffisant entre les deux hypothèses : 0"
+          ]
+        }
+      },
+      "creee_le": "2026-07-28T16:59:56.874119+00:00",
+      "reponse": null,
+      "resolue_le": null
+    },
+    {
+      "id": "question_5a688d4c679f4746a66fd30474ff30bf",
+      "requete_originale": "vérifie et valide cette connaissance avec SECAU",
+      "champ_manquant": "confirmation",
+      "texte": "Ai-je bien compris que tu veux suivre la route « competence » ?",
+      "statut": "answered",
+      "score_initial": 74,
+      "route_proposee": "confirmer",
+      "analyse": {
+        "texte_original": "vérifie et valide cette connaissance avec SECAU",
+        "texte_normalise": "vérifie et valide cette connaissance avec secau",
+        "type_requete": {
+          "valeur": "ordre",
+          "score": 85
+        },
+        "demarche": {
+          "valeur": "execution",
+          "score": 76
+        },
+        "action": {
+          "valeur": "verifier",
+          "score": 76
+        },
+        "cible": {
+          "valeur": "valide cette connaissance secau",
+          "score": 55
+        },
+        "indices": [
+          "verbe d'action directeur",
+          "forme directive",
+          "action contextualisée : verifier",
+          "cible syntaxique non vérifiée : valide cette connaissance secau",
+          "position directive : sens verbal privilégié"
+        ],
+        "jetons_inconnus": [
+          "valide",
+          "cette",
+          "connaissance",
+          "secau"
+        ],
+        "alternative_type": {
+          "valeur": "inconnu",
+          "score": 25
+        },
+        "decoupage": {
+          "texte_original": "vérifie et valide cette connaissance avec SECAU",
+          "texte_normalise": "vérifie et valide cette connaissance avec secau",
+          "jetons": [
+            {
+              "valeur": "vérifie",
+              "normalise": "verifie",
+              "position": 0,
+              "debut": 0,
+              "fin": 7,
+              "ponctuation": false
+            },
+            {
+              "valeur": "et",
+              "normalise": "et",
+              "position": 1,
+              "debut": 8,
+              "fin": 10,
+              "ponctuation": false
+            },
+            {
+              "valeur": "valide",
+              "normalise": "valide",
+              "position": 2,
+              "debut": 11,
+              "fin": 17,
+              "ponctuation": false
+            },
+            {
+              "valeur": "cette",
+              "normalise": "cette",
+              "position": 3,
+              "debut": 18,
+              "fin": 23,
+              "ponctuation": false
+            },
+            {
+              "valeur": "connaissance",
+              "normalise": "connaissance",
+              "position": 4,
+              "debut": 24,
+              "fin": 36,
+              "ponctuation": false
+            },
+            {
+              "valeur": "avec",
+              "normalise": "avec",
+              "position": 5,
+              "debut": 37,
+              "fin": 41,
+              "ponctuation": false
+            },
+            {
+              "valeur": "SECAU",
+              "normalise": "secau",
+              "position": 6,
+              "debut": 42,
+              "fin": 47,
+              "ponctuation": false
+            }
+          ]
+        },
+        "sens_contextuels": [
+          {
+            "jeton": {
+              "valeur": "vérifie",
+              "normalise": "verifie",
+              "position": 0,
+              "debut": 0,
+              "fin": 7,
+              "ponctuation": false
+            },
+            "choisi": {
+              "lemme": "verifier",
+              "categorie": "verbe_action",
+              "sens": "contrôler l'état ou la validité d'un élément",
+              "score": 90,
+              "source": "data/fr/verbes.json"
+            },
+            "alternatives": [
+              {
+                "lemme": "verifier",
+                "categorie": "verbe_action",
+                "sens": "contrôler l'état ou la validité d'un élément",
+                "score": 60,
+                "source": "data/fr/verbes.json"
+              }
+            ],
+            "indices": [
+              "position directive : sens verbal privilégié"
+            ]
+          },
+          {
+            "jeton": {
+              "valeur": "et",
+              "normalise": "et",
+              "position": 1,
+              "debut": 8,
+              "fin": 10,
+              "ponctuation": false
+            },
+            "choisi": {
+              "lemme": "et",
+              "categorie": "grammaire:conjonctions",
+              "sens": "et",
+              "score": 95,
+              "source": "data/fr/grammaire.json"
+            },
+            "alternatives": [],
+            "indices": []
+          },
+          {
+            "jeton": {
+              "valeur": "valide",
+              "normalise": "valide",
+              "position": 2,
+              "debut": 11,
+              "fin": 17,
+              "ponctuation": false
+            },
+            "choisi": {
+              "lemme": "valide",
+              "categorie": "inconnu",
+              "sens": "inconnu",
+              "score": 0,
+              "source": "aucune"
+            },
+            "alternatives": [],
+            "indices": []
+          },
+          {
+            "jeton": {
+              "valeur": "cette",
+              "normalise": "cette",
+              "position": 3,
+              "debut": 18,
+              "fin": 23,
+              "ponctuation": false
+            },
+            "choisi": {
+              "lemme": "cette",
+              "categorie": "inconnu",
+              "sens": "inconnu",
+              "score": 0,
+              "source": "aucune"
+            },
+            "alternatives": [],
+            "indices": []
+          },
+          {
+            "jeton": {
+              "valeur": "connaissance",
+              "normalise": "connaissance",
+              "position": 4,
+              "debut": 24,
+              "fin": 36,
+              "ponctuation": false
+            },
+            "choisi": {
+              "lemme": "connaissance",
+              "categorie": "inconnu",
+              "sens": "inconnu",
+              "score": 0,
+              "source": "aucune"
+            },
+            "alternatives": [],
+            "indices": []
+          },
+          {
+            "jeton": {
+              "valeur": "avec",
+              "normalise": "avec",
+              "position": 5,
+              "debut": 37,
+              "fin": 41,
+              "ponctuation": false
+            },
+            "choisi": {
+              "lemme": "avec",
+              "categorie": "grammaire:prepositions",
+              "sens": "avec",
+              "score": 95,
+              "source": "data/fr/grammaire.json"
+            },
+            "alternatives": [],
+            "indices": []
+          },
+          {
+            "jeton": {
+              "valeur": "SECAU",
+              "normalise": "secau",
+              "position": 6,
+              "debut": 42,
+              "fin": 47,
+              "ponctuation": false
+            },
+            "choisi": {
+              "lemme": "secau",
+              "categorie": "inconnu",
+              "sens": "inconnu",
+              "score": 0,
+              "source": "aucune"
+            },
+            "alternatives": [],
+            "indices": []
+          }
+        ],
+        "verification": {
+          "valide": true,
+          "route": "competence",
+          "score": 76,
+          "raisons": [
+            "ordre validé avec un écart de 60 points"
+          ]
+        }
+      },
+      "creee_le": "2026-07-28T17:19:03.298678+00:00",
+      "reponse": "pose moi des question",
+      "resolue_le": "2026-07-28T17:19:52.743973+00:00"
+    },
+    {
+      "id": "question_81e230d43cf34627ad1722ffb6771400",
+      "requete_originale": "cest quoi un atoms",
+      "champ_manquant": "sens",
+      "texte": "Je ne connais pas encore le sens de « cest » ici. Peux-tu me l'expliquer ?",
+      "statut": "answered",
+      "score_initial": 25,
+      "route_proposee": "etudier",
+      "analyse": {
+        "texte_original": "cest quoi un atoms",
+        "texte_normalise": "cest quoi un atoms",
+        "type_requete": {
+          "valeur": "inconnu",
+          "score": 25
+        },
+        "demarche": {
+          "valeur": "clarification",
+          "score": 75
+        },
+        "action": {
+          "valeur": null,
+          "score": 0
+        },
+        "cible": {
+          "valeur": null,
+          "score": 0
+        },
+        "indices": [],
+        "jetons_inconnus": [
+          "cest"
+        ],
+        "alternative_type": {
+          "valeur": null,
+          "score": 0
+        },
+        "decoupage": {
+          "texte_original": "cest quoi un atoms",
+          "texte_normalise": "cest quoi un atoms",
+          "jetons": [
+            {
+              "valeur": "cest",
+              "normalise": "cest",
+              "position": 0,
+              "debut": 0,
+              "fin": 4,
+              "ponctuation": false
+            },
+            {
+              "valeur": "quoi",
+              "normalise": "quoi",
+              "position": 1,
+              "debut": 5,
+              "fin": 9,
+              "ponctuation": false
+            },
+            {
+              "valeur": "un",
+              "normalise": "un",
+              "position": 2,
+              "debut": 10,
+              "fin": 12,
+              "ponctuation": false
+            },
+            {
+              "valeur": "atoms",
+              "normalise": "atoms",
+              "position": 3,
+              "debut": 13,
+              "fin": 18,
+              "ponctuation": false
+            }
+          ]
+        },
+        "sens_contextuels": [
+          {
+            "jeton": {
+              "valeur": "cest",
+              "normalise": "cest",
+              "position": 0,
+              "debut": 0,
+              "fin": 4,
+              "ponctuation": false
+            },
+            "choisi": {
+              "lemme": "cest",
+              "categorie": "inconnu",
+              "sens": "inconnu",
+              "score": 0,
+              "source": "aucune"
+            },
+            "alternatives": [],
+            "indices": []
+          },
+          {
+            "jeton": {
+              "valeur": "quoi",
+              "normalise": "quoi",
+              "position": 1,
+              "debut": 5,
+              "fin": 9,
+              "ponctuation": false
+            },
+            "choisi": {
+              "lemme": "quoi",
+              "categorie": "bruits:liaisons_orales",
+              "sens": "quoi",
+              "score": 95,
+              "source": "data/fr/bruits.json"
+            },
+            "alternatives": [
+              {
+                "lemme": "quoi",
+                "categorie": "grammaire:interrogatifs",
+                "sens": "quoi",
+                "score": 95,
+                "source": "data/fr/grammaire.json"
+              },
+              {
+                "lemme": "quoi",
+                "categorie": "expression:lecons",
+                "sens": "quoi",
+                "score": 85,
+                "source": "data/fr/expressions.json"
+              }
+            ],
+            "indices": []
+          },
+          {
+            "jeton": {
+              "valeur": "un",
+              "normalise": "un",
+              "position": 2,
+              "debut": 10,
+              "fin": 12,
+              "ponctuation": false
+            },
+            "choisi": {
+              "lemme": "un",
+              "categorie": "articles:indefinis",
+              "sens": "un",
+              "score": 95,
+              "source": "data/fr/articles.json"
+            },
+            "alternatives": [],
+            "indices": []
+          },
+          {
+            "jeton": {
+              "valeur": "atoms",
+              "normalise": "atoms",
+              "position": 3,
+              "debut": 13,
+              "fin": 18,
+              "ponctuation": false
+            },
+            "choisi": {
+              "lemme": "atome",
+              "categorie": "entite:sciences",
+              "sens": "atome",
+              "score": 55,
+              "source": "correction_candidate:atome"
+            },
+            "alternatives": [],
+            "indices": []
+          }
+        ],
+        "verification": {
+          "valide": false,
+          "route": "clarification",
+          "score": 25,
+          "raisons": [
+            "type de requête insuffisamment reconnu"
+          ]
+        }
+      },
+      "creee_le": "2026-07-28T17:22:18.509355+00:00",
+      "reponse": "c'est quoi python?",
+      "resolue_le": "2026-07-28T17:23:44.043431+00:00"
+    },
+    {
+      "id": "question_9d82409864564adb97e43f3b8eaa6412",
+      "requete_originale": "install lin",
+      "champ_manquant": "confirmation",
+      "texte": "Ai-je bien compris que tu veux suivre la route « competence » ?",
+      "statut": "answered",
+      "score_initial": 74,
+      "route_proposee": "confirmer",
+      "analyse": {
+        "texte_original": "install lin",
+        "texte_normalise": "install lin",
+        "type_requete": {
+          "valeur": "ordre",
+          "score": 85
+        },
+        "demarche": {
+          "valeur": "execution",
+          "score": 76
+        },
+        "action": {
+          "valeur": "installer",
+          "score": 76
+        },
+        "cible": {
+          "valeur": "lin",
+          "score": 55
+        },
+        "indices": [
+          "verbe d'action directeur",
+          "forme directive",
+          "action contextualisée : installer",
+          "cible syntaxique non vérifiée : lin",
+          "position directive : sens verbal privilégié"
+        ],
+        "jetons_inconnus": [
+          "lin"
+        ],
+        "alternative_type": {
+          "valeur": "inconnu",
+          "score": 25
+        },
+        "decoupage": {
+          "texte_original": "install lin",
+          "texte_normalise": "install lin",
+          "jetons": [
+            {
+              "valeur": "install",
+              "normalise": "install",
+              "position": 0,
+              "debut": 0,
+              "fin": 7,
+              "ponctuation": false
+            },
+            {
+              "valeur": "lin",
+              "normalise": "lin",
+              "position": 1,
+              "debut": 8,
+              "fin": 11,
+              "ponctuation": false
+            }
+          ]
+        },
+        "sens_contextuels": [
+          {
+            "jeton": {
+              "valeur": "install",
+              "normalise": "install",
+              "position": 0,
+              "debut": 0,
+              "fin": 7,
+              "ponctuation": false
+            },
+            "choisi": {
+              "lemme": "installer",
+              "categorie": "verbe_action",
+              "sens": "ajouter un logiciel au système",
+              "score": 90,
+              "source": "data/fr/verbes.json"
+            },
+            "alternatives": [
+              {
+                "lemme": "installer",
+                "categorie": "verbe_action",
+                "sens": "ajouter un logiciel au système",
+                "score": 60,
+                "source": "data/fr/verbes.json"
+              }
+            ],
+            "indices": [
+              "position directive : sens verbal privilégié"
+            ]
+          },
+          {
+            "jeton": {
+              "valeur": "lin",
+              "normalise": "lin",
+              "position": 1,
+              "debut": 8,
+              "fin": 11,
+              "ponctuation": false
+            },
+            "choisi": {
+              "lemme": "lin",
+              "categorie": "inconnu",
+              "sens": "inconnu",
+              "score": 0,
+              "source": "aucune"
+            },
+            "alternatives": [],
+            "indices": []
+          }
+        ],
+        "verification": {
+          "valide": true,
+          "route": "competence",
+          "score": 76,
+          "raisons": [
+            "ordre validé avec un écart de 60 points"
+          ]
+        }
+      },
+      "creee_le": "2026-07-28T17:26:41.848216+00:00",
+      "reponse": "oui",
+      "resolue_le": "2026-07-28T17:26:58.309422+00:00"
+    },
+    {
+      "id": "question_6f104d2ea4be472fa769e633d75351aa",
+      "requete_originale": "git init",
+      "champ_manquant": "sens",
+      "texte": "Je ne connais pas encore le sens de « init » ici. Peux-tu me l'expliquer ?",
+      "statut": "waiting_answer",
+      "score_initial": 25,
+      "route_proposee": "etudier",
+      "analyse": {
+        "texte_original": "git init",
+        "texte_normalise": "git init",
+        "type_requete": {
+          "valeur": "inconnu",
+          "score": 25
+        },
+        "demarche": {
+          "valeur": "clarification",
+          "score": 75
+        },
+        "action": {
+          "valeur": null,
+          "score": 0
+        },
+        "cible": {
+          "valeur": null,
+          "score": 0
+        },
+        "indices": [],
+        "jetons_inconnus": [
+          "init"
+        ],
+        "alternative_type": {
+          "valeur": null,
+          "score": 0
+        },
+        "decoupage": {
+          "texte_original": "git init",
+          "texte_normalise": "git init",
+          "jetons": [
+            {
+              "valeur": "git",
+              "normalise": "git",
+              "position": 0,
+              "debut": 0,
+              "fin": 3,
+              "ponctuation": false
+            },
+            {
+              "valeur": "init",
+              "normalise": "init",
+              "position": 1,
+              "debut": 4,
+              "fin": 8,
+              "ponctuation": false
+            }
+          ]
+        },
+        "sens_contextuels": [
+          {
+            "jeton": {
+              "valeur": "git",
+              "normalise": "git",
+              "position": 0,
+              "debut": 0,
+              "fin": 3,
+              "ponctuation": false
+            },
+            "choisi": {
+              "lemme": "git",
+              "categorie": "entite:logiciels",
+              "sens": "git",
+              "score": 100,
+              "source": "data/fr/entites.json"
+            },
+            "alternatives": [],
+            "indices": []
+          },
+          {
+            "jeton": {
+              "valeur": "init",
+              "normalise": "init",
+              "position": 1,
+              "debut": 4,
+              "fin": 8,
+              "ponctuation": false
+            },
+            "choisi": {
+              "lemme": "init",
+              "categorie": "inconnu",
+              "sens": "inconnu",
+              "score": 0,
+              "source": "aucune"
+            },
+            "alternatives": [],
+            "indices": []
+          }
+        ],
+        "verification": {
+          "valide": false,
+          "route": "clarification",
+          "score": 25,
+          "raisons": [
+            "type de requête insuffisamment reconnu"
+          ]
+        }
+      },
+      "creee_le": "2026-07-28T17:27:52.761366+00:00",
+      "reponse": null,
+      "resolue_le": null
+    }
+  ]
+}

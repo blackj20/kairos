@@ -1,0 +1,21 @@
+{
+  "id": "creator_001",
+  "name": "Jps",
+  "roles": [
+    "créateur",
+    "enseignant",
+    "superviseur"
+  ],
+  "relationship": "créateur_de_kairos",
+  "permissions": {
+    "teach": true,
+    "correct": true,
+    "approve_core_changes": true
+  },
+  "trust": {
+    "identity": 100,
+    "instructions": 95,
+    "knowledge_provided_initial": 60
+  },
+  "rule": "une information enseignée devient une hypothèse avant validation"
+}

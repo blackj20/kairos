@@ -1,0 +1,268 @@
+{
+  "description": "Corpus de validation de la fondation Comprendre. Les variantes servent de test de généralisation structurelle, pas de preuve de compréhension générale.",
+  "cases": [
+    {
+      "group": "core",
+      "text": "install python",
+      "expected": {"type": "ordre", "action": "installer", "cible": "python", "route": "competence"}
+    },
+    {
+      "group": "core",
+      "text": "salut cv?",
+      "expected": {"type": "question", "route": "repondre"}
+    },
+    {
+      "group": "core",
+      "text": "n'installe pas python",
+      "expected": {"type": "interdiction", "action": "installer", "cible": "python", "route": "controle"}
+    },
+    {
+      "group": "core",
+      "text": "c'est quoi un atome",
+      "expected": {"type": "lecon", "route": "repondre"}
+    },
+    {
+      "group": "core",
+      "text": "tu t'es trompé",
+      "expected": {"type": "retour_utilisateur", "route": "repondre"}
+    },
+    {
+      "group": "core",
+      "text": "bonjour",
+      "expected": {"type": "demarrage_conversation", "route": "repondre"}
+    },
+    {
+      "group": "core",
+      "text": "je marche vers la maison",
+      "expected": {"type": "affirmation", "action": "marcher", "cible": "maison", "route": "repondre"}
+    },
+    {
+      "group": "core",
+      "text": "la marche de cet escalier",
+      "expected": {"type": "inconnu", "route": "clarification"}
+    },
+
+    {
+      "group": "variant",
+      "text": "installe docker",
+      "expected": {"type": "ordre", "action": "installer", "cible": "docker", "route": "competence"}
+    },
+    {
+      "group": "variant",
+      "text": "ouvre le terminal",
+      "expected": {"type": "ordre", "action": "ouvrir", "cible": "terminal", "route": "competence"}
+    },
+    {
+      "group": "variant",
+      "text": "ferme vscode",
+      "expected": {"type": "ordre", "action": "fermer", "cible": "vscode", "route": "competence"}
+    },
+    {
+      "group": "variant",
+      "text": "lance git",
+      "expected": {"type": "ordre", "action": "lancer", "cible": "git", "route": "competence"}
+    },
+    {
+      "group": "variant",
+      "text": "supprime le fichier",
+      "expected": {"type": "ordre", "action": "supprimer", "cible": "fichier", "route": "competence"}
+    },
+    {
+      "group": "variant",
+      "text": "stp ouvre le dossier",
+      "expected": {"type": "ordre", "action": "ouvrir", "cible": "dossier", "route": "competence"}
+    },
+    {
+      "group": "variant",
+      "text": "marche vers la maison",
+      "expected": {"type": "ordre", "action": "marcher", "cible": "maison", "route": "competence"}
+    },
+
+    {
+      "group": "variant",
+      "text": "ne supprime pas le dossier",
+      "expected": {"type": "interdiction", "action": "supprimer", "cible": "dossier", "route": "controle"}
+    },
+    {
+      "group": "variant",
+      "text": "n'ouvre jamais le terminal",
+      "expected": {"type": "interdiction", "action": "ouvrir", "cible": "terminal", "route": "controle"}
+    },
+    {
+      "group": "variant",
+      "text": "interdit d'installer docker",
+      "expected": {"type": "interdiction", "action": "installer", "cible": "docker", "route": "controle"}
+    },
+    {
+      "group": "variant",
+      "text": "défense de fermer vscode",
+      "expected": {"type": "interdiction", "action": "fermer", "cible": "vscode", "route": "controle"}
+    },
+    {
+      "group": "variant",
+      "text": "ne lance plus python",
+      "expected": {"type": "interdiction", "action": "lancer", "cible": "python", "route": "controle"}
+    },
+
+    {
+      "group": "variant",
+      "text": "explique-moi python",
+      "expected": {"type": "lecon", "route": "repondre"}
+    },
+    {
+      "group": "variant",
+      "text": "explique moi docker",
+      "expected": {"type": "lecon", "action": "expliquer", "cible": "docker", "route": "repondre"}
+    },
+    {
+      "group": "variant",
+      "text": "apprends-moi git",
+      "expected": {"type": "lecon", "route": "repondre"}
+    },
+    {
+      "group": "variant",
+      "text": "définis linux",
+      "expected": {"type": "lecon", "route": "repondre"}
+    },
+    {
+      "group": "variant",
+      "text": "enseigne moi python",
+      "expected": {"type": "lecon", "route": "repondre"}
+    },
+    {
+      "group": "variant",
+      "text": "c'est quoi docker",
+      "expected": {"type": "lecon", "route": "repondre"}
+    },
+
+    {
+      "group": "variant",
+      "text": "pourquoi python ?",
+      "expected": {"type": "question", "route": "repondre"}
+    },
+    {
+      "group": "variant",
+      "text": "comment installer docker ?",
+      "expected": {"type": "question", "action": "installer", "cible": "docker", "route": "repondre"}
+    },
+    {
+      "group": "variant",
+      "text": "est-ce que docker est installé ?",
+      "expected": {"type": "question", "route": "repondre"}
+    },
+    {
+      "group": "variant",
+      "text": "où est python ?",
+      "expected": {"type": "question", "route": "repondre"}
+    },
+    {
+      "group": "variant",
+      "text": "qui suis-je ?",
+      "expected": {"type": "question", "route": "repondre"}
+    },
+    {
+      "group": "variant",
+      "text": "peux-tu ouvrir le terminal ?",
+      "expected": {"type": "question", "action": "ouvrir", "cible": "terminal", "route": "repondre"}
+    },
+    {
+      "group": "variant",
+      "text": "cv ?",
+      "expected": {"type": "question", "route": "repondre"}
+    },
+
+    {
+      "group": "variant",
+      "text": "salut",
+      "expected": {"type": "demarrage_conversation", "route": "repondre"}
+    },
+    {
+      "group": "variant",
+      "text": "bonsoir",
+      "expected": {"type": "demarrage_conversation", "route": "repondre"}
+    },
+    {
+      "group": "variant",
+      "text": "coucou",
+      "expected": {"type": "demarrage_conversation", "route": "repondre"}
+    },
+    {
+      "group": "variant",
+      "text": "hello",
+      "expected": {"type": "demarrage_conversation", "route": "repondre"}
+    },
+    {
+      "group": "variant",
+      "text": "hey",
+      "expected": {"type": "demarrage_conversation", "route": "repondre"}
+    },
+
+    {
+      "group": "variant",
+      "text": "c'est faux",
+      "expected": {"type": "retour_utilisateur", "route": "repondre"}
+    },
+    {
+      "group": "variant",
+      "text": "c'est incorrect",
+      "expected": {"type": "retour_utilisateur", "route": "repondre"}
+    },
+    {
+      "group": "variant",
+      "text": "tu as raison",
+      "expected": {"type": "retour_utilisateur", "route": "repondre"}
+    },
+    {
+      "group": "variant",
+      "text": "ça marche",
+      "expected": {"type": "retour_utilisateur", "route": "repondre"}
+    },
+    {
+      "group": "variant",
+      "text": "cela marche",
+      "expected": {"type": "retour_utilisateur", "route": "repondre"}
+    },
+
+    {
+      "group": "variant",
+      "text": "oui",
+      "expected": {"type": "affirmation", "route": "repondre"}
+    },
+    {
+      "group": "variant",
+      "text": "python est un langage",
+      "expected": {"type": "affirmation", "route": "repondre"}
+    },
+    {
+      "group": "variant",
+      "text": "docker est un logiciel",
+      "expected": {"type": "affirmation", "route": "repondre"}
+    },
+    {
+      "group": "variant",
+      "text": "je marche vers le bureau",
+      "expected": {"type": "affirmation", "action": "marcher", "cible": "bureau", "route": "repondre"}
+    },
+
+    {
+      "group": "variant",
+      "text": "truc bizarre",
+      "expected": {"type": "inconnu", "route": "clarification"}
+    },
+    {
+      "group": "variant",
+      "text": "cv",
+      "expected": {"type": "inconnu", "route": "clarification"}
+    },
+    {
+      "group": "variant",
+      "text": "python docker",
+      "expected": {"type": "inconnu", "route": "clarification"}
+    },
+    {
+      "group": "variant",
+      "text": "",
+      "expected": {"type": "inconnu", "route": "clarification"}
+    }
+  ]
+}

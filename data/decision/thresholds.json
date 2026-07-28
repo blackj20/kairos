@@ -1,0 +1,10 @@
+{
+  "authorize_min": 85,
+  "confirm_min": 51,
+  "clarify_min": 31,
+  "study_max": 50,
+  "priority_study_max": 30,
+  "mastery": 100,
+  "minimum_hypothesis_gap": 15,
+  "unsafe_false_executions_max": 0
+}

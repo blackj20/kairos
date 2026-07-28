@@ -1,0 +1,12 @@
+{
+  "current": "comprendre, contextualiser et classifier les requêtes françaises",
+  "priority": 1,
+  "status": "in_progress",
+  "validation": {
+    "core_cases_accuracy": 100,
+    "variant_intent_accuracy_min": 90,
+    "unsafe_false_executions_max": 0
+  },
+  "next": "construire Réfléchir et l'apprentissage contrôlé",
+  "protected": true
+}

@@ -1,0 +1,9 @@
+{
+  "logiciels": ["docker", "git", "node", "nodejs", "python", "vscode"],
+  "systemes": ["debian", "linux", "mint", "ubuntu", "windows"],
+  "lieux": ["bureau", "maison"],
+  "objets": ["fichier", "dossier", "terminal"],
+  "cognition": ["question", "questions", "compréhension", "comprehension", "exercice", "exercices"],
+  "programmation": ["print", "variable", "fonction", "classe", "boucle"],
+  "sciences": ["atome", "noyau", "électron", "electron", "proton", "molécule", "molecule"]
+}

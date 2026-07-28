@@ -1,0 +1,510 @@
+{
+    "arreter": {
+        "formes": [
+            "arr\u00eate",
+            "arrete",
+            "arr\u00eater",
+            "arreter",
+            "stop"
+        ],
+        "sens": "interrompre une action ou un processus",
+        "demarche": "execution",
+        "score_base": 60
+    },
+    "apprendre": {
+        "formes": [
+            "apprends",
+            "apprendre",
+            "apprenez"
+        ],
+        "sens": "acqu\u00e9rir ou demander une connaissance",
+        "demarche": "apprentissage",
+        "score_base": 60
+    },
+    "expliquer": {
+        "formes": [
+            "explique",
+            "expliquer",
+            "expliquez"
+        ],
+        "sens": "rendre une information compr\u00e9hensible",
+        "demarche": "apprentissage",
+        "score_base": 60
+    },
+    "fermer": {
+        "formes": [
+            "close",
+            "ferme",
+            "fermer",
+            "fermez"
+        ],
+        "sens": "mettre fin \u00e0 l'ouverture d'un objet ou programme",
+        "demarche": "execution",
+        "score_base": 60
+    },
+    "installer": {
+        "formes": [
+            "install",
+            "installe",
+            "installer",
+            "installez"
+        ],
+        "sens": "ajouter un logiciel au syst\u00e8me",
+        "demarche": "execution",
+        "score_base": 60,
+        "categorie_semantique": "gestion_logiciel",
+        "cible_requise": true,
+        "risque": "systeme",
+        "exemples": [
+            "installe python",
+            "installer docker",
+            "ajoute vscode"
+        ]
+    },
+    "lancer": {
+        "formes": [
+            "d\u00e9marre",
+            "demarre",
+            "ex\u00e9cute",
+            "execute",
+            "lance",
+            "lancer",
+            "run"
+        ],
+        "sens": "d\u00e9marrer un programme ou une op\u00e9ration",
+        "demarche": "execution",
+        "score_base": 60
+    },
+    "marcher": {
+        "formes": [
+            "marche",
+            "marcher",
+            "marchez"
+        ],
+        "sens": "se d\u00e9placer \u00e0 pied",
+        "demarche": "execution",
+        "score_base": 60
+    },
+    "ouvrir": {
+        "formes": [
+            "open",
+            "ouvre",
+            "ouvrir",
+            "ouvrez"
+        ],
+        "sens": "rendre accessible un objet ou programme",
+        "demarche": "execution",
+        "score_base": 60
+    },
+    "supprimer": {
+        "formes": [
+            "delete",
+            "efface",
+            "effacer",
+            "supprime",
+            "supprimer",
+            "supprimez"
+        ],
+        "sens": "retirer un \u00e9l\u00e9ment",
+        "demarche": "execution",
+        "score_base": 60
+    },
+    "afficher": {
+        "formes": [
+            "affiche",
+            "afficher",
+            "affichez",
+            "montre",
+            "montrer",
+            "montrez"
+        ],
+        "sens": "rendre une information visible",
+        "demarche": "execution",
+        "score_base": 60
+    },
+    "chercher": {
+        "formes": [
+            "cherche",
+            "chercher",
+            "cherchez",
+            "recherche",
+            "rechercher",
+            "trouve",
+            "trouver"
+        ],
+        "sens": "localiser une information ou un \u00e9l\u00e9ment",
+        "demarche": "execution",
+        "score_base": 60
+    },
+    "copier": {
+        "formes": [
+            "copie",
+            "copier",
+            "copiez",
+            "duplique",
+            "dupliquer"
+        ],
+        "sens": "cr\u00e9er une copie d'un \u00e9l\u00e9ment",
+        "demarche": "execution",
+        "score_base": 60
+    },
+    "creer": {
+        "formes": [
+            "cr\u00e9e",
+            "cree",
+            "cr\u00e9er",
+            "creer",
+            "cr\u00e9ez",
+            "creez",
+            "fabrique",
+            "fabriquer"
+        ],
+        "sens": "produire un nouvel \u00e9l\u00e9ment",
+        "demarche": "execution",
+        "score_base": 60
+    },
+    "deplacer": {
+        "formes": [
+            "d\u00e9place",
+            "deplace",
+            "d\u00e9placer",
+            "deplacer",
+            "d\u00e9placez",
+            "deplacez",
+            "bouge",
+            "bouger"
+        ],
+        "sens": "changer l'emplacement d'un \u00e9l\u00e9ment",
+        "demarche": "execution",
+        "score_base": 60
+    },
+    "ecrire": {
+        "formes": [
+            "\u00e9cris",
+            "ecris",
+            "\u00e9crire",
+            "ecrire",
+            "\u00e9crivez",
+            "ecrivez",
+            "r\u00e9dige",
+            "redige",
+            "r\u00e9diger",
+            "rediger"
+        ],
+        "sens": "produire ou modifier un texte",
+        "demarche": "execution",
+        "score_base": 60
+    },
+    "envoyer": {
+        "formes": [
+            "envoie",
+            "envoyer",
+            "envoyez",
+            "partage",
+            "partager",
+            "transmets",
+            "transmettre"
+        ],
+        "sens": "transmettre un \u00e9l\u00e9ment \u00e0 un destinataire",
+        "demarche": "execution",
+        "score_base": 60
+    },
+    "fonctionner": {
+        "formes": [
+            "fonctionne",
+            "fonctionner",
+            "fonctionnent"
+        ],
+        "sens": "\u00eatre en \u00e9tat de marche",
+        "demarche": "observation",
+        "score_base": 60
+    },
+    "lire": {
+        "formes": [
+            "lis",
+            "lire",
+            "lisez",
+            "consulte",
+            "consulter"
+        ],
+        "sens": "prendre connaissance du contenu d'un \u00e9l\u00e9ment",
+        "demarche": "execution",
+        "score_base": 60
+    },
+    "renommer": {
+        "formes": [
+            "renomme",
+            "renommer",
+            "renommez"
+        ],
+        "sens": "changer le nom d'un \u00e9l\u00e9ment",
+        "demarche": "execution",
+        "score_base": 60
+    },
+    "sauvegarder": {
+        "formes": [
+            "sauvegarde",
+            "sauvegarder",
+            "sauvegardez",
+            "enregistre",
+            "enregistrer"
+        ],
+        "sens": "conserver durablement une modification",
+        "demarche": "execution",
+        "score_base": 60
+    },
+    "telecharger": {
+        "formes": [
+            "t\u00e9l\u00e9charge",
+            "telecharge",
+            "t\u00e9l\u00e9charger",
+            "telecharger",
+            "t\u00e9l\u00e9chargez",
+            "telechargez"
+        ],
+        "sens": "r\u00e9cup\u00e9rer un \u00e9l\u00e9ment depuis une source distante",
+        "demarche": "execution",
+        "score_base": 60
+    },
+    "verifier": {
+        "formes": [
+            "v\u00e9rifie",
+            "verifie",
+            "v\u00e9rifier",
+            "verifier",
+            "v\u00e9rifiez",
+            "verifiez",
+            "contr\u00f4le",
+            "controle"
+        ],
+        "sens": "contr\u00f4ler l'\u00e9tat ou la validit\u00e9 d'un \u00e9l\u00e9ment",
+        "demarche": "execution",
+        "score_base": 60
+    },
+    "mettre": {
+        "formes": [
+            "mets",
+            "met",
+            "mettre",
+            "mettez"
+        ],
+        "sens": "placer, ajouter ou changer l'\u00e9tat d'un \u00e9l\u00e9ment selon le contexte",
+        "demarche": "execution",
+        "score_base": 60,
+        "categorie_semantique": "action_generique",
+        "cible_requise": true,
+        "risque": "variable",
+        "exemples": [
+            "mets python",
+            "mets le fichier dans le dossier"
+        ]
+    },
+    "ajouter": {
+        "formes": [
+            "ajoute",
+            "ajouter",
+            "ajoutez",
+            "rajoute",
+            "rajouter"
+        ],
+        "sens": "introduire un \u00e9l\u00e9ment qui n'\u00e9tait pas pr\u00e9sent",
+        "demarche": "execution",
+        "score_base": 60,
+        "categorie_semantique": "creation_ou_installation",
+        "cible_requise": true,
+        "risque": "variable",
+        "exemples": [
+            "ajoute python",
+            "ajoute un fichier"
+        ]
+    },
+    "retirer": {
+        "formes": [
+            "retire",
+            "retirer",
+            "retirez",
+            "enl\u00e8ve",
+            "enleve",
+            "enlever"
+        ],
+        "sens": "\u00f4ter un \u00e9l\u00e9ment d'un emplacement ou d'un ensemble",
+        "demarche": "execution",
+        "score_base": 60,
+        "categorie_semantique": "suppression_ou_deplacement",
+        "cible_requise": true,
+        "risque": "sensible",
+        "exemples": [
+            "retire le fichier",
+            "enl\u00e8ve docker"
+        ]
+    },
+    "activer": {
+        "formes": [
+            "active",
+            "activer",
+            "activez"
+        ],
+        "sens": "rendre une fonction ou un service op\u00e9rationnel",
+        "demarche": "execution",
+        "score_base": 60,
+        "categorie_semantique": "changement_etat",
+        "cible_requise": true,
+        "risque": "sensible"
+    },
+    "desactiver": {
+        "formes": [
+            "d\u00e9sactive",
+            "desactive",
+            "d\u00e9sactiver",
+            "desactiver",
+            "d\u00e9sactivez",
+            "desactivez"
+        ],
+        "sens": "rendre une fonction ou un service inactif",
+        "demarche": "execution",
+        "score_base": 60,
+        "categorie_semantique": "changement_etat",
+        "cible_requise": true,
+        "risque": "sensible"
+    },
+    "connecter": {
+        "formes": [
+            "connecte",
+            "connecter",
+            "connectez",
+            "branche",
+            "brancher"
+        ],
+        "sens": "\u00e9tablir une liaison entre des \u00e9l\u00e9ments",
+        "demarche": "execution",
+        "score_base": 60,
+        "categorie_semantique": "liaison",
+        "cible_requise": true,
+        "risque": "variable"
+    },
+    "deconnecter": {
+        "formes": [
+            "d\u00e9connecte",
+            "deconnecte",
+            "d\u00e9connecter",
+            "deconnecter",
+            "d\u00e9branche",
+            "debranche"
+        ],
+        "sens": "interrompre une liaison entre des \u00e9l\u00e9ments",
+        "demarche": "execution",
+        "score_base": 60,
+        "categorie_semantique": "liaison",
+        "cible_requise": true,
+        "risque": "variable"
+    },
+    "reparer": {
+        "formes": [
+            "r\u00e9pare",
+            "repare",
+            "r\u00e9parer",
+            "reparer",
+            "r\u00e9parez",
+            "reparez",
+            "corrige",
+            "corriger"
+        ],
+        "sens": "remettre un \u00e9l\u00e9ment en \u00e9tat de fonctionner correctement",
+        "demarche": "execution",
+        "score_base": 60,
+        "categorie_semantique": "maintenance",
+        "cible_requise": true,
+        "risque": "sensible"
+    },
+    "nettoyer": {
+        "formes": [
+            "nettoie",
+            "nettoyer",
+            "nettoyez"
+        ],
+        "sens": "retirer les \u00e9l\u00e9ments inutiles ou ind\u00e9sirables",
+        "demarche": "execution",
+        "score_base": 60,
+        "categorie_semantique": "maintenance",
+        "cible_requise": true,
+        "risque": "sensible"
+    },
+    "trier": {
+        "formes": [
+            "trie",
+            "trier",
+            "triez",
+            "classe",
+            "classer"
+        ],
+        "sens": "ordonner des \u00e9l\u00e9ments selon un crit\u00e8re",
+        "demarche": "execution",
+        "score_base": 60,
+        "categorie_semantique": "organisation",
+        "cible_requise": true,
+        "risque": "reversible"
+    },
+    "compresser": {
+        "formes": [
+            "compresse",
+            "compresser",
+            "compressez",
+            "zippe",
+            "zipper"
+        ],
+        "sens": "r\u00e9duire ou regrouper des donn\u00e9es dans une archive",
+        "demarche": "execution",
+        "score_base": 60,
+        "categorie_semantique": "archive",
+        "cible_requise": true,
+        "risque": "reversible"
+    },
+    "extraire": {
+        "formes": [
+            "extrais",
+            "extraire",
+            "extrayez",
+            "d\u00e9compresse",
+            "decompresse",
+            "d\u00e9compresser",
+            "decompresser"
+        ],
+        "sens": "sortir des donn\u00e9es d'un ensemble ou d'une archive",
+        "demarche": "execution",
+        "score_base": 60,
+        "categorie_semantique": "archive",
+        "cible_requise": true,
+        "risque": "reversible"
+    },
+    "imprimer": {
+        "formes": [
+            "imprime",
+            "imprimer",
+            "imprimez"
+        ],
+        "sens": "produire une copie physique ou un document de sortie",
+        "demarche": "execution",
+        "score_base": 60,
+        "categorie_semantique": "sortie",
+        "cible_requise": true,
+      "risque": "reversible"
+    },
+    "poser": {
+      "formes": ["pose", "poser", "posez", "pose-moi", "posez-moi", "demande", "demander"],
+      "sens": "formuler une question destinée à obtenir une information",
+      "demarche": "apprentissage",
+      "score_base": 60,
+      "categorie_semantique": "cognition",
+      "cible_requise": true,
+      "risque": "lecture"
+    },
+    "donner": {
+      "formes": ["donne", "donner", "donnez", "donne-moi", "donnez-moi"],
+      "sens": "fournir une information, un exemple ou un élément demandé",
+      "demarche": "apprentissage",
+      "score_base": 60,
+      "categorie_semantique": "cognition",
+      "cible_requise": true,
+      "risque": "lecture"
+    }
+}

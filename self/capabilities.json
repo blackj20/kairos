@@ -1,0 +1,40 @@
+{
+  "declared": [
+    "découper une requête",
+    "chercher plusieurs sens",
+    "filtrer certains sens ambigus par contexte",
+    "estimer une intention, une action et une cible",
+    "vérifier un rapport avant routage"
+  ],
+  "verified": [
+    {
+      "name": "pipeline Comprendre",
+      "evidence": "20 tests automatisés réussis"
+    },
+    {
+      "name": "classification du corpus central",
+      "evidence": "51 cas sur 51 entièrement corrects"
+    },
+    {
+      "name": "routage sécurisé",
+      "evidence": "0 fausse exécution sur 80 cas évalués"
+    },
+    {
+      "name": "résolution contextuelle initiale",
+      "evidence": "marche et cv différenciés selon leur contexte"
+    },
+    {
+      "name": "évaluation décisionnelle",
+      "evidence": "43 cas décisionnels sur 43 correctement routés"
+    },
+    {
+      "name": "questions ciblées",
+      "evidence": "100 % des questions de test ciblent le bon champ"
+    },
+    {
+      "name": "liaison question-réponse",
+      "evidence": "réponses reliées à une expérience sans promotion automatique"
+    }
+  ],
+  "rule": "une capacité devient vérifiée uniquement après un test reproductible"
+}

@@ -1,0 +1,215 @@
+{
+    "__relations__": [
+        {
+            "id": "mettre_logiciel_installer",
+            "source": "mettre",
+            "relation": "action_equivalente",
+            "target": "installer",
+            "target_categories": [
+                "logiciels"
+            ],
+            "score": 88,
+            "preuve": "usage fran\u00e7ais contextuel : mettre un logiciel sur un syst\u00e8me",
+            "source_refs": [
+                "https://www.cnrtl.fr/synonymie/installer",
+                "https://www.dictionnaire-academie.fr/article/DNP0329"
+            ],
+            "exemples": [
+                "mets python",
+                "met docker"
+            ]
+        },
+        {
+            "id": "mettre_objet_dans_deplacer",
+            "source": "mettre",
+            "relation": "action_equivalente",
+            "target": "deplacer",
+            "target_categories": [
+                "objets"
+            ],
+            "context_words": [
+                "dans",
+                "vers"
+            ],
+            "score": 88,
+            "preuve": "mettre un objet dans un emplacement implique un changement d'emplacement",
+            "source_refs": [
+                "creator://architecture-kairos"
+            ],
+            "inference_contextuelle": true,
+            "exemples": [
+                "mets le fichier dans le dossier",
+                "mets le dossier vers le bureau"
+            ]
+        },
+        {
+            "id": "ajouter_logiciel_installer",
+            "source": "ajouter",
+            "relation": "action_equivalente",
+            "target": "installer",
+            "target_categories": [
+                "logiciels"
+            ],
+            "score": 90,
+            "preuve": "ajouter un logiciel au syst\u00e8me d\u00e9crit une installation",
+            "source_refs": [
+                "https://www.cnrtl.fr/etymologie/installer",
+                "https://www.dictionnaire-academie.fr/article/DNP0329"
+            ],
+            "inference_contextuelle": true,
+            "exemples": [
+                "ajoute python",
+                "rajoute vscode"
+            ]
+        },
+        {
+            "id": "retirer_logiciel_supprimer",
+            "source": "retirer",
+            "relation": "action_equivalente",
+            "target": "supprimer",
+            "target_categories": [
+                "logiciels"
+            ],
+            "score": 85,
+            "preuve": "retirer un logiciel du syst\u00e8me d\u00e9crit sa suppression",
+            "source_refs": [
+                "creator://architecture-kairos"
+            ],
+            "inference_contextuelle": true,
+            "exemples": [
+                "retire docker",
+                "enl\u00e8ve vscode"
+            ]
+        },
+        {
+            "id": "ouvrir_fermer",
+            "source": "ouvrir",
+            "relation": "contraire",
+            "target": "fermer",
+            "score": 100
+        },
+        {
+            "id": "creer_supprimer",
+            "source": "creer",
+            "relation": "contraire",
+            "target": "supprimer",
+            "score": 95
+        },
+        {
+            "id": "installer_supprimer",
+            "source": "installer",
+            "relation": "contraire_contextuel",
+            "target": "supprimer",
+            "target_categories": [
+                "logiciels"
+            ],
+            "score": 90
+        },
+        {
+            "id": "chercher_trouver",
+            "source": "chercher",
+            "relation": "objectif",
+            "target": "trouver",
+            "score": 90
+        },
+        {
+            "id": "ecrire_lire",
+            "source": "ecrire",
+            "relation": "complementaire",
+            "target": "lire",
+            "score": 85
+        },
+        {
+            "id": "telecharger_sauvegarder",
+            "source": "telecharger",
+            "relation": "peut_preceder",
+            "target": "sauvegarder",
+            "score": 75
+        },
+        {
+            "id": "copier_deplacer",
+            "source": "copier",
+            "relation": "proche_mais_distinct",
+            "target": "deplacer",
+            "score": 80,
+            "difference": "copier conserve la source, d\u00e9placer change son emplacement"
+        },
+        {
+            "id": "expliquer_apprendre",
+            "source": "expliquer",
+            "relation": "facilite",
+            "target": "apprendre",
+            "score": 85
+        },
+        {
+            "id": "verifier_executer",
+            "source": "verifier",
+            "relation": "doit_suivre",
+            "target": "execution",
+            "score": 90
+        },
+        {
+            "id": "activer_desactiver",
+            "source": "activer",
+            "relation": "contraire",
+            "target": "desactiver",
+            "score": 100
+        },
+        {
+            "id": "connecter_deconnecter",
+            "source": "connecter",
+            "relation": "contraire",
+            "target": "deconnecter",
+            "score": 100
+        },
+        {
+            "id": "compresser_extraire",
+            "source": "compresser",
+            "relation": "operation_inverse",
+            "target": "extraire",
+            "score": 95
+        },
+        {
+            "id": "reparer_verifier",
+            "source": "reparer",
+            "relation": "doit_etre_suivi_par",
+            "target": "verifier",
+            "score": 90
+        },
+        {
+            "id": "trier_chercher",
+            "source": "trier",
+            "relation": "facilite",
+            "target": "chercher",
+            "score": 75
+        }
+    ],
+    "cv": [
+        {
+            "lemme": "curriculum_vitae",
+            "categorie": "nom_document",
+            "sens": "document pr\u00e9sentant une exp\u00e9rience professionnelle",
+            "score_base": 55
+        },
+        {
+            "lemme": "ca_va",
+            "categorie": "question_etat",
+            "sens": "demande informelle sur l'\u00e9tat d'une personne",
+            "score_base": 50
+        }
+    ],
+    "marche": [
+        {
+            "lemme": "marche",
+            "categorie": "nom",
+            "sens": "degr\u00e9 d'un escalier ou action de marcher",
+            "score_base": 50
+        },
+        {
+            "lemme": "marcher",
+            "categorie": "verbe_action",
+            "sens": "se d\u00e9placer \u00e0 pied",
+            "score_base": 60
+        }
+    ]
+}

@@ -1,0 +1,42 @@
+{
+  "priorites": [
+    "interdiction",
+    "retour_utilisateur",
+    "lecon",
+    "question",
+    "ordre",
+    "affirmation",
+    "demarrage_conversation",
+    "inconnu"
+  ],
+  "demarches": {
+    "interdiction": "controle",
+    "retour_utilisateur": "correction",
+    "lecon": "apprentissage",
+    "question": "conversation",
+    "ordre": "execution",
+    "affirmation": "conversation",
+    "demarrage_conversation": "conversation",
+    "inconnu": "clarification"
+  },
+  "routes": {
+    "interdiction": "controle",
+    "retour_utilisateur": "repondre",
+    "lecon": "repondre",
+    "question": "repondre",
+    "ordre": "competence",
+    "affirmation": "repondre",
+    "demarrage_conversation": "repondre",
+    "inconnu": "clarification"
+  },
+  "seuils": {
+    "type": 50,
+    "action_execution": 70,
+    "ecart_hypotheses": 15
+  },
+  "validation_fondation": {
+    "cas_fondamentaux": 100,
+    "intentions_variantes": 90,
+    "fausses_executions_max": 0
+  }
+}

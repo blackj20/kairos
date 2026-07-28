@@ -1,0 +1,89 @@
+{
+  "version": 1,
+  "items": [
+    {
+      "id": "learning_e272de6a46a342ad860a8e0ec4a97429",
+      "requete": "cela fonctionne",
+      "score": 25,
+      "champ": "sens",
+      "focus": "fonctionne",
+      "question_id": "question_f480e718f68e4021b39cf72b5e7d7c32",
+      "priorite": "high",
+      "statut": "to_study",
+      "occurrences": 1,
+      "cree_le": "2026-07-28T15:22:43.701287+00:00"
+    },
+    {
+      "id": "learning_1e83d9928ee3469fb4808c4125ea1e34",
+      "requete": "pose tes question",
+      "score": 25,
+      "champ": "sens",
+      "focus": "question",
+      "question_id": "question_f33f89a8b8534766b16c49022f73b5ed",
+      "priorite": "high",
+      "statut": "to_study",
+      "occurrences": 2,
+      "cree_le": "2026-07-28T15:27:04.263049+00:00"
+    },
+    {
+      "id": "learning_f5f9b8268bcc47cc8c2d044015380425",
+      "requete": "",
+      "score": 0,
+      "champ": "type_requete",
+      "focus": null,
+      "question_id": "question_d0662a31ecf3466d806f3868a629028c",
+      "priorite": "high",
+      "statut": "to_study",
+      "occurrences": 2,
+      "cree_le": "2026-07-28T15:31:28.650642+00:00"
+    },
+    {
+      "id": "learning_b512cdc37638455fa899481cf4654887",
+      "requete": "clear",
+      "score": 25,
+      "champ": "sens",
+      "focus": "clear",
+      "question_id": "question_b19f6408685d41f5842a9f6139ee87c4",
+      "priorite": "high",
+      "statut": "to_study",
+      "occurrences": 1,
+      "cree_le": "2026-07-28T15:34:02.550941+00:00"
+    },
+    {
+      "id": "learning_d4acd05fad7e40b8b69c2b01f1cb9812",
+      "requete": "bonjjour",
+      "score": 25,
+      "champ": "sens",
+      "focus": "bonjjour",
+      "question_id": "question_8bc20b25e772456c825f88b95f311ecb",
+      "priorite": "high",
+      "statut": "to_study",
+      "occurrences": 1,
+      "cree_le": "2026-07-28T16:56:55.306868+00:00"
+    },
+    {
+      "id": "learning_2ba2bcd361ec42cab95d09e7b6035385",
+      "requete": "cest quoi un atoms",
+      "score": 25,
+      "champ": "sens",
+      "focus": "cest",
+      "question_id": "question_81e230d43cf34627ad1722ffb6771400",
+      "priorite": "high",
+      "statut": "to_study",
+      "occurrences": 1,
+      "cree_le": "2026-07-28T17:22:18.509355+00:00"
+    },
+    {
+      "id": "learning_91d37635b9fc4a4a808677d01c8804b1",
+      "requete": "git init",
+      "score": 25,
+      "champ": "sens",
+      "focus": "init",
+      "question_id": "question_6f104d2ea4be472fa769e633d75351aa",
+      "priorite": "high",
+      "statut": "to_study",
+      "occurrences": 1,
+      "cree_le": "2026-07-28T17:27:52.761366+00:00"
+    }
+  ]
+}

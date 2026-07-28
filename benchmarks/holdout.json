@@ -1,0 +1,41 @@
+{
+  "description": "Variantes rédigées après l'implémentation initiale. Elles ne servent pas au seuil central et exposent honnêtement les limites restantes.",
+  "cases": [
+    {"text": "s'il te plaît ouvre le terminal", "expected_type": "ordre", "expected_route": "competence"},
+    {"text": "merci de fermer vscode", "expected_type": "ordre", "expected_route": "competence"},
+    {"text": "euh installe git", "expected_type": "ordre", "expected_route": "competence"},
+    {"text": "arrête", "expected_type": "ordre", "expected_route": "competence"},
+    {"text": "stop", "expected_type": "ordre", "expected_route": "competence"},
+    {"text": "ouvre python et ferme vscode", "expected_type": "ordre", "expected_route": "clarification"},
+
+    {"text": "pourrais-tu installer docker ?", "expected_type": "question", "expected_route": "repondre"},
+    {"text": "bonjour, peux-tu ouvrir le dossier ?", "expected_type": "question", "expected_route": "repondre"},
+    {"text": "comment supprimer un fichier ?", "expected_type": "question", "expected_route": "repondre"},
+    {"text": "supprime ?", "expected_type": "question", "expected_route": "repondre"},
+    {"text": "salut comment vas-tu ?", "expected_type": "question", "expected_route": "repondre"},
+    {"text": "comment ça va ?", "expected_type": "question", "expected_route": "repondre"},
+
+    {"text": "ne surtout jamais supprime le dossier", "expected_type": "interdiction", "expected_route": "controle"},
+    {"text": "interdit de lancer python", "expected_type": "interdiction", "expected_route": "controle"},
+    {"text": "ne ferme pas", "expected_type": "interdiction", "expected_route": "controle"},
+
+    {"text": "apprends moi ce qu'est linux", "expected_type": "lecon", "expected_route": "repondre"},
+    {"text": "explique la différence entre docker et git", "expected_type": "lecon", "expected_route": "repondre"},
+
+    {"text": "c'est incorrect", "expected_type": "retour_utilisateur", "expected_route": "repondre"},
+
+    {"text": "cela fonctionne", "expected_type": "affirmation", "expected_route": "repondre"},
+    {"text": "je suis Jps", "expected_type": "affirmation", "expected_route": "repondre"},
+    {"text": "le fichier est ouvert", "expected_type": "affirmation", "expected_route": "repondre"},
+    {"text": "cette marche est cassée", "expected_type": "affirmation", "expected_route": "repondre"},
+    {"text": "la marche est haute", "expected_type": "affirmation", "expected_route": "repondre"},
+    {"text": "oui exactement", "expected_type": "affirmation", "expected_route": "repondre"},
+
+    {"text": "bonsoir", "expected_type": "demarrage_conversation", "expected_route": "repondre"},
+
+    {"text": "le cv pour cette candidature", "expected_type": "inconnu", "expected_route": "clarification"},
+    {"text": "marche de l'escalier", "expected_type": "inconnu", "expected_route": "clarification"},
+    {"text": "python et docker", "expected_type": "inconnu", "expected_route": "clarification"},
+    {"text": "pas maintenant", "expected_type": "inconnu", "expected_route": "clarification"}
+  ]
+}
