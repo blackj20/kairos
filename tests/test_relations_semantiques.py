@@ -8,11 +8,17 @@ from pathlib import Path
 
 from kairos import Comprendre, Kernel
 from kairos.connaissances import Connaissances
+from kairos.learning import CreatorLearningPipeline
+from kairos.memory import MemoryRepository
 from kairos.relations_verbes import MemoireRelationsVerbes
 
 
 class TestRelationsSemantiques(unittest.TestCase):
     """Prouve les relations statiques, contextuelles et apprises."""
+
+    @staticmethod
+    def _resolver_deploie(texte: str) -> str | None:
+        return "installer" if texte.casefold().startswith("deploie ") else None
 
     def test_put_and_add_software_mean_install(self) -> None:
         """Les formulations quotidiennes convergent vers l'action canonique."""
@@ -73,8 +79,8 @@ class TestRelationsSemantiques(unittest.TestCase):
                 self.assertEqual(expected, decision.analyse.action.valeur)
                 self.assertEqual("competence", decision.route)
 
-    def test_creator_answer_teaches_unknown_verb(self) -> None:
-        """Question → enseignement → réutilisation prouve l'auto-amélioration."""
+    def test_creator_answer_becomes_candidate_then_confirmed(self) -> None:
+        """Question → candidate → tests → SECAU → réutilisation."""
 
         kernel = Kernel()
         before = kernel.traiter("deploie python")
@@ -86,18 +92,37 @@ class TestRelationsSemantiques(unittest.TestCase):
             "installer",
             acteur="creator",
         )
-        learned = experience.resolution["learned_semantic_relation"]
-        self.assertEqual("deploie", learned["source"])
-        self.assertEqual("installer", learned["target"])
+        candidate = experience.resolution["candidate_semantic_relation"]
+        self.assertEqual("deploie", candidate["source"])
+        self.assertEqual("installer", candidate["target"])
+        self.assertEqual("candidate", candidate["status"])
+        self.assertIsNone(
+            kernel.comprendre.connaissances.relations_verbes.obtenir("deploie")
+        )
+        still_unknown = kernel.traiter("deploie python")
+        self.assertEqual("clarification", still_unknown.route)
+
+        repository = MemoryRepository()
+        result = CreatorLearningPipeline(
+            repository,
+            kernel.comprendre.connaissances.relations_verbes,
+        ).consolidate_relation(
+            experience,
+            examples=("deploie python", "deploie docker", "deploie vscode"),
+            counterexamples=("supprime python", "ouvre terminal"),
+            resolver=self._resolver_deploie,
+            regressions=(
+                lambda: Kernel().traiter("installe python").analyse.action.valeur
+                == "installer",
+            ),
+        )
+        self.assertEqual("promote", result.secau.verdict.value)
 
         after = kernel.traiter("deploie python")
         self.assertEqual("installer", after.analyse.action.valeur)
         self.assertEqual("competence", after.route)
         self.assertIsNone(after.question_id)
-        self.assertGreater(
-            after.evaluation["score_global"],
-            before.evaluation["score_global"],
-        )
+        repository.close()
 
     def test_ordinary_user_cannot_teach_kernel(self) -> None:
         """Une réponse utilisateur reste une expérience, pas une relation."""
@@ -110,27 +135,39 @@ class TestRelationsSemantiques(unittest.TestCase):
             acteur="user",
         )
         self.assertNotIn(
-            "learned_semantic_relation",
+            "candidate_semantic_relation",
             experience.resolution,
         )
         self.assertIsNone(
             kernel.comprendre.connaissances.relations_verbes.obtenir("deploie")
         )
 
-    def test_learned_relation_persists_across_sessions(self) -> None:
-        """Une mémoire fichier rend la croissance durable et vérifiable."""
+    def test_confirmed_relation_persists_across_sessions(self) -> None:
+        """Seule une relation consolidée devient durable entre deux sessions."""
 
         with tempfile.TemporaryDirectory() as tmp:
             path = Path(tmp) / "relations.json"
+            relations = MemoireRelationsVerbes(path)
             first = Kernel(
                 comprendre=Comprendre(
-                    Connaissances(
-                        relations_verbes=MemoireRelationsVerbes(path)
-                    )
+                    Connaissances(relations_verbes=relations)
                 )
             )
             question = first.traiter("deploie python")
-            first.repondre_a(question.question_id, "installer")
+            experience = first.repondre_a(question.question_id, "installer")
+
+            repository = MemoryRepository()
+            result = CreatorLearningPipeline(
+                repository,
+                relations,
+            ).consolidate_relation(
+                experience,
+                examples=("deploie python", "deploie docker", "deploie vscode"),
+                counterexamples=("supprime python", "ouvre terminal"),
+                resolver=self._resolver_deploie,
+            )
+            self.assertEqual("promote", result.secau.verdict.value)
+            repository.close()
 
             second = Kernel(
                 comprendre=Comprendre(
@@ -143,8 +180,8 @@ class TestRelationsSemantiques(unittest.TestCase):
             self.assertEqual("installer", decision.analyse.action.valeur)
             self.assertIsNone(decision.question_id)
 
-    def test_internet_teaching_requires_two_sources(self) -> None:
-        """Une page Internet isolée ne suffit pas à enrichir le cerveau."""
+    def test_internet_teaching_requires_two_distinct_https_domains(self) -> None:
+        """Une page ou un seul domaine Internet ne suffit jamais."""
 
         kernel = Kernel()
         with self.assertRaises(ValueError):
@@ -153,12 +190,30 @@ class TestRelationsSemantiques(unittest.TestCase):
                 "installer",
                 sources=("https://example.test/source-1",),
             )
+        with self.assertRaises(ValueError):
+            kernel.enseigner_relation_verbe(
+                "provisionne",
+                "installer",
+                sources=(
+                    "https://example.test/source-1",
+                    "https://example.test/source-2",
+                ),
+            )
+        with self.assertRaises(ValueError):
+            kernel.enseigner_relation_verbe(
+                "provisionne",
+                "installer",
+                sources=(
+                    "http://example-a.test/source-1",
+                    "https://example-b.test/source-2",
+                ),
+            )
         kernel.enseigner_relation_verbe(
             "provisionne",
             "installer",
             sources=(
-                "https://example.test/source-1",
-                "https://example.test/source-2",
+                "https://example-a.test/source-1",
+                "https://example-b.test/source-2",
             ),
         )
         decision = kernel.traiter("provisionne python")
