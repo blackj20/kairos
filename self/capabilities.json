@@ -4,7 +4,10 @@
     "chercher plusieurs sens",
     "filtrer certains sens ambigus par contexte",
     "estimer une intention, une action et une cible",
-    "vérifier un rapport avant routage"
+    "vérifier un rapport avant routage",
+    "regrouper et prioriser les expériences d'apprentissage",
+    "générer une skill candidate pure depuis un plan GrowUp promu",
+    "valider, versionner et restaurer une skill sous contrôle humain"
   ],
   "verified": [
     {
@@ -34,6 +37,18 @@
     {
       "name": "liaison question-réponse",
       "evidence": "réponses reliées à une expérience sans promotion automatique"
+    },
+    {
+      "name": "orchestration GrowUp",
+      "evidence": "collecte, regroupement, priorité, plans persistants et consolidation protégée par Réfléchir, Tester et SECAU"
+    },
+    {
+      "name": "Skill Factory pure",
+      "evidence": "plan promu vers candidate inactive, manifeste strict, permissions fermées, empreinte, scan récursif et tests sandbox"
+    },
+    {
+      "name": "activation contrôlée et rollback",
+      "evidence": "rapport lié à l'artefact exact, approbation Jps, versions complètes et restauration du chemin, rapport et digest précédents"
     }
   ],
   "rule": "une capacité devient vérifiée uniquement après un test reproductible"
