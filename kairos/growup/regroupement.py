@@ -25,11 +25,21 @@ class Regroupement:
         observations: tuple[ObservationApprentissage, ...],
     ) -> tuple[GroupeApprentissage, ...]:
         paquets: dict[str, list[ObservationApprentissage]] = defaultdict(list)
+        sources_relation = {
+            cle(str(relation["source"]))
+            for observation in observations
+            if (relation := self._relation(observation)) is not None
+            and str(relation.get("source", "")).strip()
+        }
 
         for observation in observations:
             relation = self._relation(observation)
             if relation is not None and relation.get("source"):
                 cle_groupe = f"relation:{cle(str(relation['source']))}"
+            elif observation.focus and cle(observation.focus) in sources_relation:
+                # Un événement de manque et l'expérience qui le résout décrivent
+                # le même problème ; ils ne doivent jamais devenir deux groupes.
+                cle_groupe = f"relation:{cle(observation.focus)}"
             elif observation.focus:
                 cle_groupe = f"{observation.champ}:{cle(observation.focus)}"
             else:
