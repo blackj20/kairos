@@ -24,6 +24,7 @@ class SkillFactoryStore:
         "validated",
         "quarantined",
         "activated",
+        "superseded",
         "archived",
     }
 
