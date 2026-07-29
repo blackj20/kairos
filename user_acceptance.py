@@ -332,8 +332,9 @@ def main() -> int:
         executer(
             "Démarrage d’une séance pédagogique",
             "apprentissage",
-            ["kairos", "pose-moi", "des", "questions", "sur", "atome"],
-            contient("Question 1/4", "J'attends ta réponse"),
+            ["kairos"],
+            contient("Question 1/4", "J'attends ta réponse", "Séance arrêtée"),
+            entree="pose-moi des questions sur atome\nstop\nquit\n",
         )
     )
     resultats.append(
