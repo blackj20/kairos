@@ -23,7 +23,7 @@ class TestMetaComprehension(unittest.TestCase):
         relations = {
             (r.source, r.relation, r.target) for r in analyse.relations
         }
-        self.assertIn(("salutation", "est_un", "salutation"), relations)
+        self.assertIn(("mbote", "est_un", "salutation"), relations)
         self.assertIn(("salutation", "qualite", "amical"), relations)
 
     def test_proper_noun_action_targets_self(self) -> None:
