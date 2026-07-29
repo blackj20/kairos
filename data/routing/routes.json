@@ -167,6 +167,48 @@
           "required": true
         }
       ]
+    },
+    "self.explain": {
+      "steps": [
+        {
+          "id": "inspect_self",
+          "capability": "self.inspect",
+          "required": true
+        },
+        {
+          "id": "answer",
+          "capability": "response.explain",
+          "required": true
+        }
+      ]
+    },
+    "understanding.explain": {
+      "steps": [
+        {
+          "id": "inspect_understanding",
+          "capability": "understanding.inspect",
+          "required": true
+        },
+        {
+          "id": "answer",
+          "capability": "response.explain",
+          "required": true
+        }
+      ]
+    },
+    "decision.explain": {
+      "steps": [
+        {
+          "id": "inspect_decision",
+          "capability": "decision.inspect",
+          "required": true
+        },
+        {
+          "id": "answer",
+          "capability": "response.explain",
+          "required": true
+        }
+      ]
     }
   }
 }
