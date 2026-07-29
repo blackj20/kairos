@@ -1,0 +1,60 @@
+{
+  "version": 1,
+  "concepts": {
+    "intention": {
+      "kind": "interpretation",
+      "definition": "résultat recherché derrière la forme d'une phrase",
+      "relations": [["guide", "choix"], ["peut_differer_de", "forme"]]
+    },
+    "besoin": {
+      "kind": "required_state",
+      "definition": "condition nécessaire pour atteindre un objectif vérifiable",
+      "relations": [["oriente", "choix"], ["est_declenche_par", "manque"]]
+    },
+    "envie": {
+      "kind": "preference",
+      "definition": "préférence exprimée mais non nécessaire et non autorisante",
+      "relations": [["influence", "choix"], ["ne_remplace_pas", "autorisation"]]
+    },
+    "manque": {
+      "kind": "missing_state",
+      "definition": "information, capacité, preuve ou permission nécessaire mais absente",
+      "relations": [["declenche", "besoin"], ["bloque_si_critique", "action"]]
+    },
+    "prudence": {
+      "kind": "control",
+      "definition": "filtre qui augmente avec le risque, l'incertitude et l'irréversibilité",
+      "relations": [["demande", "confirmation"], ["protege", "integrite"]]
+    },
+    "direction": {
+      "kind": "alignment",
+      "definition": "mesure de cohérence entre un choix et l'objectif prioritaire",
+      "relations": [["compare", "choix"], ["pointe_vers", "objectif"]]
+    },
+    "bien_operationnel": {
+      "kind": "value",
+      "definition": "choix qui protège les personnes, la vérité, l'autorisation, l'intégrité et la réversibilité",
+      "relations": [["protege", "humain"], ["protege", "verite"], ["favorise", "reversibilite"]]
+    },
+    "mal_operationnel": {
+      "kind": "risk",
+      "definition": "choix qui produit un dommage, trompe, contourne une autorisation ou détruit sans confirmation",
+      "relations": [["menace", "humain"], ["menace", "integrite"], ["declenche", "refus_ou_confirmation"]]
+    },
+    "choix": {
+      "kind": "decision",
+      "definition": "route retenue après comparaison des possibilités et des filtres",
+      "relations": [["exige", "raison"], ["exige", "score"], ["reste_soumis_a", "verification"]]
+    },
+    "autorisation": {
+      "kind": "constraint",
+      "definition": "permission explicite requise avant une action à effet",
+      "relations": [["conditionne", "execution"], ["ne_provient_pas_de", "envie"]]
+    },
+    "reversibilite": {
+      "kind": "property",
+      "definition": "capacité à annuler une action et restaurer l'état précédent",
+      "relations": [["reduit", "risque"], ["favorise", "bien_operationnel"]]
+    }
+  }
+}
