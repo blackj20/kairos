@@ -11,7 +11,11 @@ from uuid import uuid4
 
 from .cognition import Reflechir
 from .connaissances import Connaissances
+from .contexte import Contexte
+from .decouper import Decouper
 from .normalisation import cle
+from .relations_phrase import Relier
+from .sens import Sens
 
 
 @dataclass(frozen=True, slots=True)
@@ -67,6 +71,10 @@ class DialogueApprentissage:
         configuration: Path | None = None,
     ) -> None:
         self.connaissances = connaissances
+        self._decouper = Decouper()
+        self._sens = Sens(connaissances)
+        self._contexte = Contexte()
+        self._relier = Relier(connaissances)
         racine = Path(__file__).resolve().parent.parent
         config_path = configuration or racine / "data" / "learning" / "dialogue.json"
         self.config = json.loads(config_path.read_text(encoding="utf-8"))
@@ -231,6 +239,22 @@ class DialogueApprentissage:
             )
 
         self.session["answers"][champ] = reponse
+        relations = self._extraire_relations(reponse)
+        if relations:
+            self.session.setdefault("relation_candidates", [])
+            existantes = {
+                (item["source"], item["relation"], item["target"])
+                for item in self.session["relation_candidates"]
+            }
+            for relation in relations:
+                cle_relation = (
+                    relation["source"],
+                    relation["relation"],
+                    relation["target"],
+                )
+                if cle_relation not in existantes:
+                    self.session["relation_candidates"].append(relation)
+                    existantes.add(cle_relation)
         route = self._route_candidate(reponse)
         if route:
             self.session.setdefault("route_candidates", [])
@@ -245,6 +269,9 @@ class DialogueApprentissage:
                 "answers": dict(self.session["answers"]),
                 "glossary": dict(self.session["glossary"]),
                 "route_candidates": list(self.session.get("route_candidates", [])),
+                "relation_candidates": list(
+                    self.session.get("relation_candidates", [])
+                ),
                 "status": "candidate",
                 "reusable": False,
             }
@@ -337,6 +364,22 @@ class DialogueApprentissage:
         if len(inconnus) == 1 and connus_dans_phrase >= 2:
             return inconnus[0]
         return None
+
+    def _extraire_relations(self, texte: str) -> list[dict[str, object]]:
+        decoupage = self._decouper.analyser(texte)
+        sens = self._sens.analyser(decoupage)
+        contextuels = self._contexte.analyser(decoupage, sens)
+        return [
+            {
+                "source": relation.source,
+                "relation": relation.relation,
+                "target": relation.target,
+                "score": relation.score,
+                "evidence": relation.evidence,
+                "status": "candidate",
+            }
+            for relation in self._relier.analyser(decoupage, contextuels)
+        ]
 
     def _route_candidate(self, texte: str) -> str | None:
         for mot in re.findall(r"[a-zA-ZÀ-ÿ][a-zA-ZÀ-ÿ'-]+", texte):
