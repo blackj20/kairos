@@ -73,6 +73,23 @@ class SensContextuel:
 
 
 @dataclass(frozen=True, slots=True)
+class RelationSemantique:
+    """Arête minimale extraite d'une formulation française."""
+
+    source: str
+    relation: str
+    target: str
+    score: int
+    evidence: str
+
+    def __post_init__(self) -> None:
+        if not self.source or not self.relation or not self.target:
+            raise ValueError("Une relation sémantique doit être complète.")
+        if not 0 <= self.score <= 100:
+            raise ValueError("Le score d'une relation doit être entre 0 et 100.")
+
+
+@dataclass(frozen=True, slots=True)
 class ResultatEstimation:
     """Hypothèses globales produites avant la vérification finale."""
 
@@ -112,6 +129,7 @@ class Analyse:
     )
     decoupage: Decoupage | None = None
     sens_contextuels: tuple[SensContextuel, ...] = field(default_factory=tuple)
+    relations: tuple[RelationSemantique, ...] = field(default_factory=tuple)
     verification: Verification = field(
         default_factory=lambda: Verification(
             valide=False,
