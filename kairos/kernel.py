@@ -191,6 +191,16 @@ class Kernel:
             reponse = self._executer_competence(analyse)
         elif route == "controle":
             reponse = self.repondre.confirmer_interdiction(analyse)
+        elif route == "refuser":
+            raisons = "; ".join(
+                str(raison)
+                for raison in analyse.cognition.get("raisons", ())
+            )
+            reponse = (
+                "Je refuse cette action : les filtres de sécurité ou "
+                "d'autorisation détectent un conflit. "
+                f"{raisons}"
+            )
         elif verdict.question is not None:
             reponse = verdict.question.texte
         else:
