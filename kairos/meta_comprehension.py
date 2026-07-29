@@ -188,4 +188,6 @@ class MetaComprehension:
         sans_accents = "".join(
             c for c in decompose if not unicodedata.combining(c)
         )
-        return re.sub(r"[^\w\s'-]", " ", sans_accents.casefold()).strip()
+        sans_separateurs = re.sub(r"[-'’]", " ", sans_accents.casefold())
+        nettoye = re.sub(r"[^\w\s]", " ", sans_separateurs)
+        return re.sub(r"\s+", " ", nettoye).strip()
