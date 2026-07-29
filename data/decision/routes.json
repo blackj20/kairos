@@ -88,6 +88,10 @@
   "actions_without_required_target": [
     "arreter"
   ],
+  "actions_accepting_unknown_target": [
+    "chercher",
+    "enqueter"
+  ],
   "permissions": {
     "repondre": [
       "creator",
