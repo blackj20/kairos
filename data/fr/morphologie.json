@@ -1,0 +1,70 @@
+{
+  "version": 1,
+  "groups": {
+    "adjectif": {
+      "capable": {"forms": ["capable", "capables"], "meaning": "qui possède une capacité adaptée"},
+      "incapable": {"forms": ["incapable", "incapables"], "meaning": "qui ne possède pas la capacité nécessaire", "opposite": "capable"},
+      "artificiel": {"forms": ["artificiel", "artificielle", "artificiels", "artificielles"], "meaning": "créé par une technique humaine"},
+      "symbolique": {"forms": ["symbolique", "symboliques"], "meaning": "fondé sur des symboles et des règles explicites"},
+      "evolutif": {"forms": ["évolutif", "evolutif", "évolutive", "evolutive"], "meaning": "conçu pour changer progressivement"},
+      "intelligent": {"forms": ["intelligent", "intelligente", "intelligents", "intelligentes"], "meaning": "capable de relier des informations pour résoudre un problème"},
+      "curieux": {"forms": ["curieux", "curieuse"], "meaning": "orienté vers l'acquisition d'informations"},
+      "autonome": {"forms": ["autonome", "autonomes"], "meaning": "capable d'agir sans assistance dans un périmètre défini"},
+      "protege": {"forms": ["protégé", "protege", "protégée", "protegee"], "meaning": "soumis à des règles qui empêchent une modification implicite"},
+      "actif": {"forms": ["actif", "active", "actifs", "actives"], "meaning": "actuellement utilisable"},
+      "inactif": {"forms": ["inactif", "inactive", "inactifs", "inactives"], "meaning": "actuellement non utilisable", "opposite": "actif"},
+      "vrai": {"forms": ["vrai", "vraie", "vrais", "vraies"], "meaning": "considéré conforme après vérification"},
+      "faux": {"forms": ["faux", "fausse", "fausses"], "meaning": "contredit par les preuves disponibles", "opposite": "vrai"},
+      "correct": {"forms": ["correct", "correcte", "corrects", "correctes"], "meaning": "conforme aux règles ou aux résultats attendus"},
+      "incorrect": {"forms": ["incorrect", "incorrecte", "incorrects", "incorrectes"], "meaning": "non conforme aux règles ou résultats attendus", "opposite": "correct"},
+      "clair": {"forms": ["clair", "claire", "clairs", "claires"], "meaning": "interprétable sans ambiguïté importante"},
+      "ambigu": {"forms": ["ambigu", "ambiguë", "ambigue", "ambigus"], "meaning": "compatible avec plusieurs interprétations"},
+      "connu": {"forms": ["connu", "connue", "connus", "connues"], "meaning": "présent dans une mémoire consultable"},
+      "inconnu": {"forms": ["inconnu", "inconnue", "inconnus", "inconnues"], "meaning": "absent des connaissances consultées"},
+      "simple": {"forms": ["simple", "simples"], "meaning": "composé de peu de relations nécessaires"},
+      "complexe": {"forms": ["complexe", "complexes"], "meaning": "composé de plusieurs relations dépendantes"},
+      "rapide": {"forms": ["rapide", "rapides"], "meaning": "réalisé dans un temps court"},
+      "lent": {"forms": ["lent", "lente", "lents", "lentes"], "meaning": "réalisé dans un temps long", "opposite": "rapide"},
+      "sur": {"forms": ["sûr", "sure", "sécurisé", "securise"], "meaning": "dont le risque est contrôlé"},
+      "dangereux": {"forms": ["dangereux", "dangereuse"], "meaning": "susceptible de produire un dommage"}
+    },
+    "nom_commun": {
+      "moteur": {"forms": ["moteur", "moteurs"], "meaning": "composant qui transforme des entrées selon des règles"},
+      "cerveau": {"forms": ["cerveau", "cerveaux"], "meaning": "système qui coordonne compréhension, mémoire et décision"},
+      "programme": {"forms": ["programme", "programmes"], "meaning": "ensemble d'instructions exécutables"},
+      "systeme": {"forms": ["système", "systeme", "systèmes", "systemes"], "meaning": "ensemble organisé de composants liés"},
+      "intelligence": {"forms": ["intelligence"], "meaning": "capacité à comprendre, relier, décider et réutiliser"},
+      "salutation": {"forms": ["salutation", "salutations"], "meaning": "formule qui ouvre ou entretient un échange"},
+      "explication": {"forms": ["explication", "explications"], "meaning": "ensemble de relations destiné à rendre une idée compréhensible"},
+      "relation": {"forms": ["relation", "relations", "lien", "liens"], "meaning": "connexion typée entre deux éléments"},
+      "adjectif": {"forms": ["adjectif", "adjectifs"], "meaning": "mot qui attribue une qualité"},
+      "nom": {"forms": ["nom", "noms"], "meaning": "mot qui désigne une entité ou un concept"},
+      "verbe": {"forms": ["verbe", "verbes"], "meaning": "mot qui décrit une action ou un état"},
+      "action": {"forms": ["action", "actions"], "meaning": "opération appliquée à une cible"},
+      "information": {"forms": ["information", "informations"], "meaning": "contenu qui peut être relié et vérifié"},
+      "connaissance": {"forms": ["connaissance", "connaissances"], "meaning": "information vérifiée et réutilisable"},
+      "erreur": {"forms": ["erreur", "erreurs", "faute", "fautes"], "meaning": "écart entre un résultat et ce qui est attendu"},
+      "capacite": {"forms": ["capacité", "capacite", "capacités", "capacites"], "meaning": "fonction réellement disponible"},
+      "route": {"forms": ["route", "routes"], "meaning": "enchaînement contrôlé de capacités"},
+      "objectif": {"forms": ["objectif", "objectifs", "but", "buts"], "meaning": "résultat recherché"},
+      "createur": {"forms": ["créateur", "createur"], "meaning": "personne à l'origine du système"},
+      "utilisateur": {"forms": ["utilisateur", "utilisatrice", "user"], "meaning": "personne qui adresse une requête"},
+      "question": {"forms": ["question", "questions"], "meaning": "formulation qui demande une information"},
+      "reponse": {"forms": ["réponse", "reponse", "réponses", "reponses"], "meaning": "information produite pour une question"},
+      "langage": {"forms": ["langage", "langages", "langue", "langues"], "meaning": "système de signes et de règles de communication"},
+      "memoire": {"forms": ["mémoire", "memoire", "mémoires", "memoires"], "meaning": "système de conservation d'informations"}
+    },
+    "nom_propre": {
+      "kairos": {"forms": ["kairos", "k.a.i.r.o.s"], "meaning": "nom du moteur", "referent": "self:kairos"},
+      "jps": {"forms": ["jps"], "meaning": "nom du créateur déclaré", "referent": "creator:jps"},
+      "python": {"forms": ["python"], "meaning": "langage de programmation", "referent": "language:python"},
+      "francais": {"forms": ["français", "francais"], "meaning": "langue française", "referent": "language:fr"},
+      "lingala": {"forms": ["lingala"], "meaning": "langue bantoue", "referent": "language:ln"}
+    },
+    "reference": {
+      "self": {"forms": ["tu", "te", "toi", "toi-même", "toi meme", "ton", "ta", "tes"], "meaning": "référence à Kairos", "referent": "self:kairos"},
+      "user": {"forms": ["je", "j", "me", "moi", "mon", "ma", "mes"], "meaning": "référence à l'utilisateur courant", "referent": "actor:user"},
+      "creator": {"forms": ["créateur", "createur", "jps"], "meaning": "référence au créateur déclaré", "referent": "creator:jps"}
+    }
+  }
+}
