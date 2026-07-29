@@ -47,6 +47,7 @@ def nettoyer_memoire_mutable() -> None:
         "learning_events.json",
         "corrections.json",
         "semantic_relations.json",
+        "learning_sessions.json",
         "cognition.db",
         "cognition.db-shm",
         "cognition.db-wal",
