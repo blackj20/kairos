@@ -3,6 +3,9 @@
 from __future__ import annotations
 
 from collections.abc import Callable, Iterable
+import re
+import unicodedata
+import urllib.parse
 from typing import Any
 
 from ..memory import MemoryRepository
@@ -94,5 +97,99 @@ class Tester:
                 "counterexamples": [error for _, error in negative_runs],
                 "regressions": [error for _, error in regression_runs],
             },
+        }
+        return self.repository.save_report(subject_id, report), report
+
+
+    @staticmethod
+    def _research_words(text: str) -> set[str]:
+        normalized = unicodedata.normalize("NFKD", text.casefold())
+        normalized = "".join(
+            character
+            for character in normalized
+            if not unicodedata.combining(character)
+        )
+        return set(re.findall(r"[a-z0-9]{3,}", normalized))
+
+    def test_research_candidate(
+        self,
+        subject_id: str,
+        candidate: dict[str, Any],
+    ) -> tuple[str, dict[str, Any]]:
+        """Mesure provenance, intégrité et cohérence lexicale d'un concept."""
+
+        name = str(candidate.get("name", "")).strip()
+        definition = str(candidate.get("definition", "")).strip()
+        evidence_ids = [str(item) for item in candidate.get("evidence_ids", [])]
+        urls = [str(item) for item in candidate.get("source_urls", [])]
+        claims = [str(item) for item in candidate.get("source_claims", [])]
+        domains = {
+            str(urllib.parse.urlparse(url).hostname).casefold()
+            for url in urls
+            if urllib.parse.urlparse(url).hostname
+        }
+        https_results = [
+            urllib.parse.urlparse(url).scheme == "https"
+            and bool(urllib.parse.urlparse(url).hostname)
+            for url in urls
+        ]
+        aligned = len(evidence_ids) == len(urls) == len(claims)
+        integrity = [
+            self.repository.evidence_matches(
+                evidence_id,
+                source_ref=url,
+                content=claim,
+            )
+            for evidence_id, url, claim in zip(evidence_ids, urls, claims)
+        ]
+        name_words = self._research_words(name)
+        definition_words = self._research_words(definition)
+        subject_support = [
+            bool(name_words)
+            and name_words.issubset(self._research_words(claim))
+            for claim in claims
+        ]
+        agreement = [
+            (
+                len(definition_words & self._research_words(claim))
+                / max(1, len(definition_words))
+            )
+            for claim in claims
+        ]
+        negative_controls = {
+            "http_rejected": not (
+                urllib.parse.urlparse("http://invalid.example").scheme == "https"
+            ),
+            "blank_claim_rejected": not bool(self._research_words("")),
+        }
+        protected = {
+            "identity",
+            "objective",
+            "permissions",
+            "security_policy",
+            "creator",
+        }
+        report = {
+            "passed": (
+                aligned
+                and len(evidence_ids) >= 2
+                and len(domains) >= 2
+                and bool(definition_words)
+                and all(https_results)
+                and all(integrity)
+                and all(subject_support)
+                and all(score >= 0.20 for score in agreement)
+                and all(negative_controls.values())
+                and not protected.intersection(candidate)
+            ),
+            "source_count": len(urls),
+            "independent_domains": len(domains),
+            "aligned_artifacts": aligned,
+            "https": https_results,
+            "integrity": integrity,
+            "subject_support": subject_support,
+            "lexical_agreement": agreement,
+            "negative_controls": negative_controls,
+            "limitation": "cohérence vérifiée, vérité absolue non garantie",
         }
         return self.repository.save_report(subject_id, report), report
