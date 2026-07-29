@@ -1,0 +1,22 @@
+{
+  "version": 1,
+  "actions": {
+    "chercher": {"goal": "obtenir une information vérifiable", "route": "information.search", "target_required": true, "supports_self": true},
+    "lire": {"goal": "prendre connaissance d'un contenu", "route": "information.read", "target_required": true},
+    "relire": {"goal": "reprendre une source déjà disponible", "route": "information.reread", "target_required": true},
+    "verifier": {"goal": "mesurer la validité d'une information", "route": "information.verify", "target_required": true},
+    "expliquer": {"goal": "rendre une connaissance compréhensible", "route": "response.explain", "target_required": true},
+    "comparer": {"goal": "identifier ressemblances et différences", "route": "information.compare", "target_required": true},
+    "tester": {"goal": "mesurer une hypothèse ou une capacité", "route": "cognition.test", "target_required": true},
+    "corriger": {"goal": "proposer une version corrigée", "route": "learning.correct", "target_required": true},
+    "planifier": {"goal": "décomposer un objectif en étapes", "route": "cognition.plan", "target_required": true},
+    "poser": {"goal": "obtenir une information du destinataire", "route": "response.ask", "target_required": true},
+    "enqueter": {
+      "goal": "rechercher, comparer et expliquer plusieurs sources",
+      "route": null,
+      "target_required": true,
+      "supports_self": true,
+      "compose": ["memory.search", "web.search", "sources.compare", "knowledge.propose", "response.explain"]
+    }
+  }
+}
