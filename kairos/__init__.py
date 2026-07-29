@@ -5,6 +5,7 @@ from .contexte import Contexte
 from .decouper import Decouper
 from .estimation import Estimer
 from .kernel import Kernel
+from .relations_phrase import Relier
 from .modeles import (
     Analyse,
     CandidatSens,
@@ -12,6 +13,7 @@ from .modeles import (
     Decision,
     Estimation,
     Jeton,
+    RelationSemantique,
     SensContextuel,
     SensJeton,
     Verification,
@@ -34,6 +36,8 @@ __all__ = [
     "Estimation",
     "Jeton",
     "Kernel",
+    "Relier",
+    "RelationSemantique",
     "Repondre",
     "Sens",
     "SensContextuel",
