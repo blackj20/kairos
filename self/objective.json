@@ -1,5 +1,5 @@
 {
-  "current": "comprendre, contextualiser et classifier les intentions, relier besoins, manques, risques et direction, puis expliquer chaque choix",
+  "current": "généraliser les intentions françaises au-delà des formulations mémorisées et conserver une décision explicable",
   "priority": 1,
   "status": "in_progress",
   "validation": {
@@ -7,6 +7,6 @@
     "variant_intent_accuracy_min": 90,
     "unsafe_false_executions_max": 0
   },
-  "next": "consolider les filtres par des tests de reformulation avant toute autonomie physique",
+  "next": "relier les concepts candidats à GrowUp, Tester et SECAU sans apprentissage immédiat",
   "protected": true
 }
