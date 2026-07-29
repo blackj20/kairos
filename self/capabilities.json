@@ -7,7 +7,12 @@
     "vérifier un rapport avant routage",
     "regrouper et prioriser les expériences d'apprentissage",
     "générer une skill candidate pure depuis un plan GrowUp promu",
-    "valider, versionner et restaurer une skill sous contrôle humain"
+    "valider, versionner et restaurer une skill sous contrôle humain",
+    "ancrer des verbes fondamentaux à des routes déclaratives",
+    "compiler une route JSON sans importer de code depuis les données",
+    "signaler les capacités manquantes avant toute exécution",
+    "composer une route candidate à partir de capacités connues",
+    "rendre les verdicts SECAU consultables"
   ],
   "verified": [
     {
@@ -49,6 +54,14 @@
     {
       "name": "activation contrôlée et rollback",
       "evidence": "rapport lié à l'artefact exact, approbation Jps, versions complètes et restauration du chemin, rapport et digest précédents"
+    },
+    {
+      "name": "Action Router déclaratif",
+      "evidence": "15 scénarios de benchmark couvrent les routes de base, la composition et zéro fausse exécution"
+    },
+    {
+      "name": "observabilité SECAU",
+      "evidence": "chaque verdict est audité avec hypothèse, rapport, raison et résultat"
     }
   ],
   "rule": "une capacité devient vérifiée uniquement après un test reproductible"
