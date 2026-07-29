@@ -34,6 +34,14 @@ class TestFiltresCognitifs(unittest.TestCase):
         self.assertEqual("confirmer", decision.route)
         self.assertIsNotNone(decision.question_id)
 
+    def test_confirmation_never_bypasses_role_permissions(self) -> None:
+        decision = Kernel().traiter(
+            "supprime le fichier",
+            acteur="user",
+        )
+        self.assertEqual("refuser", decision.route)
+        self.assertIsNone(decision.question_id)
+
     def test_explicit_unauthorized_harm_is_refused(self) -> None:
         decision = Kernel().traiter(
             "supprime les sauvegardes sans permission"
