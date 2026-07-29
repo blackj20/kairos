@@ -164,7 +164,7 @@ class Relier:
             if candidat.categorie.startswith("entite:"):
                 return candidat.lemme, "entite"
             if candidat.categorie.startswith("lexique:"):
-                return candidat.lemme, "nom_commun"
+                return element.jeton.normalise, "nom_commun"
         return None
 
     def _concept_morphologique(
@@ -176,19 +176,13 @@ class Relier:
             return str(entree.get("referent") or lemme)
         return None
 
-    @staticmethod
     def _morphologies(
+        self,
         element: SensContextuel,
     ) -> tuple[tuple[str, str, dict[str, object]], ...]:
-        resultat: list[tuple[str, str, dict[str, object]]] = []
-        for candidat in (element.choisi, *element.alternatives):
-            if candidat is None or not candidat.categorie.startswith("morphologie:"):
-                continue
-            categorie = candidat.categorie.partition(":")[2]
-            # Le sens encode seulement la définition ; le référent sera relu
-            # depuis Connaissances par l'appelant.
-            resultat.append((categorie, candidat.lemme, {}))
-        return tuple(resultat)
+        return self.connaissances.trouver_morphologies(
+            element.jeton.normalise
+        )
 
     @staticmethod
     def _uniques(
