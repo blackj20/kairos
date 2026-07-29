@@ -57,11 +57,56 @@
     "apprendre"
   ],
   "risk_by_action": {
-    "read": ["afficher", "chercher", "enqueter", "lire", "relire", "comparer", "verifier", "tester", "expliquer", "repondre", "saluer", "remercier"],
-    "write": ["ecrire", "copier", "creer", "sauvegarder", "memoriser", "trier", "compresser", "extraire", "imprimer", "corriger", "planifier"],
-    "system_change": ["installer", "activer", "desactiver", "connecter", "deconnecter", "deplacer", "renommer", "reparer", "nettoyer", "telecharger"],
-    "irreversible": ["supprimer", "retirer"],
-    "physical": ["avancer", "reculer", "tourner", "saisir", "relacher"]
+    "read": [
+      "afficher",
+      "chercher",
+      "enqueter",
+      "lire",
+      "relire",
+      "comparer",
+      "verifier",
+      "tester",
+      "expliquer",
+      "repondre",
+      "saluer",
+      "remercier"
+    ],
+    "write": [
+      "ecrire",
+      "copier",
+      "creer",
+      "sauvegarder",
+      "memoriser",
+      "trier",
+      "compresser",
+      "extraire",
+      "imprimer",
+      "corriger",
+      "planifier"
+    ],
+    "system_change": [
+      "installer",
+      "activer",
+      "desactiver",
+      "connecter",
+      "deconnecter",
+      "deplacer",
+      "renommer",
+      "reparer",
+      "nettoyer",
+      "telecharger"
+    ],
+    "irreversible": [
+      "supprimer",
+      "retirer"
+    ],
+    "physical": [
+      "avancer",
+      "reculer",
+      "tourner",
+      "saisir",
+      "relacher"
+    ]
   },
   "harm_patterns": [
     "sans permission",
@@ -93,7 +138,7 @@
     "unknown": 50
   },
   "thresholds": {
-    "confirm_min": 60,
+    "confirm_min": 80,
     "refuse_min": 90,
     "alignment_bonus": 10,
     "unknown_penalty": 8
