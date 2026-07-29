@@ -226,7 +226,7 @@ vertes sous Python 3.11, 3.12 et 3.13 :
 | Scan Skill Factory installé | réussi |
 | Benchmark filtres cognitifs V0.11 | 13/13 |
 | Benchmark méta-compréhension V0.10 | 11/11 |
-| Benchmark squelette | ≥ 100 analyses/s (152,76 mesurées) |
+| Benchmark squelette | ≥ 100 analyses/s (154,04 mesurées) |
 | Benchmark Comprendre | réussi |
 | Benchmark holdout | réussi |
 | Benchmark Décision | réussi |
