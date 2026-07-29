@@ -71,7 +71,7 @@ class VerifierDecision:
         evaluation: EvaluationDecision,
         route: RouteChoisie,
     ) -> RouteChoisie:
-        type_requete = evaluation.analyse.type_requete.valeur
+        type_requete = self._type_effectif(evaluation)
         seuil = self.configuration.seuils["authorize_min"]
 
         execution_invalide = (
@@ -99,3 +99,9 @@ class VerifierDecision:
                 raison="route proposée incohérente avec l'analyse",
             )
         return route
+
+    @staticmethod
+    def _type_effectif(evaluation: EvaluationDecision) -> str | None:
+        if evaluation.analyse.cognition.get("intention") == "demande_indirecte":
+            return "ordre"
+        return evaluation.analyse.type_requete.valeur
