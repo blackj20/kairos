@@ -391,8 +391,8 @@ class Connaissances:
         """Retourne le vocabulaire indexé et les relations confirmées."""
 
         mots = set(self._vocabulaire_statique)
-        for source, relation in self.relations_verbes.toutes().items():
+        for source, relation in self.relations_verbes.relations().items():
             mots.add(cle(source))
             mots.add(cle(str(relation.get("target", ""))))
-        mots.update(self.corrections.toutes())
+        mots.update(self.corrections.relations())
         return mots
