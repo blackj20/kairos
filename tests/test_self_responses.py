@@ -11,7 +11,7 @@ class TestReponsesSurSoi(unittest.TestCase):
     def test_identity_is_answered_from_protected_self_memory(self) -> None:
         decision = Kernel().traiter("qui es tu ?")
         self.assertIn("K.A.I.R.O.S.", decision.reponse)
-        self.assertIn("0.6.0-action-router", decision.reponse)
+        self.assertIn("0.7.0-information-search", decision.reponse)
 
     def test_current_objective_is_answered_from_protected_self_memory(self) -> None:
         decision = Kernel().traiter("quel est ton objectif ?")
