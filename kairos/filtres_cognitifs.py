@@ -9,6 +9,7 @@ from dataclasses import asdict, dataclass
 from pathlib import Path
 from typing import Any
 
+from .generalisation_intention import GeneralisateurIntention
 from .modeles import Analyse
 
 
@@ -40,6 +41,7 @@ class FiltresCognitifs:
         self.racine = racine or Path(__file__).resolve().parent.parent
         self.concepts = self._lire("data/cognition/concepts.json")
         self.regles = self._lire("data/cognition/filters.json")
+        self.generalisateur = GeneralisateurIntention(self.racine)
         self._valider()
         self._mots_formes = {
             mot
@@ -47,21 +49,28 @@ class FiltresCognitifs:
             for forme in groupes
             for mot in self._normaliser(str(forme)).split()
         }
+        self._mots_formes.update(self.generalisateur.mots_fonctionnels)
 
     def evaluer(self, analyse: Analyse) -> ProfilCognitif:
         texte = self._normaliser(analyse.texte_normalise)
         action = str(analyse.action.valeur or "")
         type_requete = str(analyse.type_requete.valeur or "inconnu")
+        lecture_intention = self.generalisateur.analyser(
+            texte,
+            action=action,
+            type_requete=type_requete,
+        )
         indirecte = bool(
-            action
-            and self._contient_forme(texte, "indirect_request")
+            lecture_intention.indirecte
             and action not in self.regles["non_directive_desires"]
-            and type_requete != "interdiction"
         )
         commande = type_requete == "ordre" or indirecte
 
         intention, intention_score = self._intention(
-            texte, type_requete, indirecte
+            texte,
+            type_requete,
+            indirecte,
+            lecture_intention.score,
         )
         famille_risque, score_risque = self._risque_action(action)
         dommage = commande and any(
@@ -82,6 +91,7 @@ class FiltresCognitifs:
         manques: list[str] = []
         filtres: list[str] = ["truth", "authorization", "objective_alignment"]
         raisons: list[str] = [f"intention détectée : {intention}"]
+        raisons.extend(lecture_intention.signaux)
 
         inconnus_reels = tuple(
             mot
@@ -163,12 +173,16 @@ class FiltresCognitifs:
         )
 
     def _intention(
-        self, texte: str, type_requete: str, indirecte: bool
+        self,
+        texte: str,
+        type_requete: str,
+        indirecte: bool,
+        score_indirect: int,
     ) -> tuple[str, int]:
         if type_requete == "interdiction":
             return "protection", 95
         if indirecte:
-            return "demande_indirecte", 95
+            return "demande_indirecte", score_indirect
         if type_requete == "ordre":
             return "ordre_direct", 92
         if self._contient_forme(texte, "need"):
