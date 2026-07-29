@@ -29,7 +29,7 @@ class Evaluer:
         if type_requete in {"ordre", "interdiction"}:
             if analyse.action.valeur is None or analyse.action.score < 51:
                 manquants.append("action")
-            elif self._cible_requise(analyse.action.valeur) and (
+            elif type_requete == "ordre" and self._cible_requise(analyse.action.valeur) and (
                 analyse.cible.valeur is None
                 or (
                     analyse.cible.score < 51
