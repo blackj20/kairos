@@ -47,7 +47,7 @@ class Secau:
         verdict: SecauVerdict,
         raison: str,
         hypothesis_id: str,
-        report_id: str,
+        report_id: str | None,
         concept_id: str | None = None,
     ) -> SecauResult:
         resultat = SecauResult(
@@ -125,6 +125,93 @@ class Secau:
         return self._resultat(
             SecauVerdict.PROMOTE,
             "contrôles réussis",
+            hypothesis_id,
+            report_id,
+            concept_id,
+        )
+
+    def review_research(
+        self,
+        hypothesis_id: str,
+        report_id: str | None,
+        dossier: dict[str, Any],
+    ) -> SecauResult:
+        """Décide sur un concept recherché sans confondre cohérence et vérité."""
+
+        hypothesis = self.repository.hypothesis(hypothesis_id)
+        if hypothesis is None:
+            return self._resultat(
+                SecauVerdict.REJECT,
+                "hypothèse de recherche absente",
+                hypothesis_id,
+                report_id,
+            )
+        if hypothesis.get("status") != "candidate":
+            return self._resultat(
+                SecauVerdict.REJECT,
+                "hypothèse déjà traitée",
+                hypothesis_id,
+                report_id,
+            )
+        payload = hypothesis["payload"]
+        if payload.get("research_kind") != "information.search":
+            return self._resultat(
+                SecauVerdict.REJECT,
+                "hypothèse étrangère à la recherche d'information",
+                hypothesis_id,
+                report_id,
+            )
+        if self.PROTECTED.intersection(payload):
+            return self._resultat(
+                SecauVerdict.QUARANTINE,
+                "donnée protégée",
+                hypothesis_id,
+                report_id,
+            )
+        missing = tuple(dossier.get("missing", ()))
+        if missing:
+            return self._resultat(
+                SecauVerdict.NEEDS_MORE_EVIDENCE,
+                "preuves insuffisantes : " + ", ".join(str(item) for item in missing),
+                hypothesis_id,
+                report_id,
+            )
+        if report_id is None:
+            return self._resultat(
+                SecauVerdict.NEEDS_MORE_EVIDENCE,
+                "rapport Tester absent",
+                hypothesis_id,
+                report_id,
+            )
+        report = self.repository.report(report_id)
+        if report is None or not self._report_matches_subject(
+            report, hypothesis_id
+        ):
+            return self._resultat(
+                SecauVerdict.REJECT,
+                "rapport Tester absent ou associé à une autre hypothèse",
+                hypothesis_id,
+                report_id,
+            )
+        if not bool(report.get("passed")):
+            return self._resultat(
+                SecauVerdict.REJECT,
+                "contrôles de recherche échoués",
+                hypothesis_id,
+                report_id,
+            )
+        try:
+            concept_id = self.repository.promote(hypothesis_id, report_id)
+        except ValueError as error:
+            return self._resultat(
+                SecauVerdict.REJECT,
+                str(error),
+                hypothesis_id,
+                report_id,
+            )
+        return self._resultat(
+            SecauVerdict.PROMOTE,
+            "concept confirmé après sources indépendantes et Tester",
             hypothesis_id,
             report_id,
             concept_id,
