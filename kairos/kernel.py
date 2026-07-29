@@ -17,6 +17,7 @@ from .corrections import MemoireCorrections
 from .decision import EvenementExperience, MoteurDecision
 from .information import CapacitesInformation, FournisseurRecherche, WikipediaFR
 from .memory import MemoryRepository
+from .meta_comprehension import MetaComprehension
 from .modeles import Analyse, Decision
 from .relations_verbes import MemoireRelationsVerbes
 from .repondre import Repondre
@@ -69,6 +70,8 @@ class Kernel:
             persister=persister_decisions,
         )
         self.routeur = routeur or RouteurDynamique()
+        self.meta_comprehension = MetaComprehension(self.soi)
+        self._derniere_decision: Decision | None = None
         if cognitive_repository is None:
             racine = Path(__file__).resolve().parent.parent
             chemin_cognitif: str | Path = (
@@ -157,6 +160,17 @@ class Kernel:
 
         self._dernier_plan_route = None
         analyse = self.comprendre.analyser(requete)
+        reponse_meta = self.meta_comprehension.repondre(
+            analyse,
+            self._derniere_decision,
+        )
+        if reponse_meta is not None:
+            return Decision(
+                route=reponse_meta.route,
+                analyse=analyse,
+                reponse=reponse_meta.texte,
+            )
+
         processus = self.moteur_decision.decider(analyse, acteur)
         verdict = processus.verdict
         route_interne = verdict.route.value
@@ -179,7 +193,7 @@ class Kernel:
         else:
             reponse = self.repondre.demander_clarification()
 
-        return Decision(
+        decision = Decision(
             route=route,
             analyse=analyse,
             reponse=reponse,
@@ -199,6 +213,8 @@ class Kernel:
                 else None
             ),
         )
+        self._derniere_decision = decision
+        return decision
 
     def repondre_a(
         self,
