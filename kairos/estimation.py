@@ -312,6 +312,7 @@ class Estimer:
             "grammaire:",
             "negations:",
             "affirmations:",
+            "morphologie:reference",
         )
         candidats = [
             element.jeton.normalise
