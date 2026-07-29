@@ -5,6 +5,7 @@ from __future__ import annotations
 import re
 import urllib.parse
 from collections.abc import Callable
+from dataclasses import replace
 from difflib import get_close_matches
 from pathlib import Path
 from typing import Any
@@ -15,6 +16,7 @@ from .comprendre import Comprendre
 from .connaissances import Connaissances
 from .corrections import MemoireCorrections
 from .decision import EvenementExperience, MoteurDecision
+from .filtres_cognitifs import FiltresCognitifs
 from .information import CapacitesInformation, FournisseurRecherche, WikipediaFR
 from .memory import MemoryRepository
 from .meta_comprehension import MetaComprehension
@@ -65,6 +67,7 @@ class Kernel:
             connaissances=self.comprendre.connaissances
         )
         self.soi = soi or ConnaissanceDeSoi()
+        self.filtres_cognitifs = FiltresCognitifs(self.soi.racine)
         self.moteur_decision = moteur_decision or MoteurDecision(
             comprendre=self.comprendre,
             persister=persister_decisions,
@@ -148,7 +151,7 @@ class Kernel:
             flags=re.IGNORECASE,
         )
         if apprentissage_mot:
-            analyse = self.comprendre.analyser(requete)
+            analyse = self._enrichir_analyse(self.comprendre.analyser(requete))
             topic = apprentissage_mot.group(1).strip()
             topic, correction = self._corriger_sujet_pedagogique(topic)
             reponse = self.apprentissage.demarrer(topic, correction=correction)
@@ -159,7 +162,7 @@ class Kernel:
             )
 
         self._dernier_plan_route = None
-        analyse = self.comprendre.analyser(requete)
+        analyse = self._enrichir_analyse(self.comprendre.analyser(requete))
         reponse_meta = self.meta_comprehension.repondre(
             analyse,
             self._derniere_decision,
@@ -361,7 +364,7 @@ class Kernel:
     def _traiter_reponse_pedagogique(self, requete: str) -> Decision:
         """Délègue le tour à la séance bornée puis reprend l'objectif parent."""
 
-        analyse = self.comprendre.analyser(requete)
+        analyse = self._enrichir_analyse(self.comprendre.analyser(requete))
         resultat = self.apprentissage.traiter(requete)
         return Decision(
             route="repondre",
@@ -393,6 +396,12 @@ class Kernel:
         if champ in {"counterexamples", "relations"} and len(mots) < 4:
             return False, "développe la réponse avec au moins quatre mots"
         return True, "réponse exploitable"
+
+    def _enrichir_analyse(self, analyse: Analyse) -> Analyse:
+        """Ajoute les filtres cognitifs sans altérer l'analyse linguistique."""
+
+        profil = self.filtres_cognitifs.evaluer(analyse)
+        return replace(analyse, cognition=profil.vers_dict())
 
     def close(self) -> None:
         """Ferme uniquement la mémoire cognitive créée par ce Kernel."""
