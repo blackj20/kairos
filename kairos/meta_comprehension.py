@@ -189,7 +189,7 @@ class MetaComprehension:
         cible_self = analyse.cible.valeur == "self:kairos" or any(
             relation.target == "self:kairos"
             for relation in analyse.relations
-            if relation.relation in {"reference", "expliquer"}
+            if relation.relation in {"expliquer", "presenter"}
         )
         return (
             texte
