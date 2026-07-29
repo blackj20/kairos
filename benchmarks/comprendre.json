@@ -65,7 +65,7 @@
     {
       "group": "variant",
       "text": "supprime le fichier",
-      "expected": {"type": "ordre", "action": "supprimer", "cible": "fichier", "route": "competence"}
+      "expected": {"type": "ordre", "action": "supprimer", "cible": "fichier", "route": "confirmer"}
     },
     {
       "group": "variant",
