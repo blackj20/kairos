@@ -4,6 +4,7 @@ from .comprendre import Comprendre
 from .contexte import Contexte
 from .decouper import Decouper
 from .estimation import Estimer
+from .filtres_cognitifs import FiltresCognitifs, ProfilCognitif
 from .kernel import Kernel
 from .relations_phrase import Relier
 from .modeles import (
@@ -34,8 +35,10 @@ __all__ = [
     "Decision",
     "Estimer",
     "Estimation",
+    "FiltresCognitifs",
     "Jeton",
     "Kernel",
+    "ProfilCognitif",
     "Relier",
     "RelationSemantique",
     "Repondre",

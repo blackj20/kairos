@@ -8,8 +8,8 @@
     {"text": "stop", "expected_type": "ordre", "expected_route": "competence"},
     {"text": "ouvre python et ferme vscode", "expected_type": "ordre", "expected_route": "clarification"},
 
-    {"text": "pourrais-tu installer docker ?", "expected_type": "question", "expected_route": "repondre"},
-    {"text": "bonjour, peux-tu ouvrir le dossier ?", "expected_type": "question", "expected_route": "repondre"},
+    {"text": "pourrais-tu installer docker ?", "expected_type": "question", "expected_route": "competence"},
+    {"text": "bonjour, peux-tu ouvrir le dossier ?", "expected_type": "question", "expected_route": "competence"},
     {"text": "comment supprimer un fichier ?", "expected_type": "question", "expected_route": "repondre"},
     {"text": "supprime ?", "expected_type": "question", "expected_route": "repondre"},
     {"text": "salut comment vas-tu ?", "expected_type": "question", "expected_route": "repondre"},

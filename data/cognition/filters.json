@@ -1,0 +1,146 @@
+{
+  "version": 1,
+  "priorities": [
+    "human_safety",
+    "truth",
+    "authorization",
+    "system_integrity",
+    "reversibility",
+    "objective_alignment",
+    "efficiency"
+  ],
+  "intent_patterns": {
+    "indirect_request": [
+      "je veux que tu",
+      "j aimerais que tu",
+      "je voudrais que tu",
+      "peux tu",
+      "pourrais tu",
+      "est ce que tu peux",
+      "il faut que tu"
+    ],
+    "need": [
+      "j ai besoin",
+      "il me faut",
+      "nous avons besoin",
+      "c est necessaire"
+    ],
+    "desire": [
+      "je veux",
+      "j aimerais",
+      "je souhaite",
+      "je voudrais"
+    ],
+    "missing": [
+      "il manque",
+      "je n ai pas",
+      "tu n as pas",
+      "sans information",
+      "sans preuve"
+    ]
+  },
+  "objective_actions": [
+    "chercher",
+    "enqueter",
+    "verifier",
+    "comparer",
+    "tester",
+    "corriger",
+    "apprendre",
+    "expliquer",
+    "lire",
+    "relire",
+    "planifier",
+    "memoriser"
+  ],
+  "non_directive_desires": [
+    "apprendre"
+  ],
+  "risk_by_action": {
+    "read": [
+      "afficher",
+      "chercher",
+      "enqueter",
+      "lire",
+      "relire",
+      "comparer",
+      "verifier",
+      "tester",
+      "expliquer",
+      "repondre",
+      "saluer",
+      "remercier"
+    ],
+    "write": [
+      "ecrire",
+      "copier",
+      "creer",
+      "sauvegarder",
+      "memoriser",
+      "trier",
+      "compresser",
+      "extraire",
+      "imprimer",
+      "corriger",
+      "planifier"
+    ],
+    "system_change": [
+      "installer",
+      "activer",
+      "desactiver",
+      "connecter",
+      "deconnecter",
+      "deplacer",
+      "renommer",
+      "reparer",
+      "nettoyer",
+      "telecharger"
+    ],
+    "irreversible": [
+      "supprimer",
+      "retirer"
+    ],
+    "physical": [
+      "avancer",
+      "reculer",
+      "tourner",
+      "saisir",
+      "relacher"
+    ]
+  },
+  "harm_patterns": [
+    "sans permission",
+    "sans autorisation",
+    "contourne la securite",
+    "cache la verite",
+    "detruis les preuves",
+    "attaque",
+    "blesse",
+    "tue",
+    "vole"
+  ],
+  "broad_scope_patterns": [
+    "tout",
+    "tous",
+    "toute",
+    "toutes",
+    "entier",
+    "entiere",
+    "systeme",
+    "sauvegardes"
+  ],
+  "risk_scores": {
+    "read": 10,
+    "write": 35,
+    "system_change": 60,
+    "irreversible": 80,
+    "physical": 85,
+    "unknown": 50
+  },
+  "thresholds": {
+    "confirm_min": 80,
+    "refuse_min": 90,
+    "alignment_bonus": 10,
+    "unknown_penalty": 8
+  }
+}

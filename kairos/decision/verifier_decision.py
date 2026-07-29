@@ -37,7 +37,19 @@ class VerifierDecision:
     ) -> VerdictDecision:
         route = self._corriger_route_incoherente(evaluation, route)
 
-        autorises = self.configuration.routes["permissions"][route.route.value]
+        route_permission = route.route
+        if (
+            route.route == Route.CONFIRMER
+            and evaluation.analyse.cognition.get("choix_recommande")
+            == "confirmer"
+            and self._type_effectif(evaluation) == "ordre"
+        ):
+            # Une confirmation de prudence conserve les permissions de
+            # l'action d'origine ; elle ne devient jamais un contournement.
+            route_permission = Route.EXECUTER
+        autorises = self.configuration.routes["permissions"][
+            route_permission.value
+        ]
         if acteur not in autorises:
             return VerdictDecision(
                 valide=False,
@@ -45,7 +57,7 @@ class VerifierDecision:
                 score=100,
                 raison=(
                     f"le rôle « {acteur} » n'est pas autorisé "
-                    f"à utiliser la route « {route.route.value} »"
+                    f"à utiliser la route « {route_permission.value} »"
                 ),
             )
 
@@ -71,7 +83,7 @@ class VerifierDecision:
         evaluation: EvaluationDecision,
         route: RouteChoisie,
     ) -> RouteChoisie:
-        type_requete = evaluation.analyse.type_requete.valeur
+        type_requete = self._type_effectif(evaluation)
         seuil = self.configuration.seuils["authorize_min"]
 
         execution_invalide = (
@@ -99,3 +111,9 @@ class VerifierDecision:
                 raison="route proposée incohérente avec l'analyse",
             )
         return route
+
+    @staticmethod
+    def _type_effectif(evaluation: EvaluationDecision) -> str | None:
+        if evaluation.analyse.cognition.get("intention") == "demande_indirecte":
+            return "ordre"
+        return evaluation.analyse.type_requete.valeur

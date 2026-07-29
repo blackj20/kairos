@@ -2,7 +2,7 @@
 
 ## Statut
 
-**V0.10 — prototype opérationnel avec méta-compréhension, relations françaises explicables et modèle de soi runtime.**
+**V0.11 — prototype opérationnel avec filtres cognitifs, intentions indirectes et choix explicables.**
 
 Ce statut signifie que le projet est installable depuis un clone propre,
 démarre même lorsque la mémoire mutable n’existe pas encore, analyse une
@@ -151,6 +151,22 @@ python user_acceptance_v06.py
 - vocabulaire d'explication enrichi sans désactiver les clarifications sur les vrais inconnus ;
 - normalisation des apostrophes, accents et clitiques français.
 
+### Filtres cognitifs et choix explicables V0.11
+
+- intention séparée de la forme grammaticale ;
+- demandes indirectes routées comme actions sans falsifier leur type linguistique ;
+- distinction explicite entre besoin, envie et manque ;
+- direction calculée à partir de l'objectif et de la cible ;
+- risque opérationnel mesuré par famille d'action ;
+- prudence conduisant à router, clarifier, confirmer ou refuser ;
+- priorités déclaratives : sécurité humaine, vérité, autorisation, intégrité,
+  réversibilité, alignement et efficacité ;
+- vocabulaire cognitif enrichi en noms et adjectifs ;
+- justification de la dernière décision avec filtres et raisons ;
+- une envie ne crée aucune permission ;
+- une confirmation ne contourne pas le contrôle des permissions ;
+- une interdiction claire sans cible reste une route de contrôle.
+
 ## Cycle démontré
 
 ```text
@@ -189,24 +205,28 @@ Une modification après rapport bloque l’activation.
 Seul un approbateur déclaré peut activer ou rollback.
 Chaque version active possède son chemin, rapport, digest et approbateur.
 Le rollback restaure toutes les métadonnées de la version précédente.
+Une envie, un besoin ou un score cognitif ne crée jamais une permission.
+Une action nuisible explicite est refusée avant tout routage.
+Une action irréversible ou physique exige une confirmation explicite.
 ```
 
-## Résultats vérifiés par la CI V0.10
+## Résultats vérifiés par la CI V0.11
 
 Le dernier commit n’est accepté que si toutes les portes suivantes restent
 vertes sous Python 3.11, 3.12 et 3.13 :
 
 | Porte | Seuil |
 |---|---:|
-| Tests automatisés | 145/145 |
+| Tests automatisés | 156/156 |
 | Acceptation historique et V0.4 | 18/18 |
 | Acceptation CLI Skill Factory | 11/11 |
 | Acceptation totale | 40/40 |
 | Smoke test | réussi |
 | Scan GrowUp installé | réussi |
 | Scan Skill Factory installé | réussi |
+| Benchmark filtres cognitifs V0.11 | 13/13 |
 | Benchmark méta-compréhension V0.10 | 11/11 |
-| Benchmark squelette | ≥ 100 analyses/s (152,76 mesurées) |
+| Benchmark squelette | ≥ 100 analyses/s (154,04 mesurées) |
 | Benchmark Comprendre | réussi |
 | Benchmark holdout | réussi |
 | Benchmark Décision | réussi |
@@ -239,4 +259,4 @@ implicitement et qu’une altération après le rapport est refusée.
 
 ## Prochaine porte
 
-La prochaine étape doit relier les arêtes candidates issues des explications au cycle GrowUp → Tester → SECAU, afin qu'une relation validée puisse être réutilisée sans transformer une explication unique en vérité.
+La prochaine étape doit relier les nouveaux concepts candidats au cycle GrowUp → Tester → SECAU et étendre les paraphrases d'intention. L'autonomie matérielle viendra seulement après une porte séparée : plan, génération de code candidate, analyse statique, simulateur, tests de réaction, autorisation humaine, journal et rollback.

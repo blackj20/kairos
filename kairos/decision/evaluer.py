@@ -16,7 +16,7 @@ class Evaluer:
         self.configuration = configuration or ConfigurationDecision()
 
     def analyser(self, analyse: Analyse) -> EvaluationDecision:
-        type_requete = analyse.type_requete.valeur or "inconnu"
+        type_requete = self._type_effectif(analyse)
         manquants: list[str] = []
         contradictions: list[str] = []
         indices: list[str] = []
@@ -29,7 +29,7 @@ class Evaluer:
         if type_requete in {"ordre", "interdiction"}:
             if analyse.action.valeur is None or analyse.action.score < 51:
                 manquants.append("action")
-            elif self._cible_requise(analyse.action.valeur) and (
+            elif type_requete == "ordre" and self._cible_requise(analyse.action.valeur) and (
                 analyse.cible.valeur is None
                 or (
                     analyse.cible.score < 51
@@ -97,13 +97,20 @@ class Evaluer:
     def _score_global(
         self, analyse: Analyse, manquants: tuple[str, ...]
     ) -> int:
-        type_requete = analyse.type_requete.valeur or "inconnu"
+        type_requete = self._type_effectif(analyse)
+        type_score = analyse.type_requete.score
+        if type_requete != (analyse.type_requete.valeur or "inconnu"):
+            type_score = max(
+                type_score,
+                int(analyse.cognition.get("intention_score", 0)),
+            )
         if type_requete == "inconnu":
-            return analyse.type_requete.score
+            return type_score
 
         if type_requete in {"ordre", "interdiction"}:
             if (
-                analyse.action.valeur
+                type_requete == "ordre"
+                and analyse.action.valeur
                 in self.configuration.routes["actions_requiring_target"]
             ):
                 cible_score = analyse.cible.score
@@ -115,7 +122,7 @@ class Evaluer:
                 ):
                     cible_score = max(cible_score, 80)
                 score = round(
-                    0.40 * analyse.type_requete.score
+                    0.40 * type_score
                     + 0.35 * analyse.action.score
                     + 0.25 * cible_score
                 )
@@ -123,7 +130,7 @@ class Evaluer:
                     score += 5
             else:
                 score = round(
-                    0.55 * analyse.type_requete.score
+                    0.55 * type_score
                     + 0.45 * analyse.action.score
                 )
                 if not manquants:
@@ -131,7 +138,7 @@ class Evaluer:
             return max(0, min(score, 100))
 
         bonus_completude = 0 if manquants else 10
-        return min(100, analyse.type_requete.score + bonus_completude)
+        return min(100, type_score + bonus_completude)
 
     def _actions_possibles(
         self,
@@ -141,6 +148,17 @@ class Evaluer:
         contradictions: tuple[str, ...],
     ) -> tuple[ActionSuivante, ...]:
         seuils = self.configuration.seuils
+        choix_cognitif = str(
+            analyse.cognition.get("choix_recommande", "")
+        )
+        if choix_cognitif == "refuser":
+            return (
+                ActionSuivante(
+                    "refuser",
+                    100,
+                    ("filtre cognitif de prévention du dommage",),
+                ),
+            )
         if contradictions:
             return (
                 ActionSuivante(
@@ -190,7 +208,20 @@ class Evaluer:
                 ),
             )
 
-        route_analyse = analyse.verification.route
+        if choix_cognitif == "confirmer":
+            return (
+                ActionSuivante(
+                    "confirmer",
+                    100,
+                    ("risque élevé : confirmation explicite obligatoire",),
+                ),
+            )
+
+        route_analyse = (
+            "competence"
+            if self._type_effectif(analyse) == "ordre"
+            else analyse.verification.route
+        )
         if score >= seuils["authorize_min"]:
             return (
                 ActionSuivante(
@@ -227,6 +258,12 @@ class Evaluer:
                 ("score très faible",),
             ),
         )
+
+    @staticmethod
+    def _type_effectif(analyse: Analyse) -> str:
+        if analyse.cognition.get("intention") == "demande_indirecte":
+            return "ordre"
+        return str(analyse.type_requete.valeur or "inconnu")
 
     @staticmethod
     def _choisir_focus(

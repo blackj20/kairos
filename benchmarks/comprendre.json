@@ -65,7 +65,7 @@
     {
       "group": "variant",
       "text": "supprime le fichier",
-      "expected": {"type": "ordre", "action": "supprimer", "cible": "fichier", "route": "competence"}
+      "expected": {"type": "ordre", "action": "supprimer", "cible": "fichier", "route": "confirmer"}
     },
     {
       "group": "variant",
@@ -163,7 +163,7 @@
     {
       "group": "variant",
       "text": "peux-tu ouvrir le terminal ?",
-      "expected": {"type": "question", "action": "ouvrir", "cible": "terminal", "route": "repondre"}
+      "expected": {"type": "question", "action": "ouvrir", "cible": "terminal", "route": "competence"}
     },
     {
       "group": "variant",

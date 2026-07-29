@@ -6,7 +6,7 @@
     {"text": "ouvre le terminal", "route": "competence"},
     {"text": "ferme vscode", "route": "competence"},
     {"text": "lance git", "route": "competence"},
-    {"text": "supprime le fichier", "route": "competence"},
+    {"text": "supprime le fichier", "route": "confirmer", "question_field": "confirmation"},
     {"text": "marche vers la maison", "route": "competence"},
     {"text": "arrête", "route": "competence"},
     {"text": "stp ouvre le dossier", "route": "competence"},
@@ -47,7 +47,7 @@
     {"text": "n'installe pas python", "route": "controle"},
     {"text": "ne supprime pas le dossier", "route": "controle"},
     {"text": "interdit d'installer docker", "route": "controle"},
-    {"text": "ne ferme pas", "route": "clarification", "question_field": "cible"},
+    {"text": "ne ferme pas", "route": "controle"},
 
     {"text": "install python", "actor": "user", "route": "refuser"},
     {"text": "supprime le fichier", "actor": "user", "route": "refuser"}

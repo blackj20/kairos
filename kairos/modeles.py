@@ -130,6 +130,7 @@ class Analyse:
     decoupage: Decoupage | None = None
     sens_contextuels: tuple[SensContextuel, ...] = field(default_factory=tuple)
     relations: tuple[RelationSemantique, ...] = field(default_factory=tuple)
+    cognition: dict[str, Any] = field(default_factory=dict)
     verification: Verification = field(
         default_factory=lambda: Verification(
             valide=False,
