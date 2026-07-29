@@ -398,7 +398,9 @@ def main(argv: Sequence[str] | None = None) -> int:
             print()
             return 0
 
-        if requete.casefold() in {"quit", "exit", "stop"}:
+        if requete.casefold() in {"quit", "exit"}:
+            return 0
+        if requete.casefold() == "stop" and not kernel.apprentissage.active:
             return 0
         if not requete:
             continue
