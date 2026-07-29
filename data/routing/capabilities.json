@@ -70,6 +70,21 @@
       "description": "Produire une salutation adaptée",
       "risk": "pure",
       "permissions": []
+    },
+    "self.inspect": {
+      "description": "Lire l'identité protégée et les registres runtime",
+      "risk": "pure",
+      "permissions": []
+    },
+    "understanding.inspect": {
+      "description": "Expliquer une analyse et ses relations",
+      "risk": "pure",
+      "permissions": []
+    },
+    "decision.inspect": {
+      "description": "Expliquer la dernière décision et ses scores",
+      "risk": "pure",
+      "permissions": []
     }
   }
 }
