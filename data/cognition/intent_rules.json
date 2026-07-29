@@ -59,10 +59,7 @@
     "c est quoi",
     "que signifie",
     "quelle est",
-    "quel est",
-    "peux tu expliquer",
-    "pourrais tu expliquer",
-    "explique moi comment"
+    "quel est"
   ],
   "non_directive_self_patterns": [
     "je veux apprendre",
