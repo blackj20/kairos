@@ -140,6 +140,43 @@ class MemoryRepository:
                 return {**dict(row), "payload": payload}
         return None
 
+    def evidence(self, evidence_id: str) -> dict[str, Any] | None:
+        """Expose uniquement les métadonnées et l'empreinte d'une preuve."""
+
+        row = self.connection.execute(
+            "SELECT * FROM evidence WHERE id=?", (evidence_id,)
+        ).fetchone()
+        return dict(row) if row is not None else None
+
+    def evidence_matches(
+        self,
+        evidence_id: str,
+        *,
+        source_ref: str,
+        content: str,
+    ) -> bool:
+        """Vérifie simultanément provenance et intégrité SHA-256."""
+
+        row = self.evidence(evidence_id)
+        if row is None or str(row["source_ref"]) != source_ref:
+            return False
+        digest = "sha256:" + hashlib.sha256(content.encode()).hexdigest()
+        return str(row["content_hash"]) == digest
+
+    def research_candidates(self) -> list[dict[str, Any]]:
+        """Liste les hypothèses de recherche encore candidates."""
+
+        candidates: list[dict[str, Any]] = []
+        rows = self.connection.execute(
+            "SELECT * FROM hypotheses WHERE status='candidate' "
+            "ORDER BY created_at"
+        )
+        for row in rows:
+            payload = json.loads(row["payload_json"])
+            if payload.get("research_kind") == "information.search":
+                candidates.append({**dict(row), "payload": payload})
+        return candidates
+
     def save_report(self, subject_id: str, report: dict[str, Any]) -> str:
         report_id = f"report_{uuid.uuid4().hex}"
         with self.transaction() as db:

@@ -17,7 +17,12 @@
     "rechercher sur le Web HTTPS avec autorisation explicite",
     "comparer des sources sans les confondre avec des vérités",
     "créer et réutiliser une hypothèse candidate de recherche",
-    "expliquer un résultat avec sa provenance et son statut SECAU"
+    "expliquer un résultat avec sa provenance et son statut SECAU",
+    "préparer un dossier de consolidation depuis une recherche",
+    "vérifier l’intégrité SHA-256 des affirmations recherchées",
+    "tester une hypothèse de recherche avant revue",
+    "appeler SECAU et exposer son verdict",
+    "promouvoir un concept uniquement après un rapport Tester réussi"
   ],
   "verified": [
     {
@@ -71,6 +76,10 @@
     {
       "name": "Information Search contrôlée",
       "evidence": "124 tests, benchmark 8/8, 36 scénarios utilisateur et zéro promotion directe depuis une recherche"
+    },
+    {
+      "name": "Research Tester et SECAU",
+      "evidence": "130 tests, benchmark 10/10, 40 scénarios utilisateur et zéro promotion de recherche non testée"
     }
   ],
   "rule": "une capacité devient vérifiée uniquement après un test reproductible"
