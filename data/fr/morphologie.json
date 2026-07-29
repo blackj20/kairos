@@ -238,6 +238,126 @@
           "utilisees"
         ],
         "meaning": "employé pour accomplir une fonction"
+      },
+      "prudent": {
+        "forms": [
+          "prudent",
+          "prudente",
+          "prudents",
+          "prudentes"
+        ],
+        "meaning": "qui examine le risque avant d'agir"
+      },
+      "imprudent": {
+        "forms": [
+          "imprudent",
+          "imprudente",
+          "imprudents",
+          "imprudentes"
+        ],
+        "meaning": "qui agit sans contrôle suffisant du risque",
+        "opposite": "prudent"
+      },
+      "utile": {
+        "forms": [
+          "utile",
+          "utiles"
+        ],
+        "meaning": "qui contribue à un objectif déclaré"
+      },
+      "inutile": {
+        "forms": [
+          "inutile",
+          "inutiles"
+        ],
+        "meaning": "qui ne contribue pas à l'objectif courant",
+        "opposite": "utile"
+      },
+      "reversible": {
+        "forms": [
+          "réversible",
+          "reversible",
+          "réversibles",
+          "reversibles"
+        ],
+        "meaning": "qui peut être annulé avec restauration"
+      },
+      "irreversible": {
+        "forms": [
+          "irréversible",
+          "irreversible",
+          "irréversibles",
+          "irreversibles"
+        ],
+        "meaning": "qui ne peut pas être annulé complètement",
+        "opposite": "reversible"
+      },
+      "necessaire": {
+        "forms": [
+          "nécessaire",
+          "necessaire",
+          "nécessaires",
+          "necessaires"
+        ],
+        "meaning": "requis pour accomplir un objectif"
+      },
+      "facultatif": {
+        "forms": [
+          "facultatif",
+          "facultative",
+          "facultatifs",
+          "facultatives"
+        ],
+        "meaning": "possible mais non requis",
+        "opposite": "necessaire"
+      },
+      "bon": {
+        "forms": [
+          "bon",
+          "bonne",
+          "bons",
+          "bonnes"
+        ],
+        "meaning": "compatible avec la sécurité, la vérité, l'autorisation et l'objectif"
+      },
+      "mauvais": {
+        "forms": [
+          "mauvais",
+          "mauvaise",
+          "mauvaises"
+        ],
+        "meaning": "en conflit avec la sécurité, la vérité, l'autorisation ou l'objectif",
+        "opposite": "bon"
+      },
+      "nuisible": {
+        "forms": [
+          "nuisible",
+          "nuisibles"
+        ],
+        "meaning": "susceptible de causer un dommage"
+      },
+      "coherent": {
+        "forms": [
+          "cohérent",
+          "coherent",
+          "cohérente",
+          "coherente",
+          "cohérents",
+          "coherents"
+        ],
+        "meaning": "compatible avec les informations et l'objectif"
+      },
+      "incoherent": {
+        "forms": [
+          "incohérent",
+          "incoherent",
+          "incohérente",
+          "incoherente",
+          "incohérents",
+          "incoherents"
+        ],
+        "meaning": "incompatible avec les informations ou l'objectif",
+        "opposite": "coherent"
       }
     },
     "nom_commun": {
@@ -481,6 +601,128 @@
           "preuves"
         ],
         "meaning": "élément vérifiable soutenant ou contredisant une hypothèse"
+      },
+      "intention": {
+        "forms": [
+          "intention",
+          "intentions"
+        ],
+        "meaning": "résultat recherché derrière la forme d'une phrase"
+      },
+      "besoin": {
+        "forms": [
+          "besoin",
+          "besoins"
+        ],
+        "meaning": "condition nécessaire pour atteindre un objectif"
+      },
+      "envie": {
+        "forms": [
+          "envie",
+          "envies",
+          "souhait",
+          "souhaits"
+        ],
+        "meaning": "préférence qui influence sans autoriser"
+      },
+      "manque": {
+        "forms": [
+          "manque",
+          "manques"
+        ],
+        "meaning": "information, capacité, preuve ou permission absente"
+      },
+      "prudence": {
+        "forms": [
+          "prudence"
+        ],
+        "meaning": "contrôle proportionnel au risque et à l'incertitude"
+      },
+      "direction": {
+        "forms": [
+          "direction",
+          "directions"
+        ],
+        "meaning": "alignement d'un choix avec un objectif"
+      },
+      "choix": {
+        "forms": [
+          "choix",
+          "décision",
+          "decision",
+          "décisions",
+          "decisions"
+        ],
+        "meaning": "route retenue après comparaison des possibilités"
+      },
+      "autorisation": {
+        "forms": [
+          "autorisation",
+          "autorisations",
+          "permission",
+          "permissions"
+        ],
+        "meaning": "accord explicite nécessaire avant une action à effet"
+      },
+      "reversibilite": {
+        "forms": [
+          "réversibilité",
+          "reversibilite"
+        ],
+        "meaning": "capacité à annuler une action et restaurer l'état précédent"
+      },
+      "risque": {
+        "forms": [
+          "risque",
+          "risques"
+        ],
+        "meaning": "possibilité mesurable de produire un dommage"
+      },
+      "dommage": {
+        "forms": [
+          "dommage",
+          "dommages",
+          "dégât",
+          "degat",
+          "dégâts",
+          "degats"
+        ],
+        "meaning": "effet négatif sur une personne, une donnée ou un système"
+      },
+      "verite": {
+        "forms": [
+          "vérité",
+          "verite"
+        ],
+        "meaning": "conformité avec les preuves disponibles"
+      },
+      "integrite": {
+        "forms": [
+          "intégrité",
+          "integrite"
+        ],
+        "meaning": "état complet et non altéré d'une donnée ou d'un système"
+      },
+      "securite": {
+        "forms": [
+          "sécurité",
+          "securite"
+        ],
+        "meaning": "état dans lequel les risques sont contrôlés"
+      },
+      "filtre": {
+        "forms": [
+          "filtre",
+          "filtres"
+        ],
+        "meaning": "règle qui accepte, modifie ou bloque une possibilité"
+      },
+      "personnalite": {
+        "forms": [
+          "personnalité",
+          "personnalite"
+        ],
+        "meaning": "ensemble stable de préférences et de comportements observables"
       }
     },
     "nom_propre": {
