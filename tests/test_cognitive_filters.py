@@ -17,7 +17,7 @@ class TestFiltresCognitifs(unittest.TestCase):
             "executer_si_route_autorisee",
             decision.analyse.cognition["choix_recommande"],
         )
-        self.assertIn(decision.route, {"competence", "confirmer"})
+        self.assertEqual("competence", decision.route)
 
     def test_desire_does_not_become_authorization(self) -> None:
         decision = Kernel().traiter("je veux supprimer fichier")
