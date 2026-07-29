@@ -103,32 +103,32 @@ class TestCognitiveCommands(unittest.TestCase):
         kernel = Kernel()
         kernel.traiter("bonjjour")
         first = kernel.traiter("pose-moi des questions")
-        self.assertIn("corrigé le sujet en « bonjour »", first.reponse)
+        self.assertIn("interprété le sujet comme « bonjour »", first.reponse)
         self.assertIn("Question 1/4", first.reponse)
-        self.assertIn("Type de réponse attendu : définition", first.reponse)
+        self.assertIn("Réponds naturellement", first.reponse)
         self.assertEqual(
-            "définition : une phrase d'au moins 5 mots",
+            "une explication libre et compréhensible",
             kernel.attente_pedagogique,
         )
 
         too_short = kernel.traiter("une salutation")
-        self.assertIn("Réponse à améliorer", too_short.reponse)
+        self.assertIn("pas encore assez d'éléments", too_short.reponse)
         self.assertIn("même question", too_short.reponse)
         self.assertNotIn("Question 2/4", too_short.reponse)
 
         accepted = kernel.traiter(
             "bonjour est une formule utilisée pour saluer une personne"
         )
-        self.assertIn("Proposition corrigée", accepted.reponse)
+        self.assertIn("compris provisoirement", accepted.reponse)
         self.assertIn("Question 2/4", accepted.reponse)
-        self.assertIn("trois exemples", accepted.reponse)
+        self.assertIn("situations concrètes", accepted.reponse)
         self.assertEqual(
-            "3 exemples distincts, séparés par des virgules",
+            "au moins deux situations concrètes",
             kernel.attente_pedagogique,
         )
 
-        examples_short = kernel.traiter("le matin et le soir")
-        self.assertIn("trois exemples distincts", examples_short.reponse)
+        examples_short = kernel.traiter("le matin")
+        self.assertIn("deux situations concrètes", examples_short.reponse)
         self.assertNotIn("Question 3/4", examples_short.reponse)
 
         examples = kernel.traiter(
