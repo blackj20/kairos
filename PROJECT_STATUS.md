@@ -2,7 +2,7 @@
 
 ## Statut
 
-**V0.6 — prototype opérationnel de compréhension, décision, apprentissage supervisé, skills pures et routage déclaratif ancré aux capacités.**
+**V0.7 — prototype opérationnel de compréhension, décision, apprentissage supervisé, skills pures et routage déclaratif et recherche d’information contrôlée.**
 
 Ce statut signifie que le projet est installable depuis un clone propre,
 démarre même lorsque la mémoire mutable n’existe pas encore, analyse une
@@ -101,6 +101,17 @@ python user_acceptance_v06.py
 - `toi-même` reconnu comme modificateur et non comme cible ;
 - chaque verdict SECAU inscrit dans l’audit et consultable en CLI.
 
+### Information Search V0.7
+
+- recherche locale dans les connaissances confirmées ;
+- cible inconnue acceptée comme objet de recherche, pas comme sens déjà compris ;
+- recherche Wikipédia HTTPS seulement après `--online` ;
+- fournisseur injecté pour les tests sans réseau ;
+- comparaison du nombre de sources, des domaines et du recouvrement lexical ;
+- hypothèse candidate avec empreintes de preuve et URLs ;
+- réutilisation d’une candidate existante ;
+- zéro promotion et zéro revue SECAU automatique.
+
 ## Cycle démontré
 
 ```text
@@ -148,10 +159,10 @@ vertes sous Python 3.11, 3.12 et 3.13 :
 
 | Porte | Seuil |
 |---|---:|
-| Tests automatisés | 118/118 |
+| Tests automatisés | 124/124 |
 | Acceptation historique et V0.4 | 18/18 |
 | Acceptation CLI Skill Factory | 11/11 |
-| Acceptation totale | 33/33 |
+| Acceptation totale | 36/36 |
 | Smoke test | réussi |
 | Scan GrowUp installé | réussi |
 | Scan Skill Factory installé | réussi |
@@ -161,6 +172,8 @@ vertes sous Python 3.11, 3.12 et 3.13 :
 | Benchmark GrowUp | réussi |
 | Benchmark Skill Factory | réussi |
 | Benchmark Action Router | 15/15 |
+| Benchmark Information Search | 8/8 |
+| Promotions frauduleuses | 0 |
 | Fausses exécutions de route | 0 |
 | Fausses exécutions | 0 autorisée |
 
@@ -183,4 +196,4 @@ implicitement et qu’une altération après le rapport est refusée.
 
 ## Prochaine porte
 
-La prochaine étape doit implémenter les premières capacités atomiques de lecture : recherche mémoire, lecture documentaire, recherche Web contrôlée et comparaison de sources. Les outils PC limités viendront ensuite, jamais sous forme de shell libre.
+La prochaine étape doit tester les hypothèses issues des recherches, produire exemples et contre-exemples, puis rendre la revue SECAU visible. Aucune recherche ne doit contourner cette porte.
