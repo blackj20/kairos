@@ -56,6 +56,19 @@ class Evaluer:
             # Le terme reste sémantiquement inconnu, mais il est une cible
             # textuelle complète pour une opération de recherche en lecture.
             score = max(score, self.configuration.seuils["authorize_min"])
+        if (
+            not manquants
+            and analyse.cognition.get("intention") == "demande_indirecte"
+            and analyse.cognition.get("choix_recommande")
+            == "executer_si_route_autorisee"
+            and int(analyse.cognition.get("risque_score", 100))
+            < int(analyse.cognition.get("seuil_confirmation", 80))
+        ):
+            # Une forme polie complète ne doit pas perdre des points parce
+            # que l'impératif n'est pas en première position. Les permissions
+            # finales restent contrôlées par VerifierDecision.
+            score = max(score, self.configuration.seuils["authorize_min"])
+
         focus = self._choisir_focus(analyse, tuple(manquants))
         actions = self._actions_possibles(
             analyse,
@@ -217,9 +230,23 @@ class Evaluer:
                 ),
             )
 
+        structure = str(
+            analyse.cognition.get("structure_intention", "")
+        )
+        intention = str(analyse.cognition.get("intention", ""))
+        reponse_cognitive = (
+            choix_cognitif == "repondre"
+            and (
+                intention in {"besoin_exprime", "envie_exprimee"}
+                or structure
+                in {"question_capacite", "question_information"}
+            )
+        )
         route_analyse = (
             "competence"
             if self._type_effectif(analyse) == "ordre"
+            else "repondre"
+            if reponse_cognitive
             else analyse.verification.route
         )
         if score >= seuils["authorize_min"]:

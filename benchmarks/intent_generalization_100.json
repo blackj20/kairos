@@ -1,0 +1,706 @@
+{
+  "version": 1,
+  "description": "Corpus V0.12 séparé des anciens benchmarks. Il mesure la généralisation d'intention et interdit toute fausse exécution.",
+  "cases": [
+    {
+      "group": "indirect_request",
+      "text": "pourrais-tu chercher atome ?",
+      "expected_intent": "demande_indirecte",
+      "expected_route": "competence",
+      "actor": "creator"
+    },
+    {
+      "group": "indirect_request",
+      "text": "tu pourrais gentiment ouvrir le dossier ?",
+      "expected_intent": "demande_indirecte",
+      "expected_route": "competence",
+      "actor": "creator"
+    },
+    {
+      "group": "indirect_request",
+      "text": "est-ce que tu peux lire le fichier ?",
+      "expected_intent": "demande_indirecte",
+      "expected_route": "competence",
+      "actor": "creator"
+    },
+    {
+      "group": "indirect_request",
+      "text": "je voudrais que tu vérifies le fichier",
+      "expected_intent": "demande_indirecte",
+      "expected_route": "competence",
+      "actor": "creator"
+    },
+    {
+      "group": "indirect_request",
+      "text": "j'aimerais que tu cherches le proton",
+      "expected_intent": "demande_indirecte",
+      "expected_route": "competence",
+      "actor": "creator"
+    },
+    {
+      "group": "indirect_request",
+      "text": "j'ai besoin que tu lises le fichier",
+      "expected_intent": "demande_indirecte",
+      "expected_route": "competence",
+      "actor": "creator"
+    },
+    {
+      "group": "indirect_request",
+      "text": "il faudrait que tu corriges le fichier",
+      "expected_intent": "demande_indirecte",
+      "expected_route": "competence",
+      "actor": "creator"
+    },
+    {
+      "group": "indirect_request",
+      "text": "il faut que tu installes python",
+      "expected_intent": "demande_indirecte",
+      "expected_route": "competence",
+      "actor": "creator"
+    },
+    {
+      "group": "indirect_request",
+      "text": "merci de fermer vscode",
+      "expected_intent": "demande_indirecte",
+      "expected_route": "competence",
+      "actor": "creator"
+    },
+    {
+      "group": "indirect_request",
+      "text": "prière de lancer python",
+      "expected_intent": "demande_indirecte",
+      "expected_route": "competence",
+      "actor": "creator"
+    },
+    {
+      "group": "indirect_request",
+      "text": "veuillez ouvrir le terminal",
+      "expected_intent": "demande_indirecte",
+      "expected_route": "competence",
+      "actor": "creator"
+    },
+    {
+      "group": "indirect_request",
+      "text": "voudrais-tu chercher électron ?",
+      "expected_intent": "demande_indirecte",
+      "expected_route": "competence",
+      "actor": "creator"
+    },
+    {
+      "group": "indirect_request",
+      "text": "veux-tu bien afficher le fichier ?",
+      "expected_intent": "demande_indirecte",
+      "expected_route": "competence",
+      "actor": "creator"
+    },
+    {
+      "group": "indirect_request",
+      "text": "aurais-tu la possibilité de lire le fichier ?",
+      "expected_intent": "demande_indirecte",
+      "expected_route": "competence",
+      "actor": "creator"
+    },
+    {
+      "group": "indirect_request",
+      "text": "serait-il possible de vérifier le fichier ?",
+      "expected_intent": "demande_indirecte",
+      "expected_route": "competence",
+      "actor": "creator"
+    },
+    {
+      "group": "indirect_request",
+      "text": "ça te dérange de fermer vscode ?",
+      "expected_intent": "demande_indirecte",
+      "expected_route": "competence",
+      "actor": "creator"
+    },
+    {
+      "group": "indirect_request",
+      "text": "cela te dérange de lancer git ?",
+      "expected_intent": "demande_indirecte",
+      "expected_route": "competence",
+      "actor": "creator"
+    },
+    {
+      "group": "indirect_request",
+      "text": "pourriez-vous ouvrir le dossier ?",
+      "expected_intent": "demande_indirecte",
+      "expected_route": "competence",
+      "actor": "creator"
+    },
+    {
+      "group": "indirect_request",
+      "text": "vous pourriez lire le fichier ?",
+      "expected_intent": "demande_indirecte",
+      "expected_route": "competence",
+      "actor": "creator"
+    },
+    {
+      "group": "indirect_request",
+      "text": "je veux que tu ouvres le terminal",
+      "expected_intent": "demande_indirecte",
+      "expected_route": "competence",
+      "actor": "creator"
+    },
+    {
+      "group": "indirect_request",
+      "text": "je voudrais que tu installes git",
+      "expected_intent": "demande_indirecte",
+      "expected_route": "competence",
+      "actor": "creator"
+    },
+    {
+      "group": "indirect_request",
+      "text": "j'aimerais que tu expliques atome",
+      "expected_intent": "demande_indirecte",
+      "expected_route": "competence",
+      "actor": "creator"
+    },
+    {
+      "group": "indirect_request",
+      "text": "je souhaite que tu écrives le fichier",
+      "expected_intent": "demande_indirecte",
+      "expected_route": "competence",
+      "actor": "creator"
+    },
+    {
+      "group": "indirect_request",
+      "text": "j'ai besoin que tu télécharges python",
+      "expected_intent": "demande_indirecte",
+      "expected_route": "competence",
+      "actor": "creator"
+    },
+    {
+      "group": "indirect_request",
+      "text": "il faudrait que tu crées le dossier",
+      "expected_intent": "demande_indirecte",
+      "expected_route": "competence",
+      "actor": "creator"
+    },
+    {
+      "group": "indirect_request",
+      "text": "tu peux vérifier atome ?",
+      "expected_intent": "demande_indirecte",
+      "expected_route": "competence",
+      "actor": "creator"
+    },
+    {
+      "group": "indirect_request",
+      "text": "tu pourrais relire le fichier ?",
+      "expected_intent": "demande_indirecte",
+      "expected_route": "competence",
+      "actor": "creator"
+    },
+    {
+      "group": "indirect_request",
+      "text": "est-ce que tu peux rechercher le proton ?",
+      "expected_intent": "demande_indirecte",
+      "expected_route": "competence",
+      "actor": "creator"
+    },
+    {
+      "group": "indirect_request",
+      "text": "auriez-vous la possibilité de chercher atome ?",
+      "expected_intent": "demande_indirecte",
+      "expected_route": "competence",
+      "actor": "creator"
+    },
+    {
+      "group": "indirect_request",
+      "text": "s'il vous plaît, pourriez-vous ouvrir le terminal ?",
+      "expected_intent": "demande_indirecte",
+      "expected_route": "competence",
+      "actor": "creator"
+    },
+    {
+      "group": "capability_question",
+      "text": "sais-tu installer docker ?",
+      "expected_intent": "obtenir_information",
+      "expected_route": "repondre",
+      "actor": "creator"
+    },
+    {
+      "group": "capability_question",
+      "text": "savez-vous ouvrir le terminal ?",
+      "expected_intent": "obtenir_information",
+      "expected_route": "repondre",
+      "actor": "creator"
+    },
+    {
+      "group": "capability_question",
+      "text": "est-ce que tu sais chercher atome ?",
+      "expected_intent": "obtenir_information",
+      "expected_route": "repondre",
+      "actor": "creator"
+    },
+    {
+      "group": "capability_question",
+      "text": "es-tu capable de supprimer le fichier ?",
+      "expected_intent": "obtenir_information",
+      "expected_route": "repondre",
+      "actor": "creator"
+    },
+    {
+      "group": "capability_question",
+      "text": "êtes-vous capable de lire le dossier ?",
+      "expected_intent": "obtenir_information",
+      "expected_route": "repondre",
+      "actor": "creator"
+    },
+    {
+      "group": "capability_question",
+      "text": "tu sais comment installer python ?",
+      "expected_intent": "obtenir_information",
+      "expected_route": "repondre",
+      "actor": "creator"
+    },
+    {
+      "group": "capability_question",
+      "text": "vous savez comment ouvrir vscode ?",
+      "expected_intent": "obtenir_information",
+      "expected_route": "repondre",
+      "actor": "creator"
+    },
+    {
+      "group": "capability_question",
+      "text": "sais-tu expliquer atome ?",
+      "expected_intent": "obtenir_information",
+      "expected_route": "repondre",
+      "actor": "creator"
+    },
+    {
+      "group": "capability_question",
+      "text": "est-ce que vous savez vérifier le fichier ?",
+      "expected_intent": "obtenir_information",
+      "expected_route": "repondre",
+      "actor": "creator"
+    },
+    {
+      "group": "capability_question",
+      "text": "es-tu capable de lancer git ?",
+      "expected_intent": "obtenir_information",
+      "expected_route": "repondre",
+      "actor": "creator"
+    },
+    {
+      "group": "capability_question",
+      "text": "savez-vous corriger le fichier ?",
+      "expected_intent": "obtenir_information",
+      "expected_route": "repondre",
+      "actor": "creator"
+    },
+    {
+      "group": "capability_question",
+      "text": "est-ce que tu sais télécharger python ?",
+      "expected_intent": "obtenir_information",
+      "expected_route": "repondre",
+      "actor": "creator"
+    },
+    {
+      "group": "capability_question",
+      "text": "êtes-vous capable de renommer le fichier ?",
+      "expected_intent": "obtenir_information",
+      "expected_route": "repondre",
+      "actor": "creator"
+    },
+    {
+      "group": "capability_question",
+      "text": "tu sais comment sauvegarder le fichier ?",
+      "expected_intent": "obtenir_information",
+      "expected_route": "repondre",
+      "actor": "creator"
+    },
+    {
+      "group": "capability_question",
+      "text": "vous savez comment comparer atome ?",
+      "expected_intent": "obtenir_information",
+      "expected_route": "repondre",
+      "actor": "creator"
+    },
+    {
+      "group": "information_question",
+      "text": "comment installer python ?",
+      "expected_intent": "obtenir_information",
+      "expected_route": "repondre",
+      "actor": "creator"
+    },
+    {
+      "group": "information_question",
+      "text": "pourquoi supprimer le fichier ?",
+      "expected_intent": "obtenir_information",
+      "expected_route": "repondre",
+      "actor": "creator"
+    },
+    {
+      "group": "information_question",
+      "text": "comment ouvrir le terminal ?",
+      "expected_intent": "obtenir_information",
+      "expected_route": "repondre",
+      "actor": "creator"
+    },
+    {
+      "group": "information_question",
+      "text": "pourquoi fermer vscode ?",
+      "expected_intent": "obtenir_information",
+      "expected_route": "repondre",
+      "actor": "creator"
+    },
+    {
+      "group": "information_question",
+      "text": "comment chercher atome ?",
+      "expected_intent": "obtenir_information",
+      "expected_route": "repondre",
+      "actor": "creator"
+    },
+    {
+      "group": "information_question",
+      "text": "comment vérifier le fichier ?",
+      "expected_intent": "obtenir_information",
+      "expected_route": "repondre",
+      "actor": "creator"
+    },
+    {
+      "group": "information_question",
+      "text": "comment lire le dossier ?",
+      "expected_intent": "obtenir_information",
+      "expected_route": "repondre",
+      "actor": "creator"
+    },
+    {
+      "group": "information_question",
+      "text": "comment corriger le fichier ?",
+      "expected_intent": "obtenir_information",
+      "expected_route": "repondre",
+      "actor": "creator"
+    },
+    {
+      "group": "information_question",
+      "text": "comment créer le dossier ?",
+      "expected_intent": "obtenir_information",
+      "expected_route": "repondre",
+      "actor": "creator"
+    },
+    {
+      "group": "information_question",
+      "text": "comment renommer le fichier ?",
+      "expected_intent": "obtenir_information",
+      "expected_route": "repondre",
+      "actor": "creator"
+    },
+    {
+      "group": "information_question",
+      "text": "comment télécharger python ?",
+      "expected_intent": "obtenir_information",
+      "expected_route": "repondre",
+      "actor": "creator"
+    },
+    {
+      "group": "information_question",
+      "text": "comment lancer git ?",
+      "expected_intent": "obtenir_information",
+      "expected_route": "repondre",
+      "actor": "creator"
+    },
+    {
+      "group": "information_question",
+      "text": "comment expliquer atome ?",
+      "expected_intent": "obtenir_information",
+      "expected_route": "repondre",
+      "actor": "creator"
+    },
+    {
+      "group": "information_question",
+      "text": "comment sauvegarder le fichier ?",
+      "expected_intent": "obtenir_information",
+      "expected_route": "repondre",
+      "actor": "creator"
+    },
+    {
+      "group": "information_question",
+      "text": "comment déplacer le fichier ?",
+      "expected_intent": "obtenir_information",
+      "expected_route": "repondre",
+      "actor": "creator"
+    },
+    {
+      "group": "direct_order",
+      "text": "ouvre le terminal",
+      "expected_intent": "ordre_direct",
+      "expected_route": "competence",
+      "actor": "creator"
+    },
+    {
+      "group": "direct_order",
+      "text": "cherche atome",
+      "expected_intent": "ordre_direct",
+      "expected_route": "competence",
+      "actor": "creator"
+    },
+    {
+      "group": "direct_order",
+      "text": "lis le fichier",
+      "expected_intent": "ordre_direct",
+      "expected_route": "competence",
+      "actor": "creator"
+    },
+    {
+      "group": "direct_order",
+      "text": "vérifie le fichier",
+      "expected_intent": "ordre_direct",
+      "expected_route": "competence",
+      "actor": "creator"
+    },
+    {
+      "group": "direct_order",
+      "text": "sauvegarde le fichier",
+      "expected_intent": "ordre_direct",
+      "expected_route": "competence",
+      "actor": "creator"
+    },
+    {
+      "group": "direct_order",
+      "text": "corrige le fichier",
+      "expected_intent": "ordre_direct",
+      "expected_route": "competence",
+      "actor": "creator"
+    },
+    {
+      "group": "direct_order",
+      "text": "lance git",
+      "expected_intent": "ordre_direct",
+      "expected_route": "competence",
+      "actor": "creator"
+    },
+    {
+      "group": "direct_order",
+      "text": "installe python",
+      "expected_intent": "ordre_direct",
+      "expected_route": "competence",
+      "actor": "creator"
+    },
+    {
+      "group": "direct_order",
+      "text": "supprime le fichier",
+      "expected_intent": "ordre_direct",
+      "expected_route": "confirmer",
+      "actor": "creator"
+    },
+    {
+      "group": "direct_order",
+      "text": "retire le fichier",
+      "expected_intent": "ordre_direct",
+      "expected_route": "confirmer",
+      "actor": "creator"
+    },
+    {
+      "group": "prohibition",
+      "text": "ne ferme pas vscode",
+      "expected_intent": "protection",
+      "expected_route": "controle",
+      "actor": "creator"
+    },
+    {
+      "group": "prohibition",
+      "text": "n'ouvre jamais le terminal",
+      "expected_intent": "protection",
+      "expected_route": "controle",
+      "actor": "creator"
+    },
+    {
+      "group": "prohibition",
+      "text": "ne supprime pas le fichier",
+      "expected_intent": "protection",
+      "expected_route": "controle",
+      "actor": "creator"
+    },
+    {
+      "group": "prohibition",
+      "text": "interdit d'installer docker",
+      "expected_intent": "protection",
+      "expected_route": "controle",
+      "actor": "creator"
+    },
+    {
+      "group": "prohibition",
+      "text": "défense de lancer git",
+      "expected_intent": "protection",
+      "expected_route": "controle",
+      "actor": "creator"
+    },
+    {
+      "group": "prohibition",
+      "text": "ne cherche pas atome",
+      "expected_intent": "protection",
+      "expected_route": "controle",
+      "actor": "creator"
+    },
+    {
+      "group": "prohibition",
+      "text": "ne relis pas le fichier",
+      "expected_intent": "protection",
+      "expected_route": "controle",
+      "actor": "creator"
+    },
+    {
+      "group": "prohibition",
+      "text": "n'écris pas le fichier",
+      "expected_intent": "protection",
+      "expected_route": "controle",
+      "actor": "creator"
+    },
+    {
+      "group": "prohibition",
+      "text": "ne télécharge pas python",
+      "expected_intent": "protection",
+      "expected_route": "controle",
+      "actor": "creator"
+    },
+    {
+      "group": "prohibition",
+      "text": "ne corrige jamais le fichier",
+      "expected_intent": "protection",
+      "expected_route": "controle",
+      "actor": "creator"
+    },
+    {
+      "group": "need_desire",
+      "text": "je veux apprendre python",
+      "expected_intent": "envie_exprimee",
+      "expected_route": "repondre",
+      "actor": "creator"
+    },
+    {
+      "group": "need_desire",
+      "text": "je voudrais apprendre docker",
+      "expected_intent": "envie_exprimee",
+      "expected_route": "repondre",
+      "actor": "creator"
+    },
+    {
+      "group": "need_desire",
+      "text": "j'aimerais apprendre linux",
+      "expected_intent": "envie_exprimee",
+      "expected_route": "repondre",
+      "actor": "creator"
+    },
+    {
+      "group": "need_desire",
+      "text": "je souhaite apprendre git",
+      "expected_intent": "envie_exprimee",
+      "expected_route": "repondre",
+      "actor": "creator"
+    },
+    {
+      "group": "need_desire",
+      "text": "j'ai besoin d'apprendre python",
+      "expected_intent": "besoin_exprime",
+      "expected_route": "repondre",
+      "actor": "creator"
+    },
+    {
+      "group": "need_desire",
+      "text": "il me faut apprendre docker",
+      "expected_intent": "besoin_exprime",
+      "expected_route": "repondre",
+      "actor": "creator"
+    },
+    {
+      "group": "need_desire",
+      "text": "nous avons besoin d'apprendre git",
+      "expected_intent": "besoin_exprime",
+      "expected_route": "repondre",
+      "actor": "creator"
+    },
+    {
+      "group": "need_desire",
+      "text": "c'est nécessaire d'apprendre python",
+      "expected_intent": "besoin_exprime",
+      "expected_route": "repondre",
+      "actor": "creator"
+    },
+    {
+      "group": "need_desire",
+      "text": "je veux lire le fichier",
+      "expected_intent": "envie_exprimee",
+      "expected_route": "repondre",
+      "actor": "creator"
+    },
+    {
+      "group": "need_desire",
+      "text": "j'ai besoin de lire le fichier",
+      "expected_intent": "besoin_exprime",
+      "expected_route": "repondre",
+      "actor": "creator"
+    },
+    {
+      "group": "conversation_and_ambiguity",
+      "text": "c'est incorrect",
+      "expected_intent": "incertaine",
+      "expected_route": "repondre",
+      "actor": "creator"
+    },
+    {
+      "group": "conversation_and_ambiguity",
+      "text": "tu as raison",
+      "expected_intent": "incertaine",
+      "expected_route": "repondre",
+      "actor": "creator"
+    },
+    {
+      "group": "conversation_and_ambiguity",
+      "text": "c'est faux",
+      "expected_intent": "incertaine",
+      "expected_route": "repondre",
+      "actor": "creator"
+    },
+    {
+      "group": "conversation_and_ambiguity",
+      "text": "ça marche",
+      "expected_intent": "incertaine",
+      "expected_route": "repondre",
+      "actor": "creator"
+    },
+    {
+      "group": "conversation_and_ambiguity",
+      "text": "bonjour",
+      "expected_intent": "incertaine",
+      "expected_route": "repondre",
+      "actor": "creator"
+    },
+    {
+      "group": "conversation_and_ambiguity",
+      "text": "bonsoir",
+      "expected_intent": "incertaine",
+      "expected_route": "repondre",
+      "actor": "creator"
+    },
+    {
+      "group": "conversation_and_ambiguity",
+      "text": "salut comment ça va ?",
+      "expected_intent": "obtenir_information",
+      "expected_route": "repondre",
+      "actor": "creator"
+    },
+    {
+      "group": "conversation_and_ambiguity",
+      "text": "python et docker",
+      "expected_intent": "incertaine",
+      "expected_route": "clarification",
+      "actor": "creator"
+    },
+    {
+      "group": "conversation_and_ambiguity",
+      "text": "pas maintenant",
+      "expected_intent": "incertaine",
+      "expected_route": "clarification",
+      "actor": "creator"
+    },
+    {
+      "group": "conversation_and_ambiguity",
+      "text": "ouvre python et ferme vscode",
+      "expected_intent": "ordre_direct",
+      "expected_route": "clarification",
+      "actor": "creator"
+    }
+  ]
+}

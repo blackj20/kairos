@@ -1,0 +1,84 @@
+{
+  "version": 1,
+  "request_openers": [
+    "peux tu",
+    "pourrais tu",
+    "tu peux",
+    "tu pourrais",
+    "veux tu bien",
+    "voudrais tu",
+    "je veux que tu",
+    "je voudrais que tu",
+    "j aimerais que tu",
+    "je souhaite que tu",
+    "j ai besoin que tu",
+    "il faut que tu",
+    "il faudrait que tu",
+    "merci de",
+    "priere de",
+    "veuillez",
+    "aurais tu la possibilite de",
+    "auriez vous la possibilite de",
+    "serait il possible de",
+    "ca te derange de",
+    "cela te derange de"
+  ],
+  "modal_tokens": [
+    "peux",
+    "pourrais",
+    "pourriez",
+    "voudrais",
+    "voudriez"
+  ],
+  "second_person_tokens": [
+    "tu",
+    "vous"
+  ],
+  "politeness_markers": [
+    "s il te plait",
+    "s il vous plait",
+    "stp",
+    "svp",
+    "gentiment",
+    "maintenant"
+  ],
+  "capability_questions": [
+    "sais tu",
+    "savez vous",
+    "est ce que tu sais",
+    "est ce que vous savez",
+    "es tu capable de",
+    "etes vous capable de",
+    "tu sais comment",
+    "vous savez comment"
+  ],
+  "information_openers": [
+    "comment",
+    "pourquoi",
+    "qu est ce que",
+    "c est quoi",
+    "que signifie",
+    "quelle est",
+    "quel est"
+  ],
+  "non_directive_self_patterns": [
+    "je veux apprendre",
+    "je voudrais apprendre",
+    "j aimerais apprendre",
+    "je souhaite apprendre",
+    "j ai besoin d apprendre"
+  ],
+  "negation_tokens": [
+    "ne",
+    "n",
+    "pas",
+    "jamais"
+  ],
+  "scores": {
+    "explicit_request": 96,
+    "composed_request": 92,
+    "capability_question": 94,
+    "information_question": 94,
+    "uncertain": 45
+  }
+}

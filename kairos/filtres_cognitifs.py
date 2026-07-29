@@ -9,6 +9,7 @@ from dataclasses import asdict, dataclass
 from pathlib import Path
 from typing import Any
 
+from .generalisation_intention import GeneralisateurIntention
 from .modeles import Analyse
 
 
@@ -18,12 +19,14 @@ class ProfilCognitif:
 
     intention: str
     intention_score: int
+    structure_intention: str
     direction: str
     besoins: tuple[str, ...]
     envies: tuple[str, ...]
     manques: tuple[str, ...]
     risque: str
     risque_score: int
+    seuil_confirmation: int
     prudence: str
     choix_recommande: str
     filtres: tuple[str, ...]
@@ -40,6 +43,7 @@ class FiltresCognitifs:
         self.racine = racine or Path(__file__).resolve().parent.parent
         self.concepts = self._lire("data/cognition/concepts.json")
         self.regles = self._lire("data/cognition/filters.json")
+        self.generalisateur = GeneralisateurIntention(self.racine)
         self._valider()
         self._mots_formes = {
             mot
@@ -47,21 +51,29 @@ class FiltresCognitifs:
             for forme in groupes
             for mot in self._normaliser(str(forme)).split()
         }
+        self._mots_formes.update(self.generalisateur.mots_fonctionnels)
 
     def evaluer(self, analyse: Analyse) -> ProfilCognitif:
         texte = self._normaliser(analyse.texte_normalise)
         action = str(analyse.action.valeur or "")
         type_requete = str(analyse.type_requete.valeur or "inconnu")
+        lecture_intention = self.generalisateur.analyser(
+            texte,
+            action=action,
+            type_requete=type_requete,
+        )
         indirecte = bool(
-            action
-            and self._contient_forme(texte, "indirect_request")
+            lecture_intention.indirecte
             and action not in self.regles["non_directive_desires"]
-            and type_requete != "interdiction"
         )
         commande = type_requete == "ordre" or indirecte
 
         intention, intention_score = self._intention(
-            texte, type_requete, indirecte
+            texte,
+            type_requete,
+            indirecte,
+            lecture_intention.nature,
+            lecture_intention.score,
         )
         famille_risque, score_risque = self._risque_action(action)
         dommage = commande and any(
@@ -82,11 +94,12 @@ class FiltresCognitifs:
         manques: list[str] = []
         filtres: list[str] = ["truth", "authorization", "objective_alignment"]
         raisons: list[str] = [f"intention détectée : {intention}"]
+        raisons.extend(lecture_intention.signaux)
 
         inconnus_reels = tuple(
             mot
             for mot in analyse.jetons_inconnus
-            if self._normaliser(mot) not in self._mots_formes
+            if not self._est_forme_fonctionnelle(mot)
         )
         if inconnus_reels:
             besoins.append("information")
@@ -150,12 +163,16 @@ class FiltresCognitifs:
         return ProfilCognitif(
             intention=intention,
             intention_score=intention_score,
+            structure_intention=lecture_intention.nature,
             direction=direction,
             besoins=self._uniques(besoins),
             envies=self._uniques(envies),
             manques=self._uniques(manques),
             risque=famille_risque,
             risque_score=score_risque,
+            seuil_confirmation=int(
+                self.regles["thresholds"]["confirm_min"]
+            ),
             prudence=prudence,
             choix_recommande=choix,
             filtres=self._uniques(filtres),
@@ -163,12 +180,19 @@ class FiltresCognitifs:
         )
 
     def _intention(
-        self, texte: str, type_requete: str, indirecte: bool
+        self,
+        texte: str,
+        type_requete: str,
+        indirecte: bool,
+        structure: str,
+        score_structure: int,
     ) -> tuple[str, int]:
         if type_requete == "interdiction":
             return "protection", 95
         if indirecte:
-            return "demande_indirecte", 95
+            return "demande_indirecte", score_structure
+        if structure in {"question_capacite", "question_information"}:
+            return "obtenir_information", score_structure
         if type_requete == "ordre":
             return "ordre_direct", 92
         if self._contient_forme(texte, "need"):
@@ -206,6 +230,14 @@ class FiltresCognitifs:
         return any(
             self._normaliser(str(forme)) in texte
             for forme in self.regles["intent_patterns"][groupe]
+        )
+
+    def _est_forme_fonctionnelle(self, mot: str) -> bool:
+        """Accepte aussi les clitiques : `sais-tu` devient `sais tu`."""
+
+        parties = self._normaliser(mot).split()
+        return bool(parties) and all(
+            partie in self._mots_formes for partie in parties
         )
 
     @staticmethod

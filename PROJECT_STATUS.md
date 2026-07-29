@@ -2,7 +2,7 @@
 
 ## Statut
 
-**V0.11 — prototype opérationnel avec filtres cognitifs, intentions indirectes et choix explicables.**
+**V0.12 — prototype opérationnel avec généralisation composable des intentions françaises.**
 
 Ce statut signifie que le projet est installable depuis un clone propre,
 démarre même lorsque la mémoire mutable n’existe pas encore, analyse une
@@ -29,6 +29,7 @@ kairos --skill-factory-scan
 kairos --route-plan chercher --route-target atome
 kairos --secau-status
 python -m unittest discover -s tests -v
+python intent_generalization_benchmark.py
 python meta_comprehension_benchmark.py
 python benchmark.py
 python holdout.py
@@ -167,6 +168,20 @@ python user_acceptance_v06.py
 - une confirmation ne contourne pas le contrôle des permissions ;
 - une interdiction claire sans cible reste une route de contrôle.
 
+### Généralisation des intentions V0.12
+
+- détecteur séparé du moteur de décision ;
+- règles déclaratives chargées depuis `data/cognition/intent_rules.json` ;
+- composition modalité + destinataire + action au lieu d'une phrase unique ;
+- distinction demande d'action / question de capacité / question informative ;
+- clitiques normalisés comme `sais-tu → sais + tu` ;
+- formes subordonnées françaises ajoutées aux verbes canoniques ;
+- demandes polies complètes non pénalisées par leur position syntaxique ;
+- besoins et envies compris sans devenir des permissions ;
+- contrôle des rôles conservé après généralisation ;
+- corpus indépendant de 100 formulations réparties en sept familles ;
+- zéro fausse exécution exigée.
+
 ## Cycle démontré
 
 ```text
@@ -210,23 +225,26 @@ Une action nuisible explicite est refusée avant tout routage.
 Une action irréversible ou physique exige une confirmation explicite.
 ```
 
-## Résultats vérifiés par la CI V0.11
+## Résultats vérifiés par la CI V0.12
 
 Le dernier commit n’est accepté que si toutes les portes suivantes restent
 vertes sous Python 3.11, 3.12 et 3.13 :
 
 | Porte | Seuil |
 |---|---:|
-| Tests automatisés | 156/156 |
+| Tests automatisés | 168/168 |
 | Acceptation historique et V0.4 | 18/18 |
 | Acceptation CLI Skill Factory | 11/11 |
 | Acceptation totale | 40/40 |
 | Smoke test | réussi |
 | Scan GrowUp installé | réussi |
 | Scan Skill Factory installé | réussi |
+| Généralisation des intentions V0.12 | 100/100 |
+| Précision d'intention V0.12 | 100 % |
+| Précision de route V0.12 | 100 % |
 | Benchmark filtres cognitifs V0.11 | 13/13 |
 | Benchmark méta-compréhension V0.10 | 11/11 |
-| Benchmark squelette | ≥ 100 analyses/s (154,04 mesurées) |
+| Benchmark squelette | ≥ 100 analyses/s (143,76 mesurées lors du run final) |
 | Benchmark Comprendre | réussi |
 | Benchmark holdout | réussi |
 | Benchmark Décision | réussi |
@@ -259,4 +277,4 @@ implicitement et qu’une altération après le rapport est refusée.
 
 ## Prochaine porte
 
-La prochaine étape doit relier les nouveaux concepts candidats au cycle GrowUp → Tester → SECAU et étendre les paraphrases d'intention. L'autonomie matérielle viendra seulement après une porte séparée : plan, génération de code candidate, analyse statique, simulateur, tests de réaction, autorisation humaine, journal et rollback.
+La prochaine étape doit relier les concepts candidats issus des explications au cycle GrowUp → Tester → SECAU. Le corpus V0.12 reste obligatoire pour empêcher toute régression d'intention. L'autonomie matérielle viendra seulement après une porte séparée : plan, génération de code candidate, analyse statique, simulateur, tests de réaction, autorisation humaine, journal et rollback.
