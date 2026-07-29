@@ -48,7 +48,7 @@ jobs:
       - name: Compile Python sources
         run: |
           python -m compileall -q kairos tests
-          python -m py_compile benchmark.py holdout.py decision_benchmark.py growup_benchmark.py skill_factory_benchmark.py routing_benchmark.py user_acceptance.py user_acceptance_additional.py user_acceptance_v05.py user_acceptance_v06.py
+          python -m py_compile benchmark.py holdout.py decision_benchmark.py growup_benchmark.py skill_factory_benchmark.py routing_benchmark.py information_benchmark.py user_acceptance.py user_acceptance_additional.py user_acceptance_v05.py user_acceptance_v06.py user_acceptance_v07.py
 
       - name: Run unit and end-to-end tests
         shell: bash
@@ -82,6 +82,9 @@ jobs:
       - name: Enforce Action Router benchmark
         run: python routing_benchmark.py
 
+      - name: Enforce Information Search benchmark
+        run: python information_benchmark.py
+
       - name: Run user acceptance scenarios
         shell: bash
         run: |
@@ -106,6 +109,12 @@ jobs:
           set -o pipefail
           python user_acceptance_v06.py 2>&1 | tee user-acceptance-v06.log
 
+      - name: Run Information Search user acceptance
+        shell: bash
+        run: |
+          set -o pipefail
+          python user_acceptance_v07.py 2>&1 | tee user-acceptance-v07.log
+
       - name: Preserve user acceptance report
         if: always()
         uses: actions/upload-artifact@v4
@@ -116,6 +125,7 @@ jobs:
             user-acceptance-additional.log
             user-acceptance-v05.log
             user-acceptance-v06.log
+            user-acceptance-v07.log
             artifacts/user_acceptance/USER_ACCEPTANCE_REPORT.md
             artifacts/user_acceptance/USER_ACCEPTANCE_REPORT.json
             artifacts/user_acceptance/USER_ACCEPTANCE_ADDITIONAL.md
