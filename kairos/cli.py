@@ -74,11 +74,11 @@ def growup_scan() -> int:
 
     dossier_memoire = _racine() / "memory"
     dossier_memoire.mkdir(parents=True, exist_ok=True)
+    cognitive = MemoryRepository(dossier_memoire / "cognition.db")
     kernel = Kernel(
         persister_decisions=True,
-        allow_network=args.online,
+        cognitive_repository=cognitive,
     )
-    cognitive = MemoryRepository(dossier_memoire / "cognition.db")
     stockage = StockageGrowUp(dossier_memoire / "growup.db")
     try:
         moteur = MoteurGrowUp(
@@ -314,7 +314,10 @@ def main(argv: Sequence[str] | None = None) -> int:
             approved_by=args.approved_by,
         )
 
-    kernel = Kernel(persister_decisions=True)
+    kernel = Kernel(
+        persister_decisions=True,
+        allow_network=args.online,
+    )
     if args.message:
         afficher(kernel.traiter(" ".join(args.message)))
         return 0
