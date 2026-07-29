@@ -9,6 +9,7 @@ from pathlib import Path
 from typing import Any
 
 from .growup import MoteurGrowUp, StockageGrowUp
+from .information import ConsolidateurRecherche
 from .kernel import Kernel
 from .memory import MemoryRepository
 from .modeles import Decision
@@ -127,6 +128,56 @@ def secau_status() -> int:
         repository.close()
 
 
+def research_status() -> int:
+    """Liste les candidates de recherche et les verdicts SECAU associés."""
+
+    dossier = _racine() / "memory"
+    dossier.mkdir(parents=True, exist_ok=True)
+    repository = MemoryRepository(dossier / "cognition.db")
+    try:
+        candidates = [
+            {
+                "id": item["id"],
+                "name": item["payload"].get("name"),
+                "score": item["score"],
+                "status": item["status"],
+            }
+            for item in repository.research_candidates()
+        ]
+        reviews = [
+            event
+            for event in repository.audit_events()
+            if event.get("event") == "SECAU_REVIEWED"
+        ]
+        print(
+            json.dumps(
+                {"candidates": candidates, "secau_reviews": reviews},
+                ensure_ascii=False,
+                indent=2,
+            )
+        )
+        return 0
+    finally:
+        repository.close()
+
+
+def research_review(hypothesis_id: str) -> int:
+    """Prépare, teste et soumet une candidate de recherche à SECAU."""
+
+    dossier = _racine() / "memory"
+    dossier.mkdir(parents=True, exist_ok=True)
+    repository = MemoryRepository(dossier / "cognition.db")
+    try:
+        result = ConsolidateurRecherche(repository).consolider(hypothesis_id)
+        print(json.dumps(result.vers_dict(), ensure_ascii=False, indent=2))
+        return 0 if result.secau.verdict.value != "reject" else 1
+    except (KeyError, ValueError) as error:
+        print(f"RESEARCH_REVIEW_ERROR: {error}")
+        return 1
+    finally:
+        repository.close()
+
+
 def _ouvrir_skill_factory() -> tuple[
     SkillFactory,
     StockageGrowUp,
@@ -234,6 +285,16 @@ def construire_parseur() -> argparse.ArgumentParser:
         help="affiche les verdicts SECAU audités",
     )
     actions.add_argument(
+        "--research-status",
+        action="store_true",
+        help="liste les candidates de recherche et leurs revues",
+    )
+    actions.add_argument(
+        "--research-review",
+        metavar="HYPOTHESIS_ID",
+        help="teste une candidate de recherche puis appelle SECAU",
+    )
+    actions.add_argument(
         "--skill-factory-scan",
         action="store_true",
         help="liste les plans promus, candidates et skills actives",
@@ -289,6 +350,10 @@ def main(argv: Sequence[str] | None = None) -> int:
         return route_plan(args.route_plan, args.route_target)
     if args.secau_status:
         return secau_status()
+    if args.research_status:
+        return research_status()
+    if args.research_review:
+        return research_review(args.research_review)
     if args.skill_factory_scan:
         return _skill_action("scan")
     if args.skill_generate:
