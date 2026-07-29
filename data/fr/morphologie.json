@@ -197,15 +197,6 @@
         "meaning": "réalisé dans un temps long",
         "opposite": "rapide"
       },
-      "sur": {
-        "forms": [
-          "sûr",
-          "sure",
-          "sécurisé",
-          "securise"
-        ],
-        "meaning": "dont le risque est contrôlé"
-      },
       "dangereux": {
         "forms": [
           "dangereux",
@@ -221,6 +212,19 @@
           "amicales"
         ],
         "meaning": "qui exprime une relation bienveillante"
+      },
+      "securise": {
+        "forms": [
+          "sécurisé",
+          "securise",
+          "sécurisée",
+          "securisee",
+          "sécurisés",
+          "securises",
+          "sécurisées",
+          "securisees"
+        ],
+        "meaning": "dont le risque est contrôlé"
       }
     },
     "nom_commun": {
@@ -407,6 +411,63 @@
           "memoires"
         ],
         "meaning": "système de conservation d'informations"
+      },
+      "formule": {
+        "forms": [
+          "formule",
+          "formules"
+        ],
+        "meaning": "expression structurée qui peut porter un sens"
+      },
+      "idee": {
+        "forms": [
+          "idée",
+          "idee",
+          "idées",
+          "idees"
+        ],
+        "meaning": "représentation mentale pouvant être expliquée"
+      },
+      "concept": {
+        "forms": [
+          "concept",
+          "concepts"
+        ],
+        "meaning": "unité de sens reliée à d'autres connaissances"
+      },
+      "exemple": {
+        "forms": [
+          "exemple",
+          "exemples"
+        ],
+        "meaning": "cas concret qui illustre une règle ou une connaissance"
+      },
+      "cas": {
+        "forms": [
+          "cas"
+        ],
+        "meaning": "situation particulière utilisée pour raisonner ou tester"
+      },
+      "personne": {
+        "forms": [
+          "personne",
+          "personnes"
+        ],
+        "meaning": "être humain désigné dans une explication"
+      },
+      "source": {
+        "forms": [
+          "source",
+          "sources"
+        ],
+        "meaning": "origine identifiable d'une information"
+      },
+      "preuve": {
+        "forms": [
+          "preuve",
+          "preuves"
+        ],
+        "meaning": "élément vérifiable soutenant ou contredisant une hypothèse"
       }
     },
     "nom_propre": {
