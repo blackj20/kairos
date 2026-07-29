@@ -111,16 +111,28 @@ class Relier:
             if choisi is None or choisi.categorie != "verbe_action":
                 continue
             source = self._concept_avant(contextuels, index) or "actor:user"
-            cible = self._premier_concept_apres(contextuels, index)
+            # Une entité ou un nom après le verbe reste la cible prioritaire.
+            # Les pronoms personnels indiquent souvent l'exécutant ou le
+            # bénéficiaire : « cherche toi-même atome » cible bien l'atome.
+            cible = self._premier_concept_apres(
+                contextuels, index, inclure_references=False
+            )
             target = cible[1] if cible else None
 
-            # Les clitiques liés par un tiret restent lisibles, par exemple
-            # « explique-toi ».
-            parties = element.jeton.normalise.split("-")
-            if "toi" in parties or "te" in parties:
-                target = "self:kairos"
-            elif "moi" in parties or "me" in parties:
-                target = "actor:user"
+            # Un clitique ne devient cible que lorsqu'aucune cible substantive
+            # n'existe, par exemple « explique-toi ».
+            if target is None:
+                parties = element.jeton.normalise.split("-")
+                if "toi" in parties or "te" in parties:
+                    target = "self:kairos"
+                elif "moi" in parties or "me" in parties:
+                    target = "actor:user"
+                elif choisi.lemme in {"expliquer", "presenter"}:
+                    reference = self._premier_concept_apres(
+                        contextuels, index, inclure_references=True
+                    )
+                    if reference and reference[2] == "reference":
+                        target = reference[1]
 
             if target:
                 relations.append(
@@ -144,11 +156,15 @@ class Relier:
         return None
 
     def _premier_concept_apres(
-        self, contextuels: tuple[SensContextuel, ...], index: int
+        self,
+        contextuels: tuple[SensContextuel, ...],
+        index: int,
+        *,
+        inclure_references: bool = True,
     ) -> tuple[int, str, str] | None:
         for position in range(index + 1, len(contextuels)):
             concept = self._concept(contextuels[position])
-            if concept:
+            if concept and (inclure_references or concept[1] != "reference"):
                 return position, concept[0], concept[1]
         return None
 
