@@ -4,14 +4,14 @@ K.A.I.R.O.S. est un moteur symbolique, local et explicable. Il analyse une
 requête française, estime son intention, choisit une route, demande les
 informations manquantes et conserve les réponses comme expériences.
 
-La **V0.5** ajoute **Skill Factory** : un plan GrowUp déjà validé peut devenir
-une skill candidate pure, testée et versionnée. La candidate reste inactive tant
-qu’un approbateur humain déclaré n’a pas fourni le rapport exact qui couvre son
-contenu.
+La **V0.6** ajoute **Action Router** : les verbes fondamentaux pointent vers
+des routes et des capacités déclarées en JSON. Une route absente peut être
+composée, mais reste candidate et inexécutable jusqu’à validation. Chaque verdict
+SECAU devient également visible dans l’audit.
 
-> Statut honnête : prototype opérationnel de compréhension, décision, mémoire,
-> apprentissage supervisé et génération contrôlée de skills pures. Ce n’est pas
-> une intelligence générale.
+> Statut honnête : prototype opérationnel de compréhension symbolique, décision,
+> mémoire, apprentissage supervisé, skills pures et routage déclaratif. Ce n’est
+> pas une intelligence générale et aucune capacité absente n’est simulée.
 
 ## Ce que Kairos sait faire
 
@@ -32,6 +32,10 @@ contenu.
 - lier le rapport à une empreinte SHA-256 de l’artefact ;
 - activer explicitement une version après approbation du créateur ;
 - restaurer une version précédente avec son chemin, son rapport et son empreinte.
+- relier un verbe fondamental à une route et à des capacités atomiques ;
+- compiler une route JSON en plan `ready`, `candidate` ou `blocked` ;
+- composer une route absente sans l’exécuter automatiquement ;
+- exposer les capacités manquantes et chaque verdict SECAU.
 
 ## Ce que Kairos ne sait pas encore faire
 
@@ -55,6 +59,8 @@ python -m venv .venv
 source .venv/bin/activate
 python -m pip install -e .
 kairos --smoke-test
+kairos --route-plan chercher --route-target atome
+kairos --secau-status
 ```
 
 Lancer l’interface :
@@ -82,6 +88,13 @@ Décision
 ├── ChoisirRoute
 ├── VerifierDecision
 └── Demande
+   ↓
+Action Router
+├── Catalogue JSON
+├── Compilation du plan
+├── Registre de capacités
+├── Contrôle des permissions
+└── Exécution seulement si ready
    ↓
 Expérience non confirmée
    ↓
@@ -382,8 +395,10 @@ python holdout.py
 python decision_benchmark.py
 python growup_benchmark.py
 python skill_factory_benchmark.py
+python routing_benchmark.py
 python user_acceptance.py
 python user_acceptance_additional.py
+python user_acceptance_v06.py
 ```
 
 La CI exécute ces portes sous Python 3.11, 3.12 et 3.13 avec `fail-fast: false`.
@@ -391,7 +406,7 @@ Une version qui échoue n’annule donc pas le diagnostic des deux autres.
 
 ## Suite logique
 
-La prochaine porte ne doit pas être un shell libre. Elle devra introduire des
-**outils PC limités**, chacun avec permission explicite, simulation, journal,
-confirmation humaine, timeout et rollback. Skill Factory restera responsable de
-la génération et des preuves ; un autre organe devra contrôler les effets réels.
+La prochaine porte doit rendre certaines capacités atomiques réellement
+disponibles, en commençant par la lecture de mémoire, la comparaison de sources
+et une recherche Web contrôlée. Les outils PC viendront ensuite avec simulation,
+confirmation, journal et rollback, toujours sans shell libre.

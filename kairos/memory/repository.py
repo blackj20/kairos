@@ -326,6 +326,14 @@ class MemoryRepository:
             self._audit(db, "HYPOTHESIS_REJECTED",
                         {"id": hypothesis_id, "reason": reason})
 
+    def record_audit(self, event: str, payload: dict[str, Any]) -> None:
+        """Expose une écriture d'audit atomique aux organes de contrôle."""
+
+        if not event.strip():
+            raise ValueError("Un événement d'audit doit avoir un nom.")
+        with self.transaction() as db:
+            self._audit(db, event, payload)
+
     def audit_events(self) -> list[dict[str, Any]]:
         return [
             {"event": row["event"], **json.loads(row["payload_json"])}

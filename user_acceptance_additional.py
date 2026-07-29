@@ -89,7 +89,7 @@ def main() -> int:
         verifier(
             "Connaissance de son identité",
             ["kairos", "qui", "es", "tu", "?"],
-            ("K.A.I.R.O.S.", "0.5.0-skill-factory"),
+            ("K.A.I.R.O.S.", "0.6.0-action-router"),
         ),
         verifier(
             "Connaissance de son objectif courant",

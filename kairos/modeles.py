@@ -138,6 +138,7 @@ class Decision:
     question: str | None = None
     evaluation: dict[str, Any] | None = None
     verdict: dict[str, Any] | None = None
+    routage: dict[str, Any] | None = None
 
     def vers_dict(self) -> dict[str, Any]:
         return asdict(self)

@@ -61,6 +61,15 @@ class TestEvolution(unittest.TestCase):
         self.assertEqual(
             1, len(self.repository.search({"text": "classe Python"}))
         )
+        secau_events = [
+            event
+            for event in self.repository.audit_events()
+            if event["event"] == "SECAU_REVIEWED"
+        ]
+        self.assertEqual(1, len(secau_events))
+        self.assertEqual("promote", secau_events[0]["verdict"])
+        self.assertEqual(hypothesis, secau_events[0]["hypothesis"])
+        self.assertEqual(report, secau_events[0]["report"])
 
     def test_three_paraphrases_are_mandatory(self) -> None:
         """Deux reformulations ne suffisent pas à valider un rapport."""

@@ -40,6 +40,14 @@ def afficher(decision: Decision) -> None:
     )
     print(f"{'Route':<11}: {decision.route}")
     print(f"{'Réponse':<11}: {decision.reponse}")
+    if decision.routage is not None:
+        print(
+            f"{'Plan':<11}: {decision.routage['id']} "
+            f"({decision.routage['statut']})"
+        )
+        manquantes = decision.routage.get("capacites_manquantes", ())
+        if manquantes:
+            print(f"{'Manquantes':<11}: {', '.join(manquantes)}")
 
 
 def smoke_test() -> int:
@@ -82,6 +90,38 @@ def growup_scan() -> int:
     finally:
         cognitive.close()
         stockage.close()
+
+
+def route_plan(action: str, target: str | None = None) -> int:
+    """Compile une action en route sans exécuter la moindre capacité."""
+
+    plan = Kernel().routeur.planifier(action, target)
+    print(json.dumps(plan.vers_dict(), ensure_ascii=False, indent=2))
+    return 0
+
+
+def secau_status() -> int:
+    """Expose les verdicts SECAU conservés dans l'audit cognitif."""
+
+    dossier = _racine() / "memory"
+    dossier.mkdir(parents=True, exist_ok=True)
+    repository = MemoryRepository(dossier / "cognition.db")
+    try:
+        evenements = [
+            evenement
+            for evenement in repository.audit_events()
+            if evenement.get("event") == "SECAU_REVIEWED"
+        ]
+        print(
+            json.dumps(
+                {"count": len(evenements), "events": evenements},
+                ensure_ascii=False,
+                indent=2,
+            )
+        )
+        return 0
+    finally:
+        repository.close()
 
 
 def _ouvrir_skill_factory() -> tuple[
@@ -181,6 +221,16 @@ def construire_parseur() -> argparse.ArgumentParser:
         help="regroupe et planifie les expériences sans les promouvoir",
     )
     actions.add_argument(
+        "--route-plan",
+        metavar="ACTION",
+        help="compile une action en route sans l'exécuter",
+    )
+    actions.add_argument(
+        "--secau-status",
+        action="store_true",
+        help="affiche les verdicts SECAU audités",
+    )
+    actions.add_argument(
         "--skill-factory-scan",
         action="store_true",
         help="liste les plans promus, candidates et skills actives",
@@ -205,6 +255,10 @@ def construire_parseur() -> argparse.ArgumentParser:
         metavar="SKILL_ID",
         help="restaure la version active précédente",
     )
+    parseur.add_argument(
+        "--route-target",
+        help="cible utilisée avec --route-plan",
+    )
     parseur.add_argument("--skill-id", help="identifiant explicite de la skill")
     parseur.add_argument(
         "--skill-version",
@@ -223,6 +277,10 @@ def main(argv: Sequence[str] | None = None) -> int:
         return smoke_test()
     if args.growup_scan:
         return growup_scan()
+    if args.route_plan:
+        return route_plan(args.route_plan, args.route_target)
+    if args.secau_status:
+        return secau_status()
     if args.skill_factory_scan:
         return _skill_action("scan")
     if args.skill_generate:

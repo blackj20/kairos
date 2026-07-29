@@ -189,7 +189,15 @@ class Connaissances:
         """
 
         original = cle(mot)
-        if len(original) < 4 or self.trouver_verbe(original):
+        salutations = {
+            cle(expression)
+            for expression in self.expressions.get("salutations", [])
+        }
+        if (
+            len(original) < 4
+            or original in salutations
+            or self.trouver_verbe(original)
+        ):
             return None
         # On conserve une seule meilleure forme par lemme. Sans ce regroupement,
         # « ouvre » et « ouvrir » se concurrenceraient alors qu'ils représentent

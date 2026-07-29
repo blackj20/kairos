@@ -1,0 +1,75 @@
+{
+  "version": 1,
+  "capabilities": {
+    "memory.search": {
+      "description": "Rechercher dans la mémoire confirmée",
+      "risk": "read",
+      "permissions": [
+        "memory.read"
+      ]
+    },
+    "document.read": {
+      "description": "Lire une source locale autorisée",
+      "risk": "read",
+      "permissions": [
+        "document.read"
+      ]
+    },
+    "web.search": {
+      "description": "Rechercher des sources sur le Web",
+      "risk": "network_read",
+      "permissions": [
+        "network.read"
+      ]
+    },
+    "sources.compare": {
+      "description": "Comparer les sources obtenues",
+      "risk": "pure",
+      "permissions": []
+    },
+    "knowledge.propose": {
+      "description": "Créer une connaissance candidate avec provenance",
+      "risk": "memory_candidate_write",
+      "permissions": [
+        "memory.candidate.write"
+      ]
+    },
+    "response.explain": {
+      "description": "Produire une explication depuis des données vérifiées",
+      "risk": "pure",
+      "permissions": []
+    },
+    "cognition.test": {
+      "description": "Tester une hypothèse sans la promouvoir",
+      "risk": "pure",
+      "permissions": []
+    },
+    "cognition.plan": {
+      "description": "Construire un plan sans l'exécuter",
+      "risk": "pure",
+      "permissions": []
+    },
+    "learning.correct": {
+      "description": "Créer une correction candidate",
+      "risk": "memory_candidate_write",
+      "permissions": [
+        "memory.candidate.write"
+      ]
+    },
+    "response.ask": {
+      "description": "Poser une question ciblée",
+      "risk": "pure",
+      "permissions": []
+    },
+    "response.thank": {
+      "description": "Produire un remerciement adapté",
+      "risk": "pure",
+      "permissions": []
+    },
+    "response.greet": {
+      "description": "Produire une salutation adaptée",
+      "risk": "pure",
+      "permissions": []
+    }
+  }
+}

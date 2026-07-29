@@ -1,8 +1,78 @@
 {
-  "pronoms_sujets": ["je", "j", "tu", "il", "elle", "on", "nous", "vous", "ils", "elles", "ce", "cela", "ça", "ca"],
-  "pronoms_objets": ["me", "moi", "te", "toi", "lui", "leur"],
-  "prepositions": ["à", "a", "avec", "dans", "de", "depuis", "pour", "sans", "sur", "vers"],
-  "conjonctions": ["car", "donc", "et", "mais", "ou", "parce", "puis"],
-  "interrogatifs": ["comment", "combien", "est-ce", "où", "ou", "pourquoi", "quand", "quel", "quelle", "qui", "quoi"],
-  "verbes_etat": ["ai", "as", "avons", "avez", "est", "es", "sont", "suis"]
+  "pronoms_sujets": [
+    "je",
+    "j",
+    "tu",
+    "il",
+    "elle",
+    "on",
+    "nous",
+    "vous",
+    "ils",
+    "elles",
+    "ce",
+    "cela",
+    "ça",
+    "ca"
+  ],
+  "pronoms_objets": [
+    "me",
+    "moi",
+    "te",
+    "toi",
+    "lui",
+    "leur"
+  ],
+  "prepositions": [
+    "à",
+    "a",
+    "avec",
+    "dans",
+    "de",
+    "depuis",
+    "pour",
+    "sans",
+    "sur",
+    "vers"
+  ],
+  "conjonctions": [
+    "car",
+    "donc",
+    "et",
+    "mais",
+    "ou",
+    "parce",
+    "puis"
+  ],
+  "interrogatifs": [
+    "comment",
+    "combien",
+    "est-ce",
+    "où",
+    "ou",
+    "pourquoi",
+    "quand",
+    "quel",
+    "quelle",
+    "qui",
+    "quoi"
+  ],
+  "verbes_etat": [
+    "ai",
+    "as",
+    "avons",
+    "avez",
+    "est",
+    "es",
+    "sont",
+    "suis"
+  ],
+  "modificateurs_autonomie": [
+    "toi-même",
+    "toi meme",
+    "par toi-même",
+    "par toi meme",
+    "seul",
+    "seule"
+  ]
 }
