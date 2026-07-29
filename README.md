@@ -4,15 +4,15 @@ K.A.I.R.O.S. est un moteur symbolique, local et explicable. Il analyse une
 requête française, estime son intention, choisit une route, demande les
 informations manquantes et conserve les réponses comme expériences.
 
-La **V0.7** rend la route **Information Search** exécutable. La V0.6 ajoutait **Action Router** : les verbes fondamentaux pointent vers
+La **V0.8** active la porte **Research Tester → SECAU**. La V0.7 rendait la route **Information Search** exécutable. La V0.6 ajoutait **Action Router** : les verbes fondamentaux pointent vers
 des routes et des capacités déclarées en JSON. Une route absente peut être
 composée, mais reste candidate et inexécutable jusqu’à validation. Chaque verdict
 SECAU devient également visible dans l’audit.
 
 > Statut honnête : prototype opérationnel de compréhension symbolique, décision,
-> mémoire, apprentissage supervisé, skills pures, routage déclaratif et recherche
-> d’information contrôlée. Ce n’est pas une intelligence générale et une recherche
-> Web ne devient jamais directement une connaissance confirmée.
+> mémoire, apprentissage supervisé, routage, recherche contrôlée et consolidation
+> par Tester puis SECAU. Ce n’est pas une intelligence générale : les contrôles
+> prouvent une cohérence traçable, pas une vérité absolue.
 
 ## Ce que Kairos sait faire
 
@@ -42,6 +42,11 @@ SECAU devient également visible dans l’audit.
 - comparer la provenance et le recouvrement lexical des sources ;
 - créer ou réutiliser une hypothèse candidate sans la promouvoir ;
 - répondre avec les sources et le statut d’apprentissage.
+- préparer un dossier de recherche mesurant preuves, sources et domaines ;
+- vérifier l’intégrité SHA-256 de chaque affirmation ;
+- appeler réellement Tester puis SECAU ;
+- produire `promote`, `needs_more_evidence`, `reject` ou `quarantine` ;
+- rendre une connaissance recherchée visible seulement après promotion.
 
 ## Ce que Kairos ne sait pas encore faire
 
@@ -68,6 +73,8 @@ kairos --smoke-test
 kairos --route-plan chercher --route-target atome
 kairos --secau-status
 kairos --online cherche toi-même atome
+kairos --research-status
+kairos --research-review HYPOTHESIS_ID
 ```
 
 Lancer l’interface :
@@ -413,7 +420,7 @@ Une version qui échoue n’annule donc pas le diagnostic des deux autres.
 
 ## Suite logique
 
-La prochaine porte doit conduire une hypothèse issue d’une recherche vers des
-tests reproductibles, des contre-exemples et une revue SECAU observable. La
-recherche restera séparée de la confirmation. Les outils PC viendront ensuite avec simulation,
+La prochaine porte doit diversifier réellement les fournisseurs Web. Wikipédia
+seul ne constitue qu’un domaine : Kairos doit chercher une seconde source
+indépendante avant de pouvoir consolider automatiquement. Les outils PC viendront ensuite avec simulation,
 confirmation, journal et rollback, toujours sans shell libre.
