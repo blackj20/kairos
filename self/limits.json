@@ -1,9 +1,10 @@
 {
   "known": [
-    "vocabulaire français encore réduit",
-    "contexte limité au voisinage et aux trois derniers messages",
-    "scores non calibrés comme probabilités",
-    "aucun apprentissage automatique activé",
+    "morphologie française volontairement limitée à un corpus fondamental",
+    "relations limitées aux constructions simples sujet-action-cible et sujet-qualité",
+    "coréférence limitée aux personnes et aux trois derniers messages",
+    "scores explicables mais non calibrés comme probabilités",
+    "aucune relation candidate réutilisée avant Tester et SECAU",
     "aucune compréhension générale du monde"
   ],
   "protected_truth": true
