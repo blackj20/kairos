@@ -51,7 +51,7 @@ jobs:
       - name: Compile Python sources
         run: |
           python -m compileall -q kairos tests
-          python -m py_compile cognitive_filters_benchmark.py meta_comprehension_benchmark.py benchmark.py holdout.py decision_benchmark.py growup_benchmark.py skill_factory_benchmark.py routing_benchmark.py information_benchmark.py research_secau_benchmark.py user_acceptance.py user_acceptance_additional.py user_acceptance_v05.py user_acceptance_v06.py user_acceptance_v07.py user_acceptance_v08.py
+          python -m py_compile intent_generalization_benchmark.py cognitive_filters_benchmark.py meta_comprehension_benchmark.py benchmark.py holdout.py decision_benchmark.py growup_benchmark.py skill_factory_benchmark.py routing_benchmark.py information_benchmark.py research_secau_benchmark.py user_acceptance.py user_acceptance_additional.py user_acceptance_v05.py user_acceptance_v06.py user_acceptance_v07.py user_acceptance_v08.py
 
       - name: Run unit and end-to-end tests
         shell: bash
@@ -66,6 +66,9 @@ jobs:
           name: unittest-python-${{ matrix.python-version }}
           path: unittest.log
           if-no-files-found: error
+
+      - name: Enforce intent generalization
+        run: python intent_generalization_benchmark.py
 
       - name: Enforce cognitive filters
         run: python cognitive_filters_benchmark.py
