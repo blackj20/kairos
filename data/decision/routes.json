@@ -1,116 +1,126 @@
 {
-    "allowed": [
-        "repondre",
-        "competence",
-        "controle",
-        "confirmer",
-        "clarification",
-        "etudier",
-        "refuser"
+  "allowed": [
+    "repondre",
+    "competence",
+    "controle",
+    "confirmer",
+    "clarification",
+    "etudier",
+    "refuser"
+  ],
+  "analysis_route_mapping": {
+    "repondre": "repondre",
+    "competence": "competence",
+    "controle": "controle",
+    "clarification": "clarification"
+  },
+  "required_fields_by_type": {
+    "ordre": [
+      "action"
     ],
-    "analysis_route_mapping": {
-        "repondre": "repondre",
-        "competence": "competence",
-        "controle": "controle",
-        "clarification": "clarification"
-    },
-    "required_fields_by_type": {
-        "ordre": [
-            "action"
-        ],
-        "interdiction": [
-            "action"
-        ],
-        "question": [
-            "type_requete"
-        ],
-        "lecon": [
-            "type_requete"
-        ],
-        "retour_utilisateur": [
-            "type_requete"
-        ],
-        "affirmation": [
-            "type_requete"
-        ],
-        "demarrage_conversation": [
-            "type_requete"
-        ],
-        "inconnu": [
-            "type_requete"
-        ]
-    },
-    "actions_requiring_target": [
-        "fermer",
-        "installer",
-        "lancer",
-        "marcher",
-        "ouvrir",
-        "supprimer",
-        "afficher",
-        "chercher",
-        "copier",
-        "creer",
-        "deplacer",
-        "ecrire",
-        "envoyer",
-        "lire",
-        "renommer",
-        "sauvegarder",
-        "telecharger",
-        "verifier",
-        "mettre",
-        "ajouter",
-        "retirer",
-        "activer",
-        "desactiver",
-        "connecter",
-        "deconnecter",
-        "reparer",
-        "nettoyer",
-        "trier",
-        "compresser",
-        "extraire",
-        "imprimer"
-        ,"poser"
-        ,"donner"
+    "interdiction": [
+      "action"
     ],
-    "actions_without_required_target": [
-        "arreter"
+    "question": [
+      "type_requete"
     ],
-    "permissions": {
-        "repondre": [
-            "creator",
-            "supervisor",
-            "user"
-        ],
-        "competence": [
-            "creator",
-            "supervisor"
-        ],
-        "controle": [
-            "creator",
-            "supervisor"
-        ],
-        "confirmer": [
-            "creator",
-            "supervisor",
-            "user"
-        ],
-        "clarification": [
-            "creator",
-            "supervisor",
-            "user"
-        ],
-        "etudier": [
-            "creator",
-            "supervisor",
-            "user"
-        ],
-        "refuser": [
-            "creator",
-            "supervisor",
-            "user"
-        ]
-    }
+    "lecon": [
+      "type_requete"
+    ],
+    "retour_utilisateur": [
+      "type_requete"
+    ],
+    "affirmation": [
+      "type_requete"
+    ],
+    "demarrage_conversation": [
+      "type_requete"
+    ],
+    "inconnu": [
+      "type_requete"
+    ]
+  },
+  "actions_requiring_target": [
+    "fermer",
+    "installer",
+    "lancer",
+    "marcher",
+    "ouvrir",
+    "supprimer",
+    "afficher",
+    "chercher",
+    "copier",
+    "creer",
+    "deplacer",
+    "ecrire",
+    "envoyer",
+    "lire",
+    "renommer",
+    "sauvegarder",
+    "telecharger",
+    "verifier",
+    "mettre",
+    "ajouter",
+    "retirer",
+    "activer",
+    "desactiver",
+    "connecter",
+    "deconnecter",
+    "reparer",
+    "nettoyer",
+    "trier",
+    "compresser",
+    "extraire",
+    "imprimer",
+    "poser",
+    "donner",
+    "relire",
+    "comparer",
+    "tester",
+    "corriger",
+    "planifier",
+    "enqueter",
+    "repondre",
+    "remercier",
+    "saluer",
+    "memoriser"
+  ],
+  "actions_without_required_target": [
+    "arreter"
+  ],
+  "permissions": {
+    "repondre": [
+      "creator",
+      "supervisor",
+      "user"
+    ],
+    "competence": [
+      "creator",
+      "supervisor"
+    ],
+    "controle": [
+      "creator",
+      "supervisor"
+    ],
+    "confirmer": [
+      "creator",
+      "supervisor",
+      "user"
+    ],
+    "clarification": [
+      "creator",
+      "supervisor",
+      "user"
+    ],
+    "etudier": [
+      "creator",
+      "supervisor",
+      "user"
+    ],
+    "refuser": [
+      "creator",
+      "supervisor",
+      "user"
+    ]
+  }
 }
