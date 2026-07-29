@@ -26,6 +26,7 @@ class ProfilCognitif:
     manques: tuple[str, ...]
     risque: str
     risque_score: int
+    seuil_confirmation: int
     prudence: str
     choix_recommande: str
     filtres: tuple[str, ...]
@@ -169,6 +170,9 @@ class FiltresCognitifs:
             manques=self._uniques(manques),
             risque=famille_risque,
             risque_score=score_risque,
+            seuil_confirmation=int(
+                self.regles["thresholds"]["confirm_min"]
+            ),
             prudence=prudence,
             choix_recommande=choix,
             filtres=self._uniques(filtres),
