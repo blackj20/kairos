@@ -9,6 +9,7 @@ from difflib import get_close_matches
 from pathlib import Path
 from typing import Any
 
+from .apprentissage_naturel import DialogueApprentissage
 from .cognition import Reflechir
 from .comprendre import Comprendre
 from .connaissances import Connaissances
@@ -89,12 +90,18 @@ class Kernel:
             fournisseur_web=fournisseur,
         )
         self.information.enregistrer(self.routeur)
+        racine = Path(__file__).resolve().parent.parent
+        chemin_seance = (
+            racine / "memory" / "learning_sessions.json"
+            if persister_decisions
+            else None
+        )
+        self.apprentissage = DialogueApprentissage(
+            self.comprendre.connaissances,
+            chemin=chemin_seance,
+        )
         self._competences: dict[str, Competence] = {}
         self._dernier_plan_route: PlanRoute | None = None
-        # Une séance pédagogique est volontairement locale à la conversation :
-        # une question est posée, puis KAIROS attend et évalue sa réponse avant
-        # de continuer. Les réponses ne deviennent jamais des vérités confirmées.
-        self._session_pedagogique: dict[str, object] | None = None
 
     def enregistrer_competence(self, action: str, competence: Competence) -> None:
         """Associe un verbe canonique à une fonction d'exécution."""
@@ -118,19 +125,9 @@ class Kernel:
 
     @property
     def attente_pedagogique(self) -> str | None:
-        """Décrit précisément le type de réponse attendu par la console."""
+        """Décrit l'aide du tour actif sans imposer un format artificiel."""
 
-        if self._session_pedagogique is None:
-            return None
-        champs = tuple(self._session_pedagogique["champs"])
-        index = int(self._session_pedagogique["index"])
-        attentes = {
-            "definition": "définition : une phrase d'au moins 5 mots",
-            "examples": "3 exemples distincts, séparés par des virgules",
-            "counterexamples": "contre-exemple expliqué en au moins 4 mots",
-            "relations": "relations avec d'autres concepts, en au moins 4 mots",
-        }
-        return attentes[champs[index]]
+        return self.apprentissage.attente
 
     def traiter(
         self,
@@ -139,8 +136,24 @@ class Kernel:
     ) -> Decision:
         """Analyse la requête puis appelle un seul composant spécialisé."""
 
-        if self._session_pedagogique is not None:
+        if self.apprentissage.active:
             return self._traiter_reponse_pedagogique(requete)
+
+        apprentissage_mot = re.match(
+            r"^\s*apprends(?:-moi)?\s+(?:le\s+)?mot\s+(.+?)[?.!]*\s*$",
+            requete,
+            flags=re.IGNORECASE,
+        )
+        if apprentissage_mot:
+            analyse = self.comprendre.analyser(requete)
+            topic = apprentissage_mot.group(1).strip()
+            topic, correction = self._corriger_sujet_pedagogique(topic)
+            reponse = self.apprentissage.demarrer(topic, correction=correction)
+            return Decision(
+                route="competence",
+                analyse=analyse,
+                reponse=reponse,
+            )
 
         self._dernier_plan_route = None
         analyse = self.comprendre.analyser(requete)
@@ -258,9 +271,8 @@ class Kernel:
             return self.repondre.demander_clarification()
 
         if action == "poser":
-            # Le dernier manque observé devient prioritaire ; sinon Kairos
-            # questionne sa compréhension. Une seule question est exposée :
-            # la suivante dépendra réellement de la réponse du client.
+            # Une seule question est visible. Les clarifications conservent
+            # l'objectif parent et sont limitées par le schéma déclaratif.
             events = self.moteur_decision.stockage.apprentissages()
             topic_match = re.search(
                 r"\bsur\s+(.+?)(?:[?.!]|$)",
@@ -276,24 +288,7 @@ class Kernel:
                 )
             )
             topic, correction = self._corriger_sujet_pedagogique(topic)
-            champs = ("definition", "examples", "counterexamples", "relations")
-            self._session_pedagogique = {
-                "topic": topic,
-                "champs": champs,
-                "index": 0,
-                "reponses": {},
-            }
-            question = Reflechir.questions_for(topic, (champs[0],))[0]
-            prefixe = (
-                f"J'ai corrigé le sujet en « {topic} ». "
-                if correction
-                else ""
-            )
-            return (
-                f"{prefixe}Question 1/{len(champs)} : {question}\n"
-                f"Type de réponse attendu : {self.attente_pedagogique}.\n"
-                "J'attends ta réponse avant de continuer."
-            )
+            return self.apprentissage.demarrer(topic, correction=correction)
 
         if action == "donner":
             lesson = self.repondre.knowledge_base.find(
@@ -348,66 +343,14 @@ class Kernel:
         return topic, False
 
     def _traiter_reponse_pedagogique(self, requete: str) -> Decision:
-        """Évalue un tour pédagogique et pose au plus une question suivante."""
+        """Délègue le tour à la séance bornée puis reprend l'objectif parent."""
 
         analyse = self.comprendre.analyser(requete)
-        session = self._session_pedagogique
-        assert session is not None
-        topic = str(session["topic"])
-        champs = tuple(session["champs"])
-        index = int(session["index"])
-        champ = champs[index]
-        reponse = requete.strip()
-
-        if reponse.casefold() in {"annule", "annuler", "stop", "arrete", "arrête"}:
-            self._session_pedagogique = None
-            texte = "Séance arrêtée. Aucune réponse n'a été confirmée comme connaissance."
-        else:
-            valide, conseil = self._evaluer_reponse_pedagogique(
-                champ,
-                reponse,
-                topic,
-            )
-            question = Reflechir.questions_for(topic, (champ,))[0]
-            if not valide:
-                texte = (
-                    f"Réponse à améliorer : {conseil}\n"
-                    f"Je garde la même question : {question}"
-                )
-            else:
-                reponses = dict(session["reponses"])
-                reponses[champ] = reponse
-                proposition = reponse[0].upper() + reponse[1:]
-                if proposition[-1] not in ".!?":
-                    proposition += "."
-                prochain_index = index + 1
-                if prochain_index == len(champs):
-                    self._session_pedagogique = None
-                    texte = (
-                        f"Réponse acceptée. Proposition corrigée : {proposition}\n"
-                        "Séance terminée : les quatre réponses ont été évaluées "
-                        "pendant cette séance. Elles ne sont pas transformées "
-                        "en connaissances confirmées."
-                    )
-                else:
-                    session["index"] = prochain_index
-                    session["reponses"] = reponses
-                    prochain_champ = champs[prochain_index]
-                    prochaine = Reflechir.questions_for(
-                        topic,
-                        (prochain_champ,),
-                    )[0]
-                    texte = (
-                        f"Réponse acceptée. Proposition corrigée : {proposition}\n"
-                        f"Question {prochain_index + 1}/{len(champs)} : {prochaine}\n"
-                        f"Type de réponse attendu : {self.attente_pedagogique}.\n"
-                        "J'attends ta réponse avant de continuer."
-                    )
-
+        resultat = self.apprentissage.traiter(requete)
         return Decision(
             route="repondre",
             analyse=analyse,
-            reponse=texte,
+            reponse=resultat.texte,
         )
 
     @staticmethod
