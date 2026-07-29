@@ -196,6 +196,23 @@ class CapacitesInformation:
                 "definition": str(sources[0]["extrait"]),
                 "evidence_ids": preuves,
                 "source_urls": [str(source["url"]) for source in sources],
+                "source_claims": [
+                    str(source["extrait"]) for source in sources
+                ],
+                "source_domains": sorted(
+                    {
+                        str(
+                            urllib.parse.urlparse(
+                                str(source["url"])
+                            ).hostname
+                        ).casefold()
+                        for source in sources
+                        if urllib.parse.urlparse(
+                            str(source["url"])
+                        ).hostname
+                    }
+                ),
+                "comparison": comparaison,
                 "research_kind": "information.search",
                 "score": score,
             }
