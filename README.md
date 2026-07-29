@@ -4,7 +4,7 @@ K.A.I.R.O.S. est un moteur symbolique, local et explicable. Il analyse une
 requête française, estime son intention, choisit une route, demande les
 informations manquantes et conserve les réponses comme expériences.
 
-La **V0.11** ajoute des **filtres cognitifs et des choix explicables**. Kairos distingue désormais intention, besoin, envie et manque, estime un risque opérationnel, applique prudence et direction, puis justifie sa route. Les valeurs restent techniques et traçables : sécurité humaine, vérité, autorisation, intégrité, réversibilité et alignement. Une envie ne crée jamais une permission. La **V0.10** ajoutait la méta-compréhension et un graphe de petites relations françaises. La **V0.9** ajoutait l’apprentissage naturel persistant et un squelette linguistique indexé. Une faute ou un mot inconnu ouvre une clarification bornée, puis Kairos reprend la question principale. La **V0.8** activait la porte **Research Tester → SECAU**. La V0.7 rendait la route **Information Search** exécutable. La V0.6 ajoutait **Action Router** : les verbes fondamentaux pointent vers
+La **V0.12** ajoute la **généralisation composable des intentions**. Kairos combine modalité, destinataire, action, négation et contexte pour distinguer une demande polie d'une question sur sa capacité. Cette porte est mesurée sur 100 formulations naturelles indépendantes. La **V0.11** ajoutait des filtres cognitifs et des choix explicables. Kairos distingue désormais intention, besoin, envie et manque, estime un risque opérationnel, applique prudence et direction, puis justifie sa route. Les valeurs restent techniques et traçables : sécurité humaine, vérité, autorisation, intégrité, réversibilité et alignement. Une envie ne crée jamais une permission. La **V0.10** ajoutait la méta-compréhension et un graphe de petites relations françaises. La **V0.9** ajoutait l’apprentissage naturel persistant et un squelette linguistique indexé. Une faute ou un mot inconnu ouvre une clarification bornée, puis Kairos reprend la question principale. La **V0.8** activait la porte **Research Tester → SECAU**. La V0.7 rendait la route **Information Search** exécutable. La V0.6 ajoutait **Action Router** : les verbes fondamentaux pointent vers
 des routes et des capacités déclarées en JSON. Une route absente peut être
 composée, mais reste candidate et inexécutable jusqu’à validation. Chaque verdict
 SECAU devient également visible dans l’audit.
@@ -20,6 +20,9 @@ SECAU devient également visible dans l’audit.
 - rechercher le sens des mots dans ses connaissances déclaratives ;
 - estimer le type, la démarche, l’action et la cible ;
 - reconnaître une demande indirecte malgré sa forme interrogative ;
+- distinguer une demande d'action d'une question sur sa capacité ;
+- composer des indices de modalité, personne, politesse, action et négation ;
+- reconnaître des formes subordonnées courantes comme « que tu vérifies » ;
 - distinguer intention, besoin, envie et information manquante ;
 - estimer le risque et choisir entre répondre, router, clarifier, confirmer ou refuser ;
 - expliquer un choix par sa direction, ses filtres, son risque et ses informations manquantes ;
@@ -111,6 +114,12 @@ Comprendre
 ├── Relier (références, catégories, qualités, actions)
 ├── Estimer
 └── VerifierAnalyse
+   ↓
+Généralisation d'intention V0.12
+├── Modalité et destinataire
+├── Demande ou question de capacité
+├── Clitiques et formes subordonnées
+└── Signaux explicables
    ↓
 Filtres cognitifs V0.11
 ├── Intention malgré la forme
@@ -437,6 +446,7 @@ kairos --smoke-test
 kairos --growup-scan
 kairos --skill-factory-scan
 python -m unittest discover -s tests -v
+python intent_generalization_benchmark.py
 python cognitive_filters_benchmark.py
 python meta_comprehension_benchmark.py
 python benchmark.py
@@ -455,8 +465,9 @@ Une version qui échoue n’annule donc pas le diagnostic des deux autres.
 
 ## Suite logique
 
-La prochaine porte doit éprouver les filtres sur davantage de paraphrases et
-relier leurs concepts candidats au cycle GrowUp → Tester → SECAU. Une future
+La prochaine porte doit envoyer les relations et concepts candidats issus des
+explications vers GrowUp → Tester → SECAU, sans transformer une phrase unique
+en vérité. Le corpus V0.12 restera une barrière de non-régression. Une future
 commande physique devra d’abord produire un plan, compiler une candidate,
 l’exécuter dans un simulateur, vérifier la réaction, demander une autorisation
 humaine et conserver un rollback. Aucun accès Arduino ou shell libre n’est
