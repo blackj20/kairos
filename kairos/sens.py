@@ -176,6 +176,25 @@ class Sens:
                     )
                 )
 
+            for categorie, lemme, entree in (
+                self.connaissances.trouver_morphologies(jeton.normalise)
+            ):
+                score_morphologie = {
+                    "reference": 99,
+                    "nom_propre": 98,
+                    "nom_commun": 92,
+                    "adjectif": 91,
+                }.get(categorie, 85)
+                candidats.append(
+                    CandidatSens(
+                        lemme=lemme,
+                        categorie=f"morphologie:{categorie}",
+                        sens=str(entree["meaning"]),
+                        score=score_morphologie,
+                        source="data/fr/morphologie.json",
+                    )
+                )
+
             if not candidats:
                 candidats.append(
                     CandidatSens(
