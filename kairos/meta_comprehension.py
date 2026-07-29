@@ -133,18 +133,54 @@ class MetaComprehension:
                 self._expliquer_analyse(precedente.analyse),
             )
 
-        if texte == "pourquoi" or "pourquoi as tu" in texte:
+        if any(
+            x in texte
+            for x in (
+                "de quoi as tu besoin",
+                "qu est ce qu il te manque",
+                "quels sont tes besoins",
+            )
+        ):
+            if precedente is None:
+                return ReponseMeta(
+                    "decision.explain",
+                    "Je n'ai pas encore de choix précédent à examiner.",
+                )
+            profil = precedente.analyse.cognition
+            besoins = ", ".join(profil.get("besoins", ())) or "aucun besoin supplémentaire"
+            manques = ", ".join(profil.get("manques", ())) or "aucun manque critique"
+            return ReponseMeta(
+                "decision.explain",
+                f"Pour ce choix, mes besoins étaient : {besoins}. "
+                f"Manques détectés : {manques}.",
+            )
+
+        if (
+            texte == "pourquoi"
+            or "pourquoi as tu" in texte
+            or "explique ton choix" in texte
+            or "comment as tu choisi" in texte
+        ):
             if precedente is None:
                 return ReponseMeta(
                     "decision.explain",
                     "Je n'ai pas encore de décision précédente à justifier.",
                 )
             raisons = "; ".join(precedente.analyse.verification.raisons)
+            profil = precedente.analyse.cognition
+            filtres = ", ".join(profil.get("filtres", ())) or "aucun"
+            raisons_cognitives = "; ".join(profil.get("raisons", ()))
             return ReponseMeta(
                 "decision.explain",
                 f"J'ai choisi la route « {precedente.route} » avec une "
                 f"vérification à {precedente.analyse.verification.score} %. "
-                f"Raisons : {raisons or 'aucune raison détaillée'}.",
+                f"Intention : {profil.get('intention', 'non évaluée')}; "
+                f"direction : {profil.get('direction', 'inconnue')}; "
+                f"risque : {profil.get('risque', 'inconnu')} "
+                f"({profil.get('risque_score', 0)} %); "
+                f"prudence : {profil.get('prudence', 'inconnue')}; "
+                f"filtres : {filtres}. "
+                f"Raisons : {raisons_cognitives or raisons or 'aucune raison détaillée'}.",
             )
         return None
 
