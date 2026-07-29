@@ -2,7 +2,7 @@
 
 ## Statut
 
-**V0.5 — prototype opérationnel de compréhension, décision, apprentissage supervisé et génération contrôlée de skills pures.**
+**V0.6 — prototype opérationnel de compréhension, décision, apprentissage supervisé, skills pures et routage déclaratif ancré aux capacités.**
 
 Ce statut signifie que le projet est installable depuis un clone propre,
 démarre même lorsque la mémoire mutable n’existe pas encore, analyse une
@@ -26,15 +26,19 @@ python -m pip install -e .
 kairos --smoke-test
 kairos --growup-scan
 kairos --skill-factory-scan
+kairos --route-plan chercher --route-target atome
+kairos --secau-status
 python -m unittest discover -s tests -v
 python benchmark.py
 python holdout.py
 python decision_benchmark.py
 python growup_benchmark.py
 python skill_factory_benchmark.py
+python routing_benchmark.py
 python user_acceptance.py
 python user_acceptance_additional.py
 python user_acceptance_v05.py
+python user_acceptance_v06.py
 ```
 
 ## Portes validées
@@ -83,6 +87,20 @@ python user_acceptance_v05.py
 - rollback complet et traçable ;
 - bases, candidates et artefacts actifs exclus de Git.
 
+### Action Router V0.6
+
+- catalogue JSON séparant verbes, routes et capacités ;
+- 14 verbes fondamentaux ancrés à un objectif opérationnel ;
+- route connue compilée en plan contrôlable ;
+- route absente composée en candidate ;
+- capacité manquante explicitement signalée ;
+- aucun handler ou import Python accepté depuis JSON ;
+- permissions vérifiées lors de l’enregistrement d’une capacité ;
+- route `blocked` ou `candidate` inexécutable ;
+- plan de route exposé dans la décision du Kernel ;
+- `toi-même` reconnu comme modificateur et non comme cible ;
+- chaque verdict SECAU inscrit dans l’audit et consultable en CLI.
+
 ## Cycle démontré
 
 ```text
@@ -123,17 +141,17 @@ Chaque version active possède son chemin, rapport, digest et approbateur.
 Le rollback restaure toutes les métadonnées de la version précédente.
 ```
 
-## Résultats attendus par la CI V0.5
+## Résultats attendus par la CI V0.6
 
 Le dernier commit n’est accepté que si toutes les portes suivantes restent
 vertes sous Python 3.11, 3.12 et 3.13 :
 
 | Porte | Seuil |
 |---|---:|
-| Tests automatisés | 110/110 |
+| Tests automatisés | 118/118 |
 | Acceptation historique et V0.4 | 18/18 |
 | Acceptation CLI Skill Factory | 11/11 |
-| Acceptation totale | 29/29 |
+| Acceptation totale | 33/33 |
 | Smoke test | réussi |
 | Scan GrowUp installé | réussi |
 | Scan Skill Factory installé | réussi |
@@ -142,6 +160,8 @@ vertes sous Python 3.11, 3.12 et 3.13 :
 | Benchmark Décision | réussi |
 | Benchmark GrowUp | réussi |
 | Benchmark Skill Factory | réussi |
+| Benchmark Action Router | 15/15 |
+| Fausses exécutions de route | 0 |
 | Fausses exécutions | 0 autorisée |
 
 ## Parcours V0.5 acceptés
@@ -163,7 +183,4 @@ implicitement et qu’une altération après le rapport est refusée.
 
 ## Prochaine porte
 
-La prochaine étape doit introduire des **outils PC limités**, jamais un shell
-libre. Chaque outil devra posséder : permission explicite, simulation, journal,
-confirmation humaine, timeout, périmètre de fichiers strict et rollback. Une
-skill pourra demander un outil, mais ne devra jamais contourner son contrôleur.
+La prochaine étape doit implémenter les premières capacités atomiques de lecture : recherche mémoire, lecture documentaire, recherche Web contrôlée et comparaison de sources. Les outils PC limités viendront ensuite, jamais sous forme de shell libre.
