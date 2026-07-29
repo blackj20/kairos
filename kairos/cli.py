@@ -74,7 +74,10 @@ def growup_scan() -> int:
 
     dossier_memoire = _racine() / "memory"
     dossier_memoire.mkdir(parents=True, exist_ok=True)
-    kernel = Kernel(persister_decisions=True)
+    kernel = Kernel(
+        persister_decisions=True,
+        allow_network=args.online,
+    )
     cognitive = MemoryRepository(dossier_memoire / "cognition.db")
     stockage = StockageGrowUp(dossier_memoire / "growup.db")
     try:
@@ -267,6 +270,11 @@ def construire_parseur() -> argparse.ArgumentParser:
     )
     parseur.add_argument("--report-id", help="rapport réussi utilisé à l'activation")
     parseur.add_argument("--approved-by", help="approbateur humain déclaré")
+    parseur.add_argument(
+        "--online",
+        action="store_true",
+        help="autorise la recherche Web HTTPS en lecture seule",
+    )
     parseur.add_argument("message", nargs="*")
     return parseur
 
