@@ -1,36 +1,172 @@
 {
   "version": 1,
   "routes": {
-    "information.search": {"steps": [
-      {"id": "memory", "capability": "memory.search", "required": true},
-      {"id": "web", "capability": "web.search", "required": true},
-      {"id": "compare", "capability": "sources.compare", "required": true},
-      {"id": "propose", "capability": "knowledge.propose", "required": true},
-      {"id": "answer", "capability": "response.explain", "required": true}
-    ]},
-    "information.read": {"steps": [
-      {"id": "read", "capability": "document.read", "required": true},
-      {"id": "answer", "capability": "response.explain", "required": true}
-    ]},
-    "information.reread": {"steps": [
-      {"id": "read_again", "capability": "document.read", "required": true},
-      {"id": "answer", "capability": "response.explain", "required": true}
-    ]},
-    "information.verify": {"steps": [
-      {"id": "compare", "capability": "sources.compare", "required": true},
-      {"id": "test", "capability": "cognition.test", "required": true}
-    ]},
-    "response.explain": {"steps": [{"id": "answer", "capability": "response.explain", "required": true}]},
-    "information.compare": {"steps": [
-      {"id": "compare", "capability": "sources.compare", "required": true},
-      {"id": "answer", "capability": "response.explain", "required": true}
-    ]},
-    "cognition.test": {"steps": [{"id": "test", "capability": "cognition.test", "required": true}]},
-    "learning.correct": {"steps": [
-      {"id": "correct", "capability": "learning.correct", "required": true},
-      {"id": "test", "capability": "cognition.test", "required": true}
-    ]},
-    "cognition.plan": {"steps": [{"id": "plan", "capability": "cognition.plan", "required": true}]},
-    "response.ask": {"steps": [{"id": "ask", "capability": "response.ask", "required": true}]}
+    "information.search": {
+      "steps": [
+        {
+          "id": "memory",
+          "capability": "memory.search",
+          "required": true
+        },
+        {
+          "id": "web",
+          "capability": "web.search",
+          "required": true
+        },
+        {
+          "id": "compare",
+          "capability": "sources.compare",
+          "required": true
+        },
+        {
+          "id": "propose",
+          "capability": "knowledge.propose",
+          "required": true
+        },
+        {
+          "id": "answer",
+          "capability": "response.explain",
+          "required": true
+        }
+      ]
+    },
+    "information.read": {
+      "steps": [
+        {
+          "id": "read",
+          "capability": "document.read",
+          "required": true
+        },
+        {
+          "id": "answer",
+          "capability": "response.explain",
+          "required": true
+        }
+      ]
+    },
+    "information.reread": {
+      "steps": [
+        {
+          "id": "read_again",
+          "capability": "document.read",
+          "required": true
+        },
+        {
+          "id": "answer",
+          "capability": "response.explain",
+          "required": true
+        }
+      ]
+    },
+    "information.verify": {
+      "steps": [
+        {
+          "id": "compare",
+          "capability": "sources.compare",
+          "required": true
+        },
+        {
+          "id": "test",
+          "capability": "cognition.test",
+          "required": true
+        }
+      ]
+    },
+    "response.explain": {
+      "steps": [
+        {
+          "id": "answer",
+          "capability": "response.explain",
+          "required": true
+        }
+      ]
+    },
+    "information.compare": {
+      "steps": [
+        {
+          "id": "compare",
+          "capability": "sources.compare",
+          "required": true
+        },
+        {
+          "id": "answer",
+          "capability": "response.explain",
+          "required": true
+        }
+      ]
+    },
+    "cognition.test": {
+      "steps": [
+        {
+          "id": "test",
+          "capability": "cognition.test",
+          "required": true
+        }
+      ]
+    },
+    "learning.correct": {
+      "steps": [
+        {
+          "id": "correct",
+          "capability": "learning.correct",
+          "required": true
+        },
+        {
+          "id": "test",
+          "capability": "cognition.test",
+          "required": true
+        }
+      ]
+    },
+    "cognition.plan": {
+      "steps": [
+        {
+          "id": "plan",
+          "capability": "cognition.plan",
+          "required": true
+        }
+      ]
+    },
+    "response.ask": {
+      "steps": [
+        {
+          "id": "ask",
+          "capability": "response.ask",
+          "required": true
+        }
+      ]
+    },
+    "response.thank": {
+      "steps": [
+        {
+          "id": "thank",
+          "capability": "response.thank",
+          "required": true
+        }
+      ]
+    },
+    "response.greet": {
+      "steps": [
+        {
+          "id": "greet",
+          "capability": "response.greet",
+          "required": true
+        }
+      ]
+    },
+    "learning.memorize": {
+      "steps": [
+        {
+          "id": "propose",
+          "capability": "knowledge.propose",
+          "required": true
+        },
+        {
+          "id": "test",
+          "capability": "cognition.test",
+          "required": true
+        }
+      ]
+    }
   }
 }
