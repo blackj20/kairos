@@ -18,7 +18,7 @@ class TestNaturalLearning(unittest.TestCase):
         self.assertIsNotNone(mbote)
         self.assertEqual("communication", mbote["category"])
         self.assertEqual("response.greet", mbote["route"])
-        self.assertIn("salutation", mbote["meaning"])
+        self.assertIn("échange", mbote["meaning"])
 
     def test_spelling_clarification_resumes_parent_question(self) -> None:
         dialogue = DialogueApprentissage(Connaissances())
@@ -79,7 +79,7 @@ class TestNaturalLearning(unittest.TestCase):
         connaissances = Connaissances()
         self.assertEqual("chercher", connaissances.trouver_verbe("cherche")[0])
         self.assertEqual(("python", "logiciels"), connaissances.trouver_entite("python"))
-        self.assertIn("article:definis", connaissances.fonctions_pour("le"))
+        self.assertIn("articles:definis", connaissances.fonctions_pour("le"))
 
 
 if __name__ == "__main__":
