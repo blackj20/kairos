@@ -156,7 +156,15 @@ class MetaComprehension:
             if relation.relation in {"reference", "expliquer"}
         )
         return (
-            texte in {"explique toi", "explique-toi", "presente toi", "presente-toi"}
+            texte
+            in {
+                "explique toi",
+                "explique-toi",
+                "presente toi",
+                "presente-toi",
+                "qui es tu",
+                "qui es-tu",
+            }
             or (analyse.action.valeur == "expliquer" and cible_self)
         )
 
