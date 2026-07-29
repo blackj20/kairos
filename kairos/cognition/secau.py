@@ -1,8 +1,8 @@
-"""Audit final avant promotion."""
+"""Audit final observable avant promotion."""
 
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import asdict, dataclass
 from enum import Enum
 from typing import Any
 
@@ -21,6 +21,13 @@ class SecauResult:
     verdict: SecauVerdict
     reason: str
     concept_id: str | None = None
+    hypothesis_id: str | None = None
+    report_id: str | None = None
+
+    def vers_dict(self) -> dict[str, Any]:
+        payload = asdict(self)
+        payload["verdict"] = self.verdict.value
+        return payload
 
 
 class Secau:
@@ -35,33 +42,93 @@ class Secau:
 
         return str(report.get("subject_id", "")) == subject_id
 
+    def _resultat(
+        self,
+        verdict: SecauVerdict,
+        raison: str,
+        hypothesis_id: str,
+        report_id: str,
+        concept_id: str | None = None,
+    ) -> SecauResult:
+        resultat = SecauResult(
+            verdict=verdict,
+            reason=raison,
+            concept_id=concept_id,
+            hypothesis_id=hypothesis_id,
+            report_id=report_id,
+        )
+        self.repository.record_audit(
+            "SECAU_REVIEWED",
+            {
+                "hypothesis": hypothesis_id,
+                "report": report_id,
+                "verdict": verdict.value,
+                "reason": raison,
+                "concept": concept_id,
+            },
+        )
+        return resultat
+
     def review(
         self, hypothesis_id: str, report_id: str, payload: dict[str, Any]
     ) -> SecauResult:
         hypothesis = self.repository.hypothesis(hypothesis_id)
         report = self.repository.report(report_id)
         if hypothesis is None or report is None:
-            return SecauResult(SecauVerdict.REJECT, "artefact absent")
+            return self._resultat(
+                SecauVerdict.REJECT, "artefact absent", hypothesis_id, report_id
+            )
         if hypothesis.get("status") != "candidate":
-            return SecauResult(SecauVerdict.REJECT, "hypothèse déjà traitée")
+            return self._resultat(
+                SecauVerdict.REJECT,
+                "hypothèse déjà traitée",
+                hypothesis_id,
+                report_id,
+            )
         if not self._report_matches_subject(report, hypothesis_id):
-            return SecauResult(
+            return self._resultat(
                 SecauVerdict.REJECT,
                 "le rapport de test ne correspond pas à cette hypothèse",
+                hypothesis_id,
+                report_id,
             )
         if not bool(report.get("passed")):
-            return SecauResult(SecauVerdict.REJECT, "tests échoués")
+            return self._resultat(
+                SecauVerdict.REJECT,
+                "tests échoués",
+                hypothesis_id,
+                report_id,
+            )
         if self.PROTECTED.intersection(payload):
-            return SecauResult(SecauVerdict.QUARANTINE, "donnée protégée")
+            return self._resultat(
+                SecauVerdict.QUARANTINE,
+                "donnée protégée",
+                hypothesis_id,
+                report_id,
+            )
         if not payload.get("evidence_ids"):
-            return SecauResult(
-                SecauVerdict.NEEDS_MORE_EVIDENCE, "provenance absente"
+            return self._resultat(
+                SecauVerdict.NEEDS_MORE_EVIDENCE,
+                "provenance absente",
+                hypothesis_id,
+                report_id,
             )
         try:
             concept_id = self.repository.promote(hypothesis_id, report_id)
         except ValueError as error:
-            return SecauResult(SecauVerdict.REJECT, str(error))
-        return SecauResult(SecauVerdict.PROMOTE, "contrôles réussis", concept_id)
+            return self._resultat(
+                SecauVerdict.REJECT,
+                str(error),
+                hypothesis_id,
+                report_id,
+            )
+        return self._resultat(
+            SecauVerdict.PROMOTE,
+            "contrôles réussis",
+            hypothesis_id,
+            report_id,
+            concept_id,
+        )
 
     def review_relation(
         self,
@@ -73,33 +140,61 @@ class Secau:
         hypothesis = self.repository.hypothesis(hypothesis_id)
         report = self.repository.report(report_id)
         if hypothesis is None or report is None:
-            return SecauResult(SecauVerdict.REJECT, "artefact absent")
+            return self._resultat(
+                SecauVerdict.REJECT, "artefact absent", hypothesis_id, report_id
+            )
         if hypothesis.get("status") != "candidate":
-            return SecauResult(SecauVerdict.REJECT, "hypothèse déjà traitée")
+            return self._resultat(
+                SecauVerdict.REJECT,
+                "hypothèse déjà traitée",
+                hypothesis_id,
+                report_id,
+            )
         if not self._report_matches_subject(report, hypothesis_id):
-            return SecauResult(
+            return self._resultat(
                 SecauVerdict.REJECT,
                 "le rapport de test ne correspond pas à cette hypothèse",
+                hypothesis_id,
+                report_id,
             )
         payload = hypothesis["payload"]
         if self.PROTECTED.intersection(payload):
-            return SecauResult(SecauVerdict.QUARANTINE, "donnée protégée")
+            return self._resultat(
+                SecauVerdict.QUARANTINE,
+                "donnée protégée",
+                hypothesis_id,
+                report_id,
+            )
         if len(payload.get("evidence_ids", [])) < 2:
-            return SecauResult(
+            return self._resultat(
                 SecauVerdict.NEEDS_MORE_EVIDENCE,
                 "deux preuves indépendantes sont obligatoires",
+                hypothesis_id,
+                report_id,
             )
         if not bool(report.get("passed")):
-            return SecauResult(SecauVerdict.REJECT, "tests relationnels échoués")
+            return self._resultat(
+                SecauVerdict.REJECT,
+                "tests relationnels échoués",
+                hypothesis_id,
+                report_id,
+            )
         try:
             relation_id = self.repository.promote_relation(
                 hypothesis_id,
                 report_id,
             )
         except ValueError as error:
-            return SecauResult(SecauVerdict.REJECT, str(error))
-        return SecauResult(
+            return self._resultat(
+                SecauVerdict.REJECT,
+                str(error),
+                hypothesis_id,
+                report_id,
+            )
+        return self._resultat(
             SecauVerdict.PROMOTE,
             "relation confirmée après preuves, exemples et régression",
+            hypothesis_id,
+            report_id,
             relation_id,
         )
