@@ -1,35 +1,32 @@
 {
-  "phase": "central_foundation_with_decision",
-  "current_component": "Decision",
+  "phase": "natural_learning_indexed",
+  "version": "0.9.0",
+  "current_component": "DialogueApprentissage",
+  "first_objective": "comprendre",
   "benchmark_status": "passed",
   "last_benchmark": {
-    "date": "2026-07-28",
-    "core": {
-      "total": 8,
-      "exact_accuracy": 100.0
+    "date": "2026-07-29",
+    "automated_tests": {
+      "passed": 137,
+      "total": 137
     },
-    "variants": {
-      "total": 43,
-      "intent_accuracy": 100.0,
-      "exact_accuracy": 100.0
+    "user_acceptance": {
+      "passed": 40,
+      "total": 40
     },
-    "post_implementation_holdout": {
-      "total": 29,
-      "intent_accuracy": 96.55,
-      "route_accuracy": 93.1,
+    "performance": {
+      "analyses_per_second": 174.61,
+      "minimum": 100
+    },
+    "indexes": {
+      "verb_forms": 192,
+      "entities": 31,
+      "common_word_forms": 114
+    },
+    "safety": {
       "unsafe_false_executions": 0,
-      "known_failures": [
-        "cela fonctionne reste inconnu",
-        "ne ferme pas est désormais clarifié car la cible manque"
-      ]
-    },
-    "decision_layer": {
-      "total": 43,
-      "route_accuracy": 100.0,
-      "question_field_accuracy": 100.0,
-      "incomplete_actions_blocked": 100.0,
-      "unsafe_false_executions": 0
+      "untested_research_promotions": 0
     }
   },
-  "decision": "keep_v0_3_as_central_foundation"
+  "decision": "keep_v0_9_natural_learning_as_central_dialogue_foundation"
 }
