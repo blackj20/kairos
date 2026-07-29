@@ -7,6 +7,7 @@ import urllib.parse
 from collections.abc import Callable
 from difflib import get_close_matches
 from pathlib import Path
+from typing import Any
 
 from .cognition import Reflechir
 from .comprendre import Comprendre
@@ -16,6 +17,7 @@ from .decision import EvenementExperience, MoteurDecision
 from .modeles import Analyse, Decision
 from .relations_verbes import MemoireRelationsVerbes
 from .repondre import Repondre
+from .routing import PlanRoute, RouteurDynamique, StatutRoute
 from .soi import ConnaissanceDeSoi
 
 Competence = Callable[[Analyse], str]
@@ -30,6 +32,7 @@ class Kernel:
         repondre: Repondre | None = None,
         soi: ConnaissanceDeSoi | None = None,
         moteur_decision: MoteurDecision | None = None,
+        routeur: RouteurDynamique | None = None,
         persister_decisions: bool = False,
     ) -> None:
         if comprendre is None:
@@ -59,7 +62,9 @@ class Kernel:
             comprendre=self.comprendre,
             persister=persister_decisions,
         )
+        self.routeur = routeur or RouteurDynamique()
         self._competences: dict[str, Competence] = {}
+        self._dernier_plan_route: PlanRoute | None = None
         # Une séance pédagogique est volontairement locale à la conversation :
         # une question est posée, puis KAIROS attend et évalue sa réponse avant
         # de continuer. Les réponses ne deviennent jamais des vérités confirmées.
@@ -71,6 +76,19 @@ class Kernel:
         if not action.strip():
             raise ValueError("Une compétence doit avoir un nom d'action.")
         self._competences[action.casefold()] = competence
+
+    def enregistrer_capacite(
+        self,
+        nom: str,
+        capacite: Callable[[dict[str, Any]], dict[str, Any]],
+        *,
+        permissions: tuple[str, ...] = (),
+    ) -> None:
+        """Enregistre une brique atomique explicitement autorisée."""
+
+        self.routeur.enregistrer_capacite(
+            nom, capacite, permissions=permissions
+        )
 
     @property
     def attente_pedagogique(self) -> str | None:
@@ -98,6 +116,7 @@ class Kernel:
         if self._session_pedagogique is not None:
             return self._traiter_reponse_pedagogique(requete)
 
+        self._dernier_plan_route = None
         analyse = self.comprendre.analyser(requete)
         processus = self.moteur_decision.decider(analyse, acteur)
         verdict = processus.verdict
@@ -135,6 +154,11 @@ class Kernel:
             ),
             evaluation=processus.evaluation.vers_dict(),
             verdict=verdict.vers_dict(),
+            routage=(
+                self._dernier_plan_route.vers_dict()
+                if self._dernier_plan_route is not None
+                else None
+            ),
         )
 
     def repondre_a(
@@ -253,9 +277,35 @@ class Kernel:
                 return self.repondre.knowledge_base.compose(lesson)
 
         competence = self._competences.get(action.casefold())
-        if competence is None:
+        if competence is not None:
+            return competence(analyse)
+
+        plan = self.routeur.planifier(action, analyse.cible.valeur)
+        self._dernier_plan_route = plan
+        if plan.id == "unresolved":
             return self.repondre.signaler_competence_absente(action)
-        return competence(analyse)
+        if plan.statut is StatutRoute.BLOCKED:
+            manquantes = ", ".join(plan.capacites_manquantes)
+            detail = (
+                f" Capacités manquantes : {manquantes}."
+                if manquantes
+                else f" {plan.raison}."
+            )
+            return (
+                f"Action « {action} » comprise et route « {plan.id} » "
+                f"construite, mais bloquée.{detail}"
+            )
+        if plan.statut is StatutRoute.CANDIDATE:
+            return (
+                f"Route candidate « {plan.id} » composée pour « {action} ». "
+                "Elle doit passer par Tester et SECAU avant toute exécution."
+            )
+
+        resultat = self.routeur.executer(plan, {"analyse": analyse})
+        reponse = resultat.get("response")
+        return str(reponse) if reponse else (
+            f"Route « {plan.id} » exécutée avec succès."
+        )
 
     def _corriger_sujet_pedagogique(self, topic: str) -> tuple[str, bool]:
         """Corrige une faute évidente avec le vocabulaire réellement connu."""
