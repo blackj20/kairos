@@ -1,0 +1,35 @@
+{
+  "version": 1,
+  "max_clarifications_per_field": 2,
+  "commands": {
+    "yes": ["oui", "oui c'est ça", "exactement", "correct"],
+    "no": ["non", "non pas ça", "incorrect"],
+    "cancel": ["annule", "annuler", "stop", "arrête", "arrete"]
+  },
+  "fields": {
+    "definition": {
+      "expectation": "une explication libre et compréhensible",
+      "minimum_words": 4,
+      "help": "Explique avec tes mots ; aucun format spécial n'est imposé.",
+      "retry": "explique l'idée en une phrase un peu plus complète"
+    },
+    "examples": {
+      "expectation": "au moins deux situations concrètes",
+      "minimum_words": 4,
+      "help": "Donne des situations concrètes, comme dans une conversation.",
+      "retry": "donne au moins deux situations concrètes"
+    },
+    "counterexamples": {
+      "expectation": "une limite ou un cas où le mot ne convient pas",
+      "minimum_words": 4,
+      "help": "Indique simplement un cas où cette idée ne s'applique pas.",
+      "retry": "décris un cas où cette idée ne convient pas"
+    },
+    "relations": {
+      "expectation": "un lien expliqué avec une idée déjà connue",
+      "minimum_words": 4,
+      "help": "Relie cette idée à une action, une catégorie ou une capacité connue.",
+      "retry": "explique le lien avec une autre idée connue"
+    }
+  }
+}

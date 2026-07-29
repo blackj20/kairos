@@ -67,6 +67,9 @@ jobs:
           path: unittest.log
           if-no-files-found: error
 
+      - name: Enforce skeleton performance
+        run: python skeleton_benchmark.py
+
       - name: Enforce understanding benchmark
         run: python benchmark.py
 

@@ -22,7 +22,12 @@
     "vérifier l’intégrité SHA-256 des affirmations recherchées",
     "tester une hypothèse de recherche avant revue",
     "appeler SECAU et exposer son verdict",
-    "promouvoir un concept uniquement après un rapport Tester réussi"
+    "promouvoir un concept uniquement après un rapport Tester réussi",
+    "garder une question principale pendant une clarification secondaire",
+    "confirmer une faute avant de mémoriser sa correction",
+    "reprendre une séance d'apprentissage après redémarrage",
+    "relier un mot courant à un sens, une catégorie et une route candidate",
+    "pré-indexer le vocabulaire utilisé sur chaque requête"
   ],
   "verified": [
     {
@@ -80,6 +85,14 @@
     {
       "name": "Research Tester et SECAU",
       "evidence": "130 tests, benchmark 10/10, 40 scénarios utilisateur et zéro promotion de recherche non testée"
+    },
+    {
+      "name": "apprentissage naturel persistant",
+      "evidence": "137 tests, 40 scénarios utilisateur, clarifications bornées et reprise après redémarrage"
+    },
+    {
+      "name": "squelette linguistique indexé",
+      "evidence": "174,61 analyses/s avec 192 formes verbales, 31 entités et 114 formes courantes indexées"
     }
   ],
   "rule": "une capacité devient vérifiée uniquement après un test reproductible"

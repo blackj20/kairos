@@ -28,6 +28,7 @@ class Connaissances:
         "entites.json",
         "expressions.json",
         "grammaire.json",
+        "lexique.json",
         "negations.json",
         "sens.json",
         "verbes.json",
@@ -49,6 +50,7 @@ class Connaissances:
             nom.removesuffix(".json"): self._charger_json(nom)
             for nom in self.FICHIERS_REQUIS
         }
+        self._construire_indexes()
 
     def _charger_json(self, nom: str) -> dict[str, Any]:
         chemin = self.dossier / nom
@@ -89,6 +91,108 @@ class Connaissances:
         return self._donnees["sens"]
 
     @property
+    def lexique(self) -> dict[str, Any]:
+        """Expose les mots courants avec sens, catégorie et route éventuelle."""
+
+        entrees = self._donnees["lexique"].get("entries", {})
+        if not isinstance(entrees, dict):
+            raise ErreurConnaissances(
+                "data/fr/lexique.json : entries doit être un objet."
+            )
+        return entrees
+
+    def _construire_indexes(self) -> None:
+        """Construit une fois les tables utilisées sur chaque requête."""
+
+        self._index_verbes: dict[str, tuple[str, dict[str, Any]]] = {}
+        for lemme, regle in self.verbes.items():
+            for forme in regle.get("formes", []):
+                self._index_verbes[cle(forme)] = (lemme, regle)
+
+        self._index_entites: dict[str, tuple[str, str]] = {}
+        for categorie, elements in self.entites.items():
+            for element in elements:
+                self._index_entites[cle(element)] = (
+                    str(element).casefold(),
+                    categorie,
+                )
+
+        self._index_fonctions: dict[str, tuple[str, ...]] = {}
+        categories_fonctions: dict[str, set[str]] = {}
+        for fichier in (
+            "affirmations",
+            "articles",
+            "bruits",
+            "grammaire",
+            "negations",
+        ):
+            for categorie, valeurs in self._donnees[fichier].items():
+                if not isinstance(valeurs, list):
+                    continue
+                nom_categorie = f"{fichier}:{categorie}"
+                normalisees = {cle(valeur) for valeur in valeurs}
+                categories_fonctions[nom_categorie] = normalisees
+                for mot in normalisees:
+                    self._index_fonctions.setdefault(mot, ())
+                    self._index_fonctions[mot] += (nom_categorie,)
+        self._categories_fonctions = categories_fonctions
+
+        self._index_expressions: dict[str, tuple[str, ...]] = {}
+        for categorie, expressions in self.expressions.items():
+            if not isinstance(expressions, list):
+                continue
+            for expression in expressions:
+                for mot in re.findall(
+                    r"[a-zA-ZÀ-ÿ0-9_+#.-]+", str(expression)
+                ):
+                    mot_cle = cle(mot)
+                    existantes = self._index_expressions.get(mot_cle, ())
+                    if categorie not in existantes:
+                        self._index_expressions[mot_cle] = (
+                            *existantes,
+                            categorie,
+                        )
+
+        self._index_lexique: dict[str, tuple[str, dict[str, Any]]] = {}
+        for lemme, entree in self.lexique.items():
+            if not isinstance(entree, dict):
+                continue
+            for forme in entree.get("forms", []):
+                self._index_lexique[cle(forme)] = (lemme, entree)
+
+        self._vocabulaire_statique = set(self._index_verbes)
+        self._vocabulaire_statique.update(self._index_entites)
+        self._vocabulaire_statique.update(self._index_fonctions)
+        self._vocabulaire_statique.update(self._index_expressions)
+        self._vocabulaire_statique.update(self._index_lexique)
+        self._vocabulaire_statique.update(cle(mot) for mot in self.sens_ambigus)
+
+    @property
+    def nombre_verbes_indexes(self) -> int:
+        return len(self._index_verbes)
+
+    @property
+    def nombre_entites_indexees(self) -> int:
+        return len(self._index_entites)
+
+    @property
+    def nombre_mots_courants_indexes(self) -> int:
+        return len(self._index_lexique)
+
+    def fonctions_pour(self, mot: str) -> tuple[str, ...]:
+        return self._index_fonctions.get(cle(mot), ())
+
+    def expressions_pour(self, mot: str) -> tuple[str, ...]:
+        return self._index_expressions.get(cle(mot), ())
+
+    def trouver_mot_courant(self, mot: str) -> dict[str, Any] | None:
+        trouve = self._index_lexique.get(cle(mot))
+        if trouve is None:
+            return None
+        lemme, entree = trouve
+        return {"lemma": lemme, **entree}
+
+    @property
     def conversations(self) -> dict[str, Any]:
         """Compatibilité avec Repondre, sans dupliquer les données."""
 
@@ -111,11 +215,7 @@ class Connaissances:
         forme_confirmee = self.corrections.obtenir(mot_cle)
         if forme_confirmee is not None:
             mot_cle = forme_confirmee
-        for lemme, regle in self.verbes.items():
-            formes = {cle(forme) for forme in regle.get("formes", [])}
-            if mot_cle in formes:
-                return lemme, regle
-        return None
+        return self._index_verbes.get(mot_cle)
 
     @property
     def relations_semantiques(self) -> tuple[dict[str, Any], ...]:
@@ -248,11 +348,7 @@ class Connaissances:
         forme_confirmee = self.corrections.obtenir(mot_cle)
         if forme_confirmee is not None:
             mot_cle = forme_confirmee
-        for categorie, elements in self.entites.items():
-            for element in elements:
-                if mot_cle == cle(element):
-                    return str(element).casefold(), categorie
-        return None
+        return self._index_entites.get(mot_cle)
 
     def proposer_correction_entite(
         self, mot: str
@@ -284,43 +380,19 @@ class Connaissances:
         return tuple(cle(expression) for expression in self.expressions[categorie])
 
     def mots_fonctions(self) -> dict[str, set[str]]:
-        categories: dict[str, set[str]] = {}
-        for fichier in (
-            "affirmations",
-            "articles",
-            "bruits",
-            "grammaire",
-            "negations",
-        ):
-            for categorie, valeurs in self._donnees[fichier].items():
-                if isinstance(valeurs, list):
-                    categories[f"{fichier}:{categorie}"] = {
-                        cle(valeur) for valeur in valeurs
-                    }
-        return categories
+        """Compatibilité : renvoie une copie des catégories pré-indexées."""
+
+        return {
+            categorie: set(valeurs)
+            for categorie, valeurs in self._categories_fonctions.items()
+        }
 
     def vocabulaire_connu(self) -> set[str]:
-        mots: set[str] = set()
+        """Retourne le vocabulaire indexé et les relations confirmées."""
 
-        def ajouter(expression: object) -> None:
-            mots.update(
-                cle(morceau)
-                for morceau in re.findall(
-                    r"[a-zA-ZÀ-ÿ0-9_+#.-]+", str(expression)
-                )
-            )
-
-        for regle in self.verbes.values():
-            for forme in regle.get("formes", []):
-                ajouter(forme)
-        for valeurs in self.entites.values():
-            for valeur in valeurs:
-                ajouter(valeur)
-        for valeurs in self.expressions.values():
-            if isinstance(valeurs, list):
-                for valeur in valeurs:
-                    ajouter(valeur)
-        for valeurs in self.mots_fonctions().values():
-            mots.update(valeurs)
-        mots.update(cle(mot) for mot in self.sens_ambigus)
+        mots = set(self._vocabulaire_statique)
+        for source, relation in self.relations_verbes.relations().items():
+            mots.add(cle(source))
+            mots.add(cle(str(relation.get("target", ""))))
+        mots.update(self.corrections.relations())
         return mots

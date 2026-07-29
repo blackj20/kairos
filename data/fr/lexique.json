@@ -1,0 +1,405 @@
+{
+  "version": 1,
+  "entries": {
+    "salutation": {
+      "forms": [
+        "salutation",
+        "salutations",
+        "bonjour",
+        "bonsoir",
+        "salut",
+        "coucou",
+        "hello",
+        "mbote"
+      ],
+      "category": "communication",
+      "meaning": "formule utilisée pour ouvrir ou entretenir un échange",
+      "route": "response.greet"
+    },
+    "remerciement": {
+      "forms": [
+        "remerciement",
+        "remerciements",
+        "merci",
+        "gratitude"
+      ],
+      "category": "communication",
+      "meaning": "expression de reconnaissance envers une personne",
+      "route": "response.thank"
+    },
+    "question": {
+      "forms": [
+        "question",
+        "questions"
+      ],
+      "category": "dialogue",
+      "meaning": "formulation destinée à obtenir une information",
+      "route": "dialogue.ask"
+    },
+    "reponse": {
+      "forms": [
+        "réponse",
+        "reponse",
+        "réponses",
+        "reponses"
+      ],
+      "category": "dialogue",
+      "meaning": "information produite à la suite d'une question",
+      "route": "dialogue.answer"
+    },
+    "explication": {
+      "forms": [
+        "explication",
+        "explications"
+      ],
+      "category": "apprentissage",
+      "meaning": "présentation qui rend une information plus compréhensible",
+      "route": "learning.explain"
+    },
+    "definition": {
+      "forms": [
+        "définition",
+        "definition"
+      ],
+      "category": "apprentissage",
+      "meaning": "description du sens d'un mot ou d'un concept",
+      "route": "learning.define"
+    },
+    "exemple": {
+      "forms": [
+        "exemple",
+        "exemples",
+        "illustration"
+      ],
+      "category": "apprentissage",
+      "meaning": "cas concret qui aide à comprendre une idée",
+      "route": "learning.example"
+    },
+    "information": {
+      "forms": [
+        "information",
+        "informations",
+        "renseignement",
+        "renseignements"
+      ],
+      "category": "connaissance",
+      "meaning": "contenu susceptible d'être compris, vérifié et réutilisé",
+      "route": "information.inspect"
+    },
+    "connaissance": {
+      "forms": [
+        "connaissance",
+        "connaissances",
+        "savoir"
+      ],
+      "category": "connaissance",
+      "meaning": "information reliée, vérifiée et réutilisable",
+      "route": "memory.read"
+    },
+    "memoire": {
+      "forms": [
+        "mémoire",
+        "memoire",
+        "souvenir"
+      ],
+      "category": "cognition",
+      "meaning": "système qui conserve expériences, candidates et connaissances",
+      "route": "memory.read"
+    },
+    "comprehension": {
+      "forms": [
+        "compréhension",
+        "comprehension"
+      ],
+      "category": "cognition",
+      "meaning": "capacité à relier une formulation à un sens, un contexte et une intention",
+      "route": "cognition.understand"
+    },
+    "relation": {
+      "forms": [
+        "relation",
+        "relations",
+        "lien",
+        "liens"
+      ],
+      "category": "cognition",
+      "meaning": "connexion typée entre deux informations",
+      "route": "cognition.relate"
+    },
+    "contexte": {
+      "forms": [
+        "contexte",
+        "situation",
+        "circonstance"
+      ],
+      "category": "cognition",
+      "meaning": "ensemble d'indices qui précise le sens d'une formulation"
+    },
+    "sens": {
+      "forms": [
+        "sens",
+        "signification",
+        "signifie"
+      ],
+      "category": "cognition",
+      "meaning": "interprétation associée à un mot ou une expression"
+    },
+    "objectif": {
+      "forms": [
+        "objectif",
+        "but",
+        "mission"
+      ],
+      "category": "planification",
+      "meaning": "résultat recherché qui guide un plan",
+      "route": "planning.plan"
+    },
+    "plan": {
+      "forms": [
+        "plan",
+        "étape",
+        "etape",
+        "étapes",
+        "etapes"
+      ],
+      "category": "planification",
+      "meaning": "suite ordonnée d'étapes destinée à atteindre un objectif",
+      "route": "planning.plan"
+    },
+    "action": {
+      "forms": [
+        "action",
+        "actions",
+        "opération",
+        "operation"
+      ],
+      "category": "execution",
+      "meaning": "transformation ou consultation demandée à une capacité",
+      "route": "routing.resolve"
+    },
+    "capacite": {
+      "forms": [
+        "capacité",
+        "capacite",
+        "capacités",
+        "capacites",
+        "skill"
+      ],
+      "category": "execution",
+      "meaning": "fonction réelle que Kairos peut appeler sous permissions",
+      "route": "routing.resolve"
+    },
+    "route": {
+      "forms": [
+        "route",
+        "routes",
+        "chemin"
+      ],
+      "category": "execution",
+      "meaning": "enchaînement contrôlé de capacités pour réaliser une action",
+      "route": "routing.resolve"
+    },
+    "resultat": {
+      "forms": [
+        "résultat",
+        "resultat",
+        "résultats",
+        "resultats"
+      ],
+      "category": "execution",
+      "meaning": "sortie observable produite par une action ou un test"
+    },
+    "source": {
+      "forms": [
+        "source",
+        "sources",
+        "référence",
+        "reference"
+      ],
+      "category": "verification",
+      "meaning": "origine traçable d'une information",
+      "route": "information.inspect"
+    },
+    "preuve": {
+      "forms": [
+        "preuve",
+        "preuves",
+        "indice",
+        "indices"
+      ],
+      "category": "verification",
+      "meaning": "élément vérifiable qui soutient ou contredit une hypothèse",
+      "route": "verification.test"
+    },
+    "hypothese": {
+      "forms": [
+        "hypothèse",
+        "hypothese",
+        "candidate",
+        "candidat"
+      ],
+      "category": "verification",
+      "meaning": "proposition non confirmée qui doit encore être testée",
+      "route": "verification.test"
+    },
+    "test": {
+      "forms": [
+        "test",
+        "tests",
+        "essai",
+        "essais"
+      ],
+      "category": "verification",
+      "meaning": "mesure reproductible appliquée à une hypothèse",
+      "route": "verification.test"
+    },
+    "verification": {
+      "forms": [
+        "vérification",
+        "verification"
+      ],
+      "category": "verification",
+      "meaning": "examen qui décide si les preuves sont suffisantes",
+      "route": "verification.test"
+    },
+    "confirmation": {
+      "forms": [
+        "confirmation"
+      ],
+      "category": "dialogue",
+      "meaning": "validation explicite donnée après une proposition",
+      "route": "dialogue.confirm"
+    },
+    "correction": {
+      "forms": [
+        "correction",
+        "corrigé",
+        "faute",
+        "erreur"
+      ],
+      "category": "apprentissage",
+      "meaning": "proposition destinée à réparer une information ou une graphie",
+      "route": "learning.correct"
+    },
+    "ordre": {
+      "forms": [
+        "ordre",
+        "commande",
+        "instruction"
+      ],
+      "category": "intention",
+      "meaning": "demande qui vise l'exécution d'une action",
+      "route": "decision.command"
+    },
+    "interdiction": {
+      "forms": [
+        "interdiction",
+        "interdit",
+        "défense",
+        "defense"
+      ],
+      "category": "intention",
+      "meaning": "instruction qui empêche une action",
+      "route": "decision.block"
+    },
+    "affirmation": {
+      "forms": [
+        "affirmation",
+        "déclaration",
+        "declaration"
+      ],
+      "category": "intention",
+      "meaning": "phrase qui présente une information comme vraie"
+    },
+    "retour": {
+      "forms": [
+        "retour",
+        "feedback",
+        "avis"
+      ],
+      "category": "dialogue",
+      "meaning": "réaction utilisateur utilisée pour évaluer un résultat",
+      "route": "learning.feedback"
+    },
+    "mot": {
+      "forms": [
+        "mot",
+        "mots",
+        "terme",
+        "termes"
+      ],
+      "category": "langue",
+      "meaning": "unité de langue qui peut porter un ou plusieurs sens"
+    },
+    "phrase": {
+      "forms": [
+        "phrase",
+        "phrases",
+        "formulation"
+      ],
+      "category": "langue",
+      "meaning": "suite structurée de mots exprimant une intention"
+    },
+    "maintenant": {
+      "forms": [
+        "maintenant",
+        "actuellement"
+      ],
+      "category": "temps",
+      "meaning": "au moment présent"
+    },
+    "ensuite": {
+      "forms": [
+        "ensuite",
+        "après",
+        "apres",
+        "puis"
+      ],
+      "category": "temps",
+      "meaning": "dans une étape qui suit"
+    },
+    "avant": {
+      "forms": [
+        "avant",
+        "d'abord",
+        "dabord"
+      ],
+      "category": "temps",
+      "meaning": "dans une étape qui précède"
+    },
+    "toujours": {
+      "forms": [
+        "toujours"
+      ],
+      "category": "fréquence",
+      "meaning": "dans tous les cas considérés"
+    },
+    "jamais": {
+      "forms": [
+        "jamais"
+      ],
+      "category": "fréquence",
+      "meaning": "dans aucun cas considéré"
+    },
+    "probabilite": {
+      "forms": [
+        "peut-être",
+        "peut etre",
+        "probablement",
+        "possible"
+      ],
+      "category": "incertitude",
+      "meaning": "marque qu'une information n'est pas certaine"
+    },
+    "precision": {
+      "forms": [
+        "exactement",
+        "précisément",
+        "precisement",
+        "seulement"
+      ],
+      "category": "nuance",
+      "meaning": "marque une restriction ou un haut degré de précision"
+    }
+  }
+}

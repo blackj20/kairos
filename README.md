@@ -4,7 +4,7 @@ K.A.I.R.O.S. est un moteur symbolique, local et explicable. Il analyse une
 requête française, estime son intention, choisit une route, demande les
 informations manquantes et conserve les réponses comme expériences.
 
-La **V0.8** active la porte **Research Tester → SECAU**. La V0.7 rendait la route **Information Search** exécutable. La V0.6 ajoutait **Action Router** : les verbes fondamentaux pointent vers
+La **V0.9** ajoute l’**apprentissage naturel persistant** et un squelette linguistique indexé. Une faute ou un mot inconnu ouvre une clarification bornée, puis Kairos reprend la question principale. La **V0.8** activait la porte **Research Tester → SECAU**. La V0.7 rendait la route **Information Search** exécutable. La V0.6 ajoutait **Action Router** : les verbes fondamentaux pointent vers
 des routes et des capacités déclarées en JSON. Une route absente peut être
 composée, mais reste candidate et inexécutable jusqu’à validation. Chaque verdict
 SECAU devient également visible dans l’audit.
@@ -21,6 +21,11 @@ SECAU devient également visible dans l’audit.
 - estimer le type, la démarche, l’action et la cible ;
 - bloquer un ordre incomplet ou contradictoire ;
 - poser une question ciblée ;
+- garder l’objectif principal pendant une clarification secondaire ;
+- demander confirmation avant de mémoriser une correction orthographique ;
+- reprendre une séance d’apprentissage après redémarrage ;
+- relier un mot courant à son sens, sa catégorie et une route candidate ;
+- produire une connaissance candidate non réutilisable avant Tester et SECAU ;
 - relier la réponse à la question originale ;
 - conserver l’expérience après redémarrage ;
 - regrouper les difficultés similaires avec GrowUp ;
@@ -91,11 +96,18 @@ Utilisateur
 Kernel
    ↓
 Comprendre
+├── Index lexical V0.9
 ├── Découper
 ├── Sens
 ├── Contexte
 ├── Estimer
 └── VerifierAnalyse
+   ↓
+Dialogue d’apprentissage naturel
+├── Question principale persistante
+├── Clarification bornée
+├── Reprise automatique
+└── Candidate non confirmée
    ↓
 Décision
 ├── Évaluer

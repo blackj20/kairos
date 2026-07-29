@@ -2,7 +2,7 @@
 
 ## Statut
 
-**V0.8 — prototype opérationnel de compréhension, décision, apprentissage supervisé, skills pures et routage, recherche contrôlée et consolidation par Tester puis SECAU.**
+**V0.9 — prototype opérationnel avec apprentissage naturel persistant, lexique courant routable et squelette linguistique indexé.**
 
 Ce statut signifie que le projet est installable depuis un clone propre,
 démarre même lorsque la mémoire mutable n’existe pas encore, analyse une
@@ -123,6 +123,20 @@ python user_acceptance_v06.py
 - quatre verdicts SECAU observables ;
 - promotion seulement après rapport réussi.
 
+### Apprentissage naturel et indexation V0.9
+
+- une seule question principale exposée à la fois ;
+- objectif parent conservé pendant une faute ou un mot inconnu ;
+- deux clarifications au maximum par étape ;
+- correction orthographique enregistrée seulement après confirmation ;
+- reprise de la séance après redémarrage ;
+- réponses libres guidées par un exemple, sans format artificiel obligatoire ;
+- candidate structurée mais non réutilisable avant Tester et SECAU ;
+- 39 concepts courants décrits par sens, catégorie et route éventuelle ;
+- 192 formes verbales, 31 entités et 114 formes courantes pré-indexées ;
+- 174,61 analyses par seconde mesurées sur Python 3.11 ;
+- commande `stop` transmise à la séance active avant de quitter la console.
+
 ## Cycle démontré
 
 ```text
@@ -163,20 +177,21 @@ Chaque version active possède son chemin, rapport, digest et approbateur.
 Le rollback restaure toutes les métadonnées de la version précédente.
 ```
 
-## Résultats attendus par la CI V0.6
+## Résultats attendus par la CI V0.9
 
 Le dernier commit n’est accepté que si toutes les portes suivantes restent
 vertes sous Python 3.11, 3.12 et 3.13 :
 
 | Porte | Seuil |
 |---|---:|
-| Tests automatisés | 130/130 |
+| Tests automatisés | 137/137 |
 | Acceptation historique et V0.4 | 18/18 |
 | Acceptation CLI Skill Factory | 11/11 |
 | Acceptation totale | 40/40 |
 | Smoke test | réussi |
 | Scan GrowUp installé | réussi |
 | Scan Skill Factory installé | réussi |
+| Benchmark squelette V0.9 | ≥ 100 analyses/s (174,61 mesurées) |
 | Benchmark Comprendre | réussi |
 | Benchmark holdout | réussi |
 | Benchmark Décision | réussi |
