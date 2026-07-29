@@ -163,7 +163,7 @@
     {
       "group": "variant",
       "text": "peux-tu ouvrir le terminal ?",
-      "expected": {"type": "question", "action": "ouvrir", "cible": "terminal", "route": "repondre"}
+      "expected": {"type": "question", "action": "ouvrir", "cible": "terminal", "route": "competence"}
     },
     {
       "group": "variant",
