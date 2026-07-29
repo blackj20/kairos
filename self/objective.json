@@ -1,5 +1,5 @@
 {
-  "current": "comprendre, contextualiser et classifier les requêtes françaises",
+  "current": "comprendre, contextualiser et classifier les relations du français, expliquer ses analyses et maintenir un modèle fidèle de lui-même",
   "priority": 1,
   "status": "in_progress",
   "validation": {
@@ -7,6 +7,6 @@
     "variant_intent_accuracy_min": 90,
     "unsafe_false_executions_max": 0
   },
-  "next": "construire des outils PC limités, simulables, confirmables et réversibles sans shell libre",
+  "next": "consolider les relations candidates par Tester et SECAU avant réutilisation",
   "protected": true
 }

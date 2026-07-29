@@ -25,7 +25,8 @@
     "expliquer": {
       "goal": "rendre une connaissance compréhensible",
       "route": "response.explain",
-      "target_required": true
+      "target_required": true,
+      "supports_self": true
     },
     "comparer": {
       "goal": "identifier ressemblances et différences",

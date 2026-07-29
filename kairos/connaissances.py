@@ -29,6 +29,7 @@ class Connaissances:
         "expressions.json",
         "grammaire.json",
         "lexique.json",
+        "morphologie.json",
         "negations.json",
         "sens.json",
         "verbes.json",
@@ -101,6 +102,17 @@ class Connaissances:
             )
         return entrees
 
+    @property
+    def morphologie(self) -> dict[str, Any]:
+        """Expose les catégories grammaticales relationnelles."""
+
+        groupes = self._donnees["morphologie"].get("groups", {})
+        if not isinstance(groupes, dict):
+            raise ErreurConnaissances(
+                "data/fr/morphologie.json : groups doit être un objet."
+            )
+        return groupes
+
     def _construire_indexes(self) -> None:
         """Construit une fois les tables utilisées sur chaque requête."""
 
@@ -160,11 +172,31 @@ class Connaissances:
             for forme in entree.get("forms", []):
                 self._index_lexique[cle(forme)] = (lemme, entree)
 
+        self._index_morphologie: dict[
+            str, tuple[tuple[str, str, dict[str, Any]], ...]
+        ] = {}
+        for categorie, entrees in self.morphologie.items():
+            if not isinstance(entrees, dict):
+                continue
+            for lemme, entree in entrees.items():
+                if not isinstance(entree, dict):
+                    continue
+                for forme in entree.get("forms", []):
+                    forme_cle = cle(forme)
+                    existantes = self._index_morphologie.get(forme_cle, ())
+                    candidat = (categorie, lemme, entree)
+                    if candidat not in existantes:
+                        self._index_morphologie[forme_cle] = (
+                            *existantes,
+                            candidat,
+                        )
+
         self._vocabulaire_statique = set(self._index_verbes)
         self._vocabulaire_statique.update(self._index_entites)
         self._vocabulaire_statique.update(self._index_fonctions)
         self._vocabulaire_statique.update(self._index_expressions)
         self._vocabulaire_statique.update(self._index_lexique)
+        self._vocabulaire_statique.update(self._index_morphologie)
         self._vocabulaire_statique.update(cle(mot) for mot in self.sens_ambigus)
 
     @property
@@ -178,6 +210,20 @@ class Connaissances:
     @property
     def nombre_mots_courants_indexes(self) -> int:
         return len(self._index_lexique)
+
+    @property
+    def nombre_formes_morphologiques(self) -> int:
+        return len(self._index_morphologie)
+
+    def trouver_morphologies(
+        self, mot: str
+    ) -> tuple[tuple[str, str, dict[str, Any]], ...]:
+        return tuple(
+            (categorie, lemme, dict(entree))
+            for categorie, lemme, entree in self._index_morphologie.get(
+                cle(mot), ()
+            )
+        )
 
     def fonctions_pour(self, mot: str) -> tuple[str, ...]:
         return self._index_fonctions.get(cle(mot), ())

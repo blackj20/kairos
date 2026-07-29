@@ -2,7 +2,7 @@
 
 ## Statut
 
-**V0.9 — prototype opérationnel avec apprentissage naturel persistant, lexique courant routable et squelette linguistique indexé.**
+**V0.10 — prototype opérationnel avec méta-compréhension, relations françaises explicables et modèle de soi runtime.**
 
 Ce statut signifie que le projet est installable depuis un clone propre,
 démarre même lorsque la mémoire mutable n’existe pas encore, analyse une
@@ -29,6 +29,7 @@ kairos --skill-factory-scan
 kairos --route-plan chercher --route-target atome
 kairos --secau-status
 python -m unittest discover -s tests -v
+python meta_comprehension_benchmark.py
 python benchmark.py
 python holdout.py
 python decision_benchmark.py
@@ -137,6 +138,19 @@ python user_acceptance_v06.py
 - 174,61 analyses par seconde mesurées sur Python 3.11 ;
 - commande `stop` transmise à la séance active avant de quitter la console.
 
+### Méta-compréhension relationnelle V0.10
+
+- catégories déclaratives pour adjectifs, noms communs, noms propres et références ;
+- relations `est_un`, `qualite`, `reference` et actions extraites avec score et preuve ;
+- référents stables `self:kairos`, `actor:user` et `creator:jps` ;
+- une référence personnelle ne remplace jamais une cible substantive ;
+- `explique-toi` résout directement Kairos comme cible ;
+- identité, objectif, version, actions, routes et capacités lus depuis l'état runtime ;
+- explication de la dernière analyse, des mots inconnus et de la dernière décision ;
+- relations pédagogiques conservées comme candidates, jamais comme vérités immédiates ;
+- vocabulaire d'explication enrichi sans désactiver les clarifications sur les vrais inconnus ;
+- normalisation des apostrophes, accents et clitiques français.
+
 ## Cycle démontré
 
 ```text
@@ -177,21 +191,22 @@ Chaque version active possède son chemin, rapport, digest et approbateur.
 Le rollback restaure toutes les métadonnées de la version précédente.
 ```
 
-## Résultats attendus par la CI V0.9
+## Résultats vérifiés par la CI V0.10
 
 Le dernier commit n’est accepté que si toutes les portes suivantes restent
 vertes sous Python 3.11, 3.12 et 3.13 :
 
 | Porte | Seuil |
 |---|---:|
-| Tests automatisés | 137/137 |
+| Tests automatisés | 145/145 |
 | Acceptation historique et V0.4 | 18/18 |
 | Acceptation CLI Skill Factory | 11/11 |
 | Acceptation totale | 40/40 |
 | Smoke test | réussi |
 | Scan GrowUp installé | réussi |
 | Scan Skill Factory installé | réussi |
-| Benchmark squelette V0.9 | ≥ 100 analyses/s (174,61 mesurées) |
+| Benchmark méta-compréhension V0.10 | 11/11 |
+| Benchmark squelette | ≥ 100 analyses/s (152,76 mesurées) |
 | Benchmark Comprendre | réussi |
 | Benchmark holdout | réussi |
 | Benchmark Décision | réussi |
@@ -224,4 +239,4 @@ implicitement et qu’une altération après le rapport est refusée.
 
 ## Prochaine porte
 
-La prochaine étape doit ajouter des fournisseurs Web indépendants et une stratégie de diversification. Le fournisseur Wikipédia seul ne suffit volontairement pas à franchir SECAU.
+La prochaine étape doit relier les arêtes candidates issues des explications au cycle GrowUp → Tester → SECAU, afin qu'une relation validée puisse être réutilisée sans transformer une explication unique en vérité.

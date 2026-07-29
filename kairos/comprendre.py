@@ -7,6 +7,7 @@ from .contexte import Contexte
 from .decouper import Decouper
 from .estimation import Estimer
 from .modeles import Analyse
+from .relations_phrase import Relier
 from .sens import Sens
 from .verifier_analyse import VerifierAnalyse
 
@@ -19,6 +20,7 @@ class Comprendre:
         self.decouper = Decouper()
         self.sens = Sens(self.connaissances)
         self.contexte = Contexte()
+        self.relier = Relier(self.connaissances)
         self.estimer = Estimer(self.connaissances)
         self.verifier = VerifierAnalyse(self.connaissances)
 
@@ -36,7 +38,12 @@ class Comprendre:
             sens_possibles,
             historique,
         )
-        resultat = self.estimer.analyser(decoupage, sens_contextuels)
+        relations = self.relier.analyser(decoupage, sens_contextuels)
+        resultat = self.estimer.analyser(
+            decoupage,
+            sens_contextuels,
+            relations,
+        )
         verification = self.verifier.analyser(resultat)
 
         return Analyse(
@@ -51,5 +58,6 @@ class Comprendre:
             alternative_type=resultat.alternative_type,
             decoupage=decoupage,
             sens_contextuels=sens_contextuels,
+            relations=relations,
             verification=verification,
         )

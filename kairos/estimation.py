@@ -6,6 +6,7 @@ from .connaissances import Connaissances
 from .modeles import (
     Decoupage,
     Estimation as Score,
+    RelationSemantique,
     ResultatEstimation,
     SensContextuel,
 )
@@ -22,6 +23,7 @@ class Estimer:
         self,
         decoupage: Decoupage,
         contextuels: tuple[SensContextuel, ...],
+        relations: tuple[RelationSemantique, ...] = (),
     ) -> ResultatEstimation:
         if not decoupage.mots:
             return ResultatEstimation(
@@ -42,6 +44,21 @@ class Estimer:
         cible, score_cible, indices_cible = self._estimer_cible(
             contextuels, position_action
         )
+        if action:
+            relation_action = next(
+                (
+                    relation
+                    for relation in relations
+                    if relation.relation == action
+                ),
+                None,
+            )
+            if relation_action is not None and cible is None:
+                cible = relation_action.target
+                score_cible = relation_action.score
+                indices_cible = [
+                    f"cible relationnelle : {relation_action.target}"
+                ]
 
         hypotheses: dict[str, int] = {"inconnu": 25}
         indices_type: list[str] = []
@@ -295,6 +312,7 @@ class Estimer:
             "grammaire:",
             "negations:",
             "affirmations:",
+            "morphologie:reference",
         )
         candidats = [
             element.jeton.normalise
