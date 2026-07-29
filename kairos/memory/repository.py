@@ -126,6 +126,20 @@ class MemoryRepository:
             params.append(domain)
         return [dict(row) for row in self.connection.execute(sql, params)]
 
+    def candidate_for(self, name: str) -> dict[str, Any] | None:
+        """Réutilise une hypothèse candidate au lieu de la dupliquer."""
+
+        cible = name.casefold().strip()
+        rows = self.connection.execute(
+            "SELECT * FROM hypotheses WHERE status='candidate' "
+            "ORDER BY created_at DESC"
+        )
+        for row in rows:
+            payload = json.loads(row["payload_json"])
+            if str(payload.get("name", "")).casefold().strip() == cible:
+                return {**dict(row), "payload": payload}
+        return None
+
     def save_report(self, subject_id: str, report: dict[str, Any]) -> str:
         report_id = f"report_{uuid.uuid4().hex}"
         with self.transaction() as db:
