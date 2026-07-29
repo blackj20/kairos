@@ -27,7 +27,8 @@
       "expliquer",
       "expliquez",
       "explique-toi",
-      "expliquez-vous"
+      "expliquez-vous",
+      "expliques"
     ],
     "sens": "rendre une information compréhensible",
     "demarche": "apprentissage",
@@ -38,7 +39,8 @@
       "close",
       "ferme",
       "fermer",
-      "fermez"
+      "fermez",
+      "fermes"
     ],
     "sens": "mettre fin à l'ouverture d'un objet ou programme",
     "demarche": "execution",
@@ -49,7 +51,8 @@
       "install",
       "installe",
       "installer",
-      "installez"
+      "installez",
+      "installes"
     ],
     "sens": "ajouter un logiciel au système",
     "demarche": "execution",
@@ -71,7 +74,8 @@
       "execute",
       "lance",
       "lancer",
-      "run"
+      "run",
+      "lances"
     ],
     "sens": "démarrer un programme ou une opération",
     "demarche": "execution",
@@ -92,7 +96,8 @@
       "open",
       "ouvre",
       "ouvrir",
-      "ouvrez"
+      "ouvrez",
+      "ouvres"
     ],
     "sens": "rendre accessible un objet ou programme",
     "demarche": "execution",
@@ -105,7 +110,8 @@
       "effacer",
       "supprime",
       "supprimer",
-      "supprimez"
+      "supprimez",
+      "supprimes"
     ],
     "sens": "retirer un élément",
     "demarche": "execution",
@@ -132,7 +138,8 @@
       "recherche",
       "rechercher",
       "trouve",
-      "trouver"
+      "trouver",
+      "cherches"
     ],
     "sens": "localiser une information ou un élément",
     "demarche": "execution",
@@ -159,7 +166,9 @@
       "créez",
       "creez",
       "fabrique",
-      "fabriquer"
+      "fabriquer",
+      "crées",
+      "crees"
     ],
     "sens": "produire un nouvel élément",
     "demarche": "execution",
@@ -191,7 +200,9 @@
       "rédige",
       "redige",
       "rédiger",
-      "rediger"
+      "rediger",
+      "écrives",
+      "ecrives"
     ],
     "sens": "produire ou modifier un texte",
     "demarche": "execution",
@@ -205,7 +216,8 @@
       "partage",
       "partager",
       "transmets",
-      "transmettre"
+      "transmettre",
+      "envoies"
     ],
     "sens": "transmettre un élément à un destinataire",
     "demarche": "execution",
@@ -227,7 +239,8 @@
       "lire",
       "lisez",
       "consulte",
-      "consulter"
+      "consulter",
+      "lises"
     ],
     "sens": "prendre connaissance du contenu d'un élément",
     "demarche": "execution",
@@ -262,7 +275,9 @@
       "télécharger",
       "telecharger",
       "téléchargez",
-      "telechargez"
+      "telechargez",
+      "télécharges",
+      "telecharges"
     ],
     "sens": "récupérer un élément depuis une source distante",
     "demarche": "execution",
@@ -277,7 +292,9 @@
       "vérifiez",
       "verifiez",
       "contrôle",
-      "controle"
+      "controle",
+      "vérifies",
+      "verifies"
     ],
     "sens": "contrôler l'état ou la validité d'un élément",
     "demarche": "execution",
@@ -538,7 +555,8 @@
     "formes": [
       "compare",
       "comparer",
-      "comparez"
+      "comparez",
+      "compares"
     ],
     "sens": "identifier les ressemblances et les différences entre des éléments",
     "demarche": "execution",
@@ -564,7 +582,8 @@
     "formes": [
       "corrige",
       "corriger",
-      "corrigez"
+      "corrigez",
+      "corriges"
     ],
     "sens": "proposer une version qui répare une erreur identifiée",
     "demarche": "apprentissage",
