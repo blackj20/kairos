@@ -53,9 +53,7 @@ class Estimer:
                 ),
                 None,
             )
-            if relation_action is not None and (
-                cible is None or relation_action.target.startswith(("self:", "actor:", "creator:"))
-            ):
+            if relation_action is not None and cible is None:
                 cible = relation_action.target
                 score_cible = relation_action.score
                 indices_cible = [
