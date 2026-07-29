@@ -2,7 +2,7 @@
 
 ## Statut
 
-**V0.7 — prototype opérationnel de compréhension, décision, apprentissage supervisé, skills pures et routage déclaratif et recherche d’information contrôlée.**
+**V0.8 — prototype opérationnel de compréhension, décision, apprentissage supervisé, skills pures et routage, recherche contrôlée et consolidation par Tester puis SECAU.**
 
 Ce statut signifie que le projet est installable depuis un clone propre,
 démarre même lorsque la mémoire mutable n’existe pas encore, analyse une
@@ -112,6 +112,17 @@ python user_acceptance_v06.py
 - réutilisation d’une candidate existante ;
 - zéro promotion et zéro revue SECAU automatique.
 
+### Research Tester → SECAU V0.8
+
+- dossier de consolidation mesurable ;
+- deux preuves, deux sources et deux domaines HTTPS ;
+- intégrité SHA-256 preuve/source/affirmation ;
+- contrôle de présence du sujet et accord lexical ;
+- contrôles négatifs de sécurité ;
+- rapport Tester lié à l’hypothèse exacte ;
+- quatre verdicts SECAU observables ;
+- promotion seulement après rapport réussi.
+
 ## Cycle démontré
 
 ```text
@@ -159,10 +170,10 @@ vertes sous Python 3.11, 3.12 et 3.13 :
 
 | Porte | Seuil |
 |---|---:|
-| Tests automatisés | 124/124 |
+| Tests automatisés | 130/130 |
 | Acceptation historique et V0.4 | 18/18 |
 | Acceptation CLI Skill Factory | 11/11 |
-| Acceptation totale | 36/36 |
+| Acceptation totale | 40/40 |
 | Smoke test | réussi |
 | Scan GrowUp installé | réussi |
 | Scan Skill Factory installé | réussi |
@@ -173,6 +184,8 @@ vertes sous Python 3.11, 3.12 et 3.13 :
 | Benchmark Skill Factory | réussi |
 | Benchmark Action Router | 15/15 |
 | Benchmark Information Search | 8/8 |
+| Benchmark Research SECAU | 10/10 |
+| Promotions non testées | 0 |
 | Promotions frauduleuses | 0 |
 | Fausses exécutions de route | 0 |
 | Fausses exécutions | 0 autorisée |
@@ -196,4 +209,4 @@ implicitement et qu’une altération après le rapport est refusée.
 
 ## Prochaine porte
 
-La prochaine étape doit tester les hypothèses issues des recherches, produire exemples et contre-exemples, puis rendre la revue SECAU visible. Aucune recherche ne doit contourner cette porte.
+La prochaine étape doit ajouter des fournisseurs Web indépendants et une stratégie de diversification. Le fournisseur Wikipédia seul ne suffit volontairement pas à franchir SECAU.
