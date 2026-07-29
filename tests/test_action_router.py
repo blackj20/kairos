@@ -13,7 +13,7 @@ class ActionRouterTests(unittest.TestCase):
         plan = RouteurDynamique().planifier("chercher", "atome")
         self.assertEqual(StatutRoute.BLOCKED, plan.statut)
         self.assertEqual("information.search", plan.id)
-        self.assertIn("web.search", plan.capacites_manquantes)
+        self.assertIn("memory.search", plan.capacites_manquantes)
 
     def test_complete_declared_route_executes_in_order(self) -> None:
         routeur = RouteurDynamique()
@@ -87,14 +87,14 @@ class ActionRouterTests(unittest.TestCase):
         self.assertEqual(StatutRoute.BLOCKED, plan.statut)
         self.assertIn("cible", plan.raison)
 
-    def test_kernel_exposes_blocked_route_instead_of_empty_relation(self) -> None:
+    def test_kernel_executes_search_with_builtin_capabilities(self) -> None:
         decision = Kernel().traiter("cherche atome")
         self.assertEqual("chercher", decision.analyse.action.valeur)
         self.assertIsNotNone(decision.routage)
         assert decision.routage is not None
         self.assertEqual("information.search", decision.routage["id"])
-        self.assertEqual("blocked", decision.routage["statut"])
-        self.assertIn("Capacités manquantes", decision.reponse)
+        self.assertEqual("ready", decision.routage["statut"])
+        self.assertIn("Source confirmée", decision.reponse)
 
     def test_self_modifier_does_not_replace_the_target(self) -> None:
         decision = Kernel().traiter("cherche toi-même atome")
