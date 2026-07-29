@@ -14,6 +14,8 @@ from .comprendre import Comprendre
 from .connaissances import Connaissances
 from .corrections import MemoireCorrections
 from .decision import EvenementExperience, MoteurDecision
+from .information import CapacitesInformation, FournisseurRecherche, WikipediaFR
+from .memory import MemoryRepository
 from .modeles import Analyse, Decision
 from .relations_verbes import MemoireRelationsVerbes
 from .repondre import Repondre
@@ -33,6 +35,9 @@ class Kernel:
         soi: ConnaissanceDeSoi | None = None,
         moteur_decision: MoteurDecision | None = None,
         routeur: RouteurDynamique | None = None,
+        cognitive_repository: MemoryRepository | None = None,
+        web_provider: FournisseurRecherche | None = None,
+        allow_network: bool = False,
         persister_decisions: bool = False,
     ) -> None:
         if comprendre is None:
@@ -63,6 +68,27 @@ class Kernel:
             persister=persister_decisions,
         )
         self.routeur = routeur or RouteurDynamique()
+        if cognitive_repository is None:
+            racine = Path(__file__).resolve().parent.parent
+            chemin_cognitif: str | Path = (
+                racine / "memory" / "cognition.db"
+                if persister_decisions
+                else ":memory:"
+            )
+            self.cognitive_repository = MemoryRepository(chemin_cognitif)
+            self._owns_cognitive_repository = True
+        else:
+            self.cognitive_repository = cognitive_repository
+            self._owns_cognitive_repository = False
+        fournisseur = web_provider
+        if fournisseur is None and allow_network:
+            fournisseur = WikipediaFR()
+        self.information = CapacitesInformation(
+            self.cognitive_repository,
+            knowledge_base=self.repondre.knowledge_base,
+            fournisseur_web=fournisseur,
+        )
+        self.information.enregistrer(self.routeur)
         self._competences: dict[str, Competence] = {}
         self._dernier_plan_route: PlanRoute | None = None
         # Une séance pédagogique est volontairement locale à la conversation :
@@ -408,3 +434,9 @@ class Kernel:
         if champ in {"counterexamples", "relations"} and len(mots) < 4:
             return False, "développe la réponse avec au moins quatre mots"
         return True, "réponse exploitable"
+
+    def close(self) -> None:
+        """Ferme uniquement la mémoire cognitive créée par ce Kernel."""
+
+        if self._owns_cognitive_repository:
+            self.cognitive_repository.close()
