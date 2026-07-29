@@ -1,8 +1,8 @@
 {
   "known": [
+    "la généralisation V0.12 reste symbolique et limitée aux indices français déclarés",
+    "un score de 100 % décrit le corpus de 100 cas, pas toutes les phrases françaises possibles",
     "les filtres définissent des critères opérationnels et non des émotions réelles",
-    "les notions de bien et de mal restent limitées à sécurité, vérité, autorisation, intégrité et réversibilité",
-    "la détection d'intention indirecte repose sur des formes françaises déclarées",
     "aucune envie simulée ne donne une autorisation",
     "aucune action physique ou irréversible ne peut contourner confirmation, permissions et sandbox",
     "aucune compréhension générale du monde"
