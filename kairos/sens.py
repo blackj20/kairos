@@ -2,11 +2,8 @@
 
 from __future__ import annotations
 
-import re
-
 from .connaissances import Connaissances
 from .modeles import CandidatSens, Decoupage, SensJeton
-from .normalisation import cle
 
 
 class Sens:
@@ -16,7 +13,6 @@ class Sens:
         self.connaissances = connaissances
 
     def analyser(self, decoupage: Decoupage) -> tuple[SensJeton, ...]:
-        fonctions = self.connaissances.mots_fonctions()
         resultats: list[SensJeton] = []
         mots_contexte = tuple(jeton.normalise for jeton in decoupage.mots)
 
@@ -140,38 +136,45 @@ class Sens:
                     )
                 )
 
-            for categorie, valeurs in fonctions.items():
-                if jeton.normalise in valeurs:
-                    candidats.append(
-                        CandidatSens(
-                            lemme=jeton.normalise,
-                            categorie=categorie,
-                            sens=jeton.normalise,
-                            score=95,
-                            source=f"data/fr/{categorie.split(':')[0]}.json",
-                        )
+            for categorie in self.connaissances.fonctions_pour(
+                jeton.normalise
+            ):
+                candidats.append(
+                    CandidatSens(
+                        lemme=jeton.normalise,
+                        categorie=categorie,
+                        sens=jeton.normalise,
+                        score=95,
+                        source=f"data/fr/{categorie.split(':')[0]}.json",
                     )
+                )
 
-            for categorie, expressions in self.connaissances.expressions.items():
-                if not isinstance(expressions, list):
-                    continue
-                mots_expressions = {
-                    cle(mot)
-                    for expression in expressions
-                    for mot in re.findall(
-                        r"[a-zA-ZÀ-ÿ0-9_+#.-]+", str(expression)
+            for categorie in self.connaissances.expressions_pour(
+                jeton.normalise
+            ):
+                candidats.append(
+                    CandidatSens(
+                        lemme=jeton.normalise,
+                        categorie=f"expression:{categorie}",
+                        sens=jeton.normalise,
+                        score=85,
+                        source="data/fr/expressions.json",
                     )
-                }
-                if jeton.normalise in mots_expressions:
-                    candidats.append(
-                        CandidatSens(
-                            lemme=jeton.normalise,
-                            categorie=f"expression:{categorie}",
-                            sens=jeton.normalise,
-                            score=85,
-                            source="data/fr/expressions.json",
-                        )
+                )
+
+            courant = self.connaissances.trouver_mot_courant(
+                jeton.normalise
+            )
+            if courant:
+                candidats.append(
+                    CandidatSens(
+                        lemme=str(courant["lemma"]),
+                        categorie=f"lexique:{courant['category']}",
+                        sens=str(courant["meaning"]),
+                        score=90,
+                        source="data/fr/lexique.json",
                     )
+                )
 
             if not candidats:
                 candidats.append(
