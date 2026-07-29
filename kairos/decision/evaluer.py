@@ -47,6 +47,15 @@ class Evaluer:
             contradictions.append("plusieurs_actions")
 
         score = self._score_global(analyse, tuple(manquants))
+        if (
+            not manquants
+            and analyse.action.valeur is not None
+            and analyse.cible.valeur is not None
+            and self._accepte_cible_inconnue(analyse.action.valeur)
+        ):
+            # Le terme reste sémantiquement inconnu, mais il est une cible
+            # textuelle complète pour une opération de recherche en lecture.
+            score = max(score, self.configuration.seuils["authorize_min"])
         focus = self._choisir_focus(analyse, tuple(manquants))
         actions = self._actions_possibles(
             analyse,
