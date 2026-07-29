@@ -19,6 +19,7 @@ class ProfilCognitif:
 
     intention: str
     intention_score: int
+    structure_intention: str
     direction: str
     besoins: tuple[str, ...]
     envies: tuple[str, ...]
@@ -70,6 +71,7 @@ class FiltresCognitifs:
             texte,
             type_requete,
             indirecte,
+            lecture_intention.nature,
             lecture_intention.score,
         )
         famille_risque, score_risque = self._risque_action(action)
@@ -96,7 +98,7 @@ class FiltresCognitifs:
         inconnus_reels = tuple(
             mot
             for mot in analyse.jetons_inconnus
-            if self._normaliser(mot) not in self._mots_formes
+            if not self._est_forme_fonctionnelle(mot)
         )
         if inconnus_reels:
             besoins.append("information")
@@ -160,6 +162,7 @@ class FiltresCognitifs:
         return ProfilCognitif(
             intention=intention,
             intention_score=intention_score,
+            structure_intention=lecture_intention.nature,
             direction=direction,
             besoins=self._uniques(besoins),
             envies=self._uniques(envies),
@@ -177,12 +180,15 @@ class FiltresCognitifs:
         texte: str,
         type_requete: str,
         indirecte: bool,
-        score_indirect: int,
+        structure: str,
+        score_structure: int,
     ) -> tuple[str, int]:
         if type_requete == "interdiction":
             return "protection", 95
         if indirecte:
-            return "demande_indirecte", score_indirect
+            return "demande_indirecte", score_structure
+        if structure in {"question_capacite", "question_information"}:
+            return "obtenir_information", score_structure
         if type_requete == "ordre":
             return "ordre_direct", 92
         if self._contient_forme(texte, "need"):
@@ -220,6 +226,14 @@ class FiltresCognitifs:
         return any(
             self._normaliser(str(forme)) in texte
             for forme in self.regles["intent_patterns"][groupe]
+        )
+
+    def _est_forme_fonctionnelle(self, mot: str) -> bool:
+        """Accepte aussi les clitiques : `sais-tu` devient `sais tu`."""
+
+        parties = self._normaliser(mot).split()
+        return bool(parties) and all(
+            partie in self._mots_formes for partie in parties
         )
 
     @staticmethod
