@@ -168,7 +168,7 @@ class FiltresCognitifs:
         if type_requete == "interdiction":
             return "protection", 95
         if indirecte:
-            return "demande_indirecte", 86
+            return "demande_indirecte", 95
         if type_requete == "ordre":
             return "ordre_direct", 92
         if self._contient_forme(texte, "need"):
