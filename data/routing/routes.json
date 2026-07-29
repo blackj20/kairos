@@ -11,7 +11,7 @@
         {
           "id": "web",
           "capability": "web.search",
-          "required": true
+          "required": false
         },
         {
           "id": "compare",

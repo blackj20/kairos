@@ -12,7 +12,12 @@
     "compiler une route JSON sans importer de code depuis les données",
     "signaler les capacités manquantes avant toute exécution",
     "composer une route candidate à partir de capacités connues",
-    "rendre les verdicts SECAU consultables"
+    "rendre les verdicts SECAU consultables",
+    "rechercher dans la mémoire confirmée",
+    "rechercher sur le Web HTTPS avec autorisation explicite",
+    "comparer des sources sans les confondre avec des vérités",
+    "créer et réutiliser une hypothèse candidate de recherche",
+    "expliquer un résultat avec sa provenance et son statut SECAU"
   ],
   "verified": [
     {
@@ -62,6 +67,10 @@
     {
       "name": "observabilité SECAU",
       "evidence": "chaque verdict est audité avec hypothèse, rapport, raison et résultat"
+    },
+    {
+      "name": "Information Search contrôlée",
+      "evidence": "124 tests, benchmark 8/8, 36 scénarios utilisateur et zéro promotion directe depuis une recherche"
     }
   ],
   "rule": "une capacité devient vérifiée uniquement après un test reproductible"

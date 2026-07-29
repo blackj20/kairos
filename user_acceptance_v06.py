@@ -28,16 +28,16 @@ def main() -> int:
         "Route chercher compilée",
         code == 0
         and plan.get("id") == "information.search"
-        and plan.get("statut") == "blocked"
-        and "web.search" in plan.get("capacites_manquantes", []),
+        and plan.get("statut") == "ready"
+        and plan.get("capacites_manquantes", []) == [],
     ))
 
     code, sortie = lancer("cherche", "toi-même", "atome")
     resultats.append((
-        "Ordre autonome ancré sans fausse exécution",
+        "Ordre autonome ancré et exécuté en mémoire locale",
         code == 0
-        and "Plan       : information.search (blocked)" in sortie
-        and "Capacités manquantes" in sortie,
+        and "Plan       : information.search (ready)" in sortie
+        and "Source confirmée" in sortie,
     ))
 
     code, sortie = lancer(

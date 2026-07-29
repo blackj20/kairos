@@ -30,7 +30,13 @@ class Evaluer:
             if analyse.action.valeur is None or analyse.action.score < 51:
                 manquants.append("action")
             elif self._cible_requise(analyse.action.valeur) and (
-                analyse.cible.valeur is None or analyse.cible.score < 51
+                analyse.cible.valeur is None
+                or (
+                    analyse.cible.score < 51
+                    and not self._accepte_cible_inconnue(
+                        analyse.action.valeur
+                    )
+                )
             ):
                 manquants.append("cible")
 
@@ -41,6 +47,15 @@ class Evaluer:
             contradictions.append("plusieurs_actions")
 
         score = self._score_global(analyse, tuple(manquants))
+        if (
+            not manquants
+            and analyse.action.valeur is not None
+            and analyse.cible.valeur is not None
+            and self._accepte_cible_inconnue(analyse.action.valeur)
+        ):
+            # Le terme reste sémantiquement inconnu, mais il est une cible
+            # textuelle complète pour une opération de recherche en lecture.
+            score = max(score, self.configuration.seuils["authorize_min"])
         focus = self._choisir_focus(analyse, tuple(manquants))
         actions = self._actions_possibles(
             analyse,
@@ -72,6 +87,13 @@ class Evaluer:
     def _cible_requise(self, action: str) -> bool:
         return action in self.configuration.routes["actions_requiring_target"]
 
+    def _accepte_cible_inconnue(self, action: str) -> bool:
+        """Une recherche peut viser un terme sans déjà en connaître le sens."""
+
+        return action in self.configuration.routes.get(
+            "actions_accepting_unknown_target", ()
+        )
+
     def _score_global(
         self, analyse: Analyse, manquants: tuple[str, ...]
     ) -> int:
@@ -84,10 +106,18 @@ class Evaluer:
                 analyse.action.valeur
                 in self.configuration.routes["actions_requiring_target"]
             ):
+                cible_score = analyse.cible.score
+                if (
+                    analyse.cible.valeur is not None
+                    and self._accepte_cible_inconnue(
+                        str(analyse.action.valeur)
+                    )
+                ):
+                    cible_score = max(cible_score, 80)
                 score = round(
                     0.40 * analyse.type_requete.score
                     + 0.35 * analyse.action.score
-                    + 0.25 * analyse.cible.score
+                    + 0.25 * cible_score
                 )
                 if type_requete == "interdiction" and not manquants:
                     score += 5

@@ -4,14 +4,15 @@ K.A.I.R.O.S. est un moteur symbolique, local et explicable. Il analyse une
 requête française, estime son intention, choisit une route, demande les
 informations manquantes et conserve les réponses comme expériences.
 
-La **V0.6** ajoute **Action Router** : les verbes fondamentaux pointent vers
+La **V0.7** rend la route **Information Search** exécutable. La V0.6 ajoutait **Action Router** : les verbes fondamentaux pointent vers
 des routes et des capacités déclarées en JSON. Une route absente peut être
 composée, mais reste candidate et inexécutable jusqu’à validation. Chaque verdict
 SECAU devient également visible dans l’audit.
 
 > Statut honnête : prototype opérationnel de compréhension symbolique, décision,
-> mémoire, apprentissage supervisé, skills pures et routage déclaratif. Ce n’est
-> pas une intelligence générale et aucune capacité absente n’est simulée.
+> mémoire, apprentissage supervisé, skills pures, routage déclaratif et recherche
+> d’information contrôlée. Ce n’est pas une intelligence générale et une recherche
+> Web ne devient jamais directement une connaissance confirmée.
 
 ## Ce que Kairos sait faire
 
@@ -36,6 +37,11 @@ SECAU devient également visible dans l’audit.
 - compiler une route JSON en plan `ready`, `candidate` ou `blocked` ;
 - composer une route absente sans l’exécuter automatiquement ;
 - exposer les capacités manquantes et chaque verdict SECAU.
+- exécuter `chercher` dans la mémoire confirmée ;
+- rechercher sur Wikipédia en HTTPS après autorisation `--online` ;
+- comparer la provenance et le recouvrement lexical des sources ;
+- créer ou réutiliser une hypothèse candidate sans la promouvoir ;
+- répondre avec les sources et le statut d’apprentissage.
 
 ## Ce que Kairos ne sait pas encore faire
 
@@ -61,6 +67,7 @@ python -m pip install -e .
 kairos --smoke-test
 kairos --route-plan chercher --route-target atome
 kairos --secau-status
+kairos --online cherche toi-même atome
 ```
 
 Lancer l’interface :
@@ -406,7 +413,7 @@ Une version qui échoue n’annule donc pas le diagnostic des deux autres.
 
 ## Suite logique
 
-La prochaine porte doit rendre certaines capacités atomiques réellement
-disponibles, en commençant par la lecture de mémoire, la comparaison de sources
-et une recherche Web contrôlée. Les outils PC viendront ensuite avec simulation,
+La prochaine porte doit conduire une hypothèse issue d’une recherche vers des
+tests reproductibles, des contre-exemples et une revue SECAU observable. La
+recherche restera séparée de la confirmation. Les outils PC viendront ensuite avec simulation,
 confirmation, journal et rollback, toujours sans shell libre.
