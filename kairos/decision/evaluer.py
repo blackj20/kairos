@@ -109,7 +109,8 @@ class Evaluer:
 
         if type_requete in {"ordre", "interdiction"}:
             if (
-                analyse.action.valeur
+                type_requete == "ordre"
+                and analyse.action.valeur
                 in self.configuration.routes["actions_requiring_target"]
             ):
                 cible_score = analyse.cible.score
