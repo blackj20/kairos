@@ -4,7 +4,7 @@ K.A.I.R.O.S. est un moteur symbolique, local et explicable. Il analyse une
 requête française, estime son intention, choisit une route, demande les
 informations manquantes et conserve les réponses comme expériences.
 
-La **V0.10** ajoute la **méta-compréhension** et un graphe de petites relations françaises : références personnelles, noms communs, noms propres, adjectifs, états et actions. « explique-toi » pointe désormais vers le modèle runtime de Kairos, tandis que « qu’as-tu compris ? », « qu’as-tu mal compris ? » et « pourquoi ? » réutilisent sa dernière analyse ou décision. La **V0.9** ajoutait l’**apprentissage naturel persistant** et un squelette linguistique indexé. Une faute ou un mot inconnu ouvre une clarification bornée, puis Kairos reprend la question principale. La **V0.8** activait la porte **Research Tester → SECAU**. La V0.7 rendait la route **Information Search** exécutable. La V0.6 ajoutait **Action Router** : les verbes fondamentaux pointent vers
+La **V0.11** ajoute des **filtres cognitifs et des choix explicables**. Kairos distingue désormais intention, besoin, envie et manque, estime un risque opérationnel, applique prudence et direction, puis justifie sa route. Les valeurs restent techniques et traçables : sécurité humaine, vérité, autorisation, intégrité, réversibilité et alignement. Une envie ne crée jamais une permission. La **V0.10** ajoutait la méta-compréhension et un graphe de petites relations françaises. La **V0.9** ajoutait l’apprentissage naturel persistant et un squelette linguistique indexé. Une faute ou un mot inconnu ouvre une clarification bornée, puis Kairos reprend la question principale. La **V0.8** activait la porte **Research Tester → SECAU**. La V0.7 rendait la route **Information Search** exécutable. La V0.6 ajoutait **Action Router** : les verbes fondamentaux pointent vers
 des routes et des capacités déclarées en JSON. Une route absente peut être
 composée, mais reste candidate et inexécutable jusqu’à validation. Chaque verdict
 SECAU devient également visible dans l’audit.
@@ -19,6 +19,10 @@ SECAU devient également visible dans l’audit.
 - découper et normaliser une requête ;
 - rechercher le sens des mots dans ses connaissances déclaratives ;
 - estimer le type, la démarche, l’action et la cible ;
+- reconnaître une demande indirecte malgré sa forme interrogative ;
+- distinguer intention, besoin, envie et information manquante ;
+- estimer le risque et choisir entre répondre, router, clarifier, confirmer ou refuser ;
+- expliquer un choix par sa direction, ses filtres, son risque et ses informations manquantes ;
 - extraire des relations explicables comme `mbote —est_un→ salutation` et `salutation —qualite→ amical` ;
 - résoudre `toi`, `moi`, `Kairos` et `Jps` vers des référents explicites sans remplacer une cible concrète ;
 - expliquer sa dernière compréhension, ses inconnus et la route choisie ;
@@ -107,6 +111,13 @@ Comprendre
 ├── Relier (références, catégories, qualités, actions)
 ├── Estimer
 └── VerifierAnalyse
+   ↓
+Filtres cognitifs V0.11
+├── Intention malgré la forme
+├── Besoins, envies et manques
+├── Risque et prudence
+├── Direction opérationnelle
+└── Choix explicable
    ↓
 Méta-compréhension
 ├── Modèle de soi runtime
@@ -426,6 +437,7 @@ kairos --smoke-test
 kairos --growup-scan
 kairos --skill-factory-scan
 python -m unittest discover -s tests -v
+python cognitive_filters_benchmark.py
 python meta_comprehension_benchmark.py
 python benchmark.py
 python holdout.py
@@ -443,10 +455,9 @@ Une version qui échoue n’annule donc pas le diagnostic des deux autres.
 
 ## Suite logique
 
-La prochaine porte doit rendre les relations extraites réellement enseignables :
-une explication produit des arêtes candidates traçables, GrowUp les regroupe,
-Tester les éprouve sur des reformulations et SECAU seul autorise leur
-réutilisation. Les fournisseurs Web indépendants pourront ensuite apporter des
-preuves, sans promouvoir automatiquement une affirmation. Les outils PC
-viendront plus tard avec simulation, confirmation, journal et rollback, toujours
-sans shell libre.
+La prochaine porte doit éprouver les filtres sur davantage de paraphrases et
+relier leurs concepts candidats au cycle GrowUp → Tester → SECAU. Une future
+commande physique devra d’abord produire un plan, compiler une candidate,
+l’exécuter dans un simulateur, vérifier la réaction, demander une autorisation
+humaine et conserver un rollback. Aucun accès Arduino ou shell libre n’est
+accordé par la V0.11.
