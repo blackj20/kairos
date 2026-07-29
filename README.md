@@ -4,7 +4,7 @@ K.A.I.R.O.S. est un moteur symbolique, local et explicable. Il analyse une
 requête française, estime son intention, choisit une route, demande les
 informations manquantes et conserve les réponses comme expériences.
 
-La **V0.9** ajoute l’**apprentissage naturel persistant** et un squelette linguistique indexé. Une faute ou un mot inconnu ouvre une clarification bornée, puis Kairos reprend la question principale. La **V0.8** activait la porte **Research Tester → SECAU**. La V0.7 rendait la route **Information Search** exécutable. La V0.6 ajoutait **Action Router** : les verbes fondamentaux pointent vers
+La **V0.10** ajoute la **méta-compréhension** et un graphe de petites relations françaises : références personnelles, noms communs, noms propres, adjectifs, états et actions. « explique-toi » pointe désormais vers le modèle runtime de Kairos, tandis que « qu’as-tu compris ? », « qu’as-tu mal compris ? » et « pourquoi ? » réutilisent sa dernière analyse ou décision. La **V0.9** ajoutait l’**apprentissage naturel persistant** et un squelette linguistique indexé. Une faute ou un mot inconnu ouvre une clarification bornée, puis Kairos reprend la question principale. La **V0.8** activait la porte **Research Tester → SECAU**. La V0.7 rendait la route **Information Search** exécutable. La V0.6 ajoutait **Action Router** : les verbes fondamentaux pointent vers
 des routes et des capacités déclarées en JSON. Une route absente peut être
 composée, mais reste candidate et inexécutable jusqu’à validation. Chaque verdict
 SECAU devient également visible dans l’audit.
@@ -19,6 +19,10 @@ SECAU devient également visible dans l’audit.
 - découper et normaliser une requête ;
 - rechercher le sens des mots dans ses connaissances déclaratives ;
 - estimer le type, la démarche, l’action et la cible ;
+- extraire des relations explicables comme `mbote —est_un→ salutation` et `salutation —qualite→ amical` ;
+- résoudre `toi`, `moi`, `Kairos` et `Jps` vers des référents explicites sans remplacer une cible concrète ;
+- expliquer sa dernière compréhension, ses inconnus et la route choisie ;
+- décrire son identité, son objectif, sa version et ses capacités depuis les registres runtime ;
 - bloquer un ordre incomplet ou contradictoire ;
 - poser une question ciblée ;
 - garder l’objectif principal pendant une clarification secondaire ;
@@ -100,8 +104,14 @@ Comprendre
 ├── Découper
 ├── Sens
 ├── Contexte
+├── Relier (références, catégories, qualités, actions)
 ├── Estimer
 └── VerifierAnalyse
+   ↓
+Méta-compréhension
+├── Modèle de soi runtime
+├── Explication de la dernière analyse
+└── Justification de la dernière décision
    ↓
 Dialogue d’apprentissage naturel
 ├── Question principale persistante
@@ -416,6 +426,7 @@ kairos --smoke-test
 kairos --growup-scan
 kairos --skill-factory-scan
 python -m unittest discover -s tests -v
+python meta_comprehension_benchmark.py
 python benchmark.py
 python holdout.py
 python decision_benchmark.py
@@ -432,7 +443,10 @@ Une version qui échoue n’annule donc pas le diagnostic des deux autres.
 
 ## Suite logique
 
-La prochaine porte doit diversifier réellement les fournisseurs Web. Wikipédia
-seul ne constitue qu’un domaine : Kairos doit chercher une seconde source
-indépendante avant de pouvoir consolider automatiquement. Les outils PC viendront ensuite avec simulation,
-confirmation, journal et rollback, toujours sans shell libre.
+La prochaine porte doit rendre les relations extraites réellement enseignables :
+une explication produit des arêtes candidates traçables, GrowUp les regroupe,
+Tester les éprouve sur des reformulations et SECAU seul autorise leur
+réutilisation. Les fournisseurs Web indépendants pourront ensuite apporter des
+preuves, sans promouvoir automatiquement une affirmation. Les outils PC
+viendront plus tard avec simulation, confirmation, journal et rollback, toujours
+sans shell libre.
