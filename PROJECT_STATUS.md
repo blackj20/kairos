@@ -244,7 +244,7 @@ vertes sous Python 3.11, 3.12 et 3.13 :
 | Précision de route V0.12 | 100 % |
 | Benchmark filtres cognitifs V0.11 | 13/13 |
 | Benchmark méta-compréhension V0.10 | 11/11 |
-| Benchmark squelette | ≥ 100 analyses/s (219,66 mesurées) |
+| Benchmark squelette | ≥ 100 analyses/s (143,76 mesurées lors du run final) |
 | Benchmark Comprendre | réussi |
 | Benchmark holdout | réussi |
 | Benchmark Décision | réussi |
