@@ -8,6 +8,7 @@ from collections.abc import Sequence
 from pathlib import Path
 from typing import Any
 
+from .autonomie import MoteurAutonomie, StockageButs
 from .causal import MoteurCausal, StockageCausal
 from .growup import MoteurGrowUp, StockageGrowUp
 from .information import ConsolidateurRecherche
@@ -128,6 +129,65 @@ def causal_action(action: str, value: str | None = None) -> int:
     finally:
         kernel.close()
         stockage.close()
+
+
+
+def goal_action(
+    action: str,
+    value: str | None = None,
+    *,
+    goal_id: str | None = None,
+    priorite: int = 50,
+    max_etapes: int = 3,
+    raison: str | None = None,
+) -> int:
+    """Crée, exécute ou inspecte un but persistant borné."""
+
+    dossier = _racine() / "memory"
+    dossier.mkdir(parents=True, exist_ok=True)
+    buts = StockageButs(dossier / "goals.db")
+    causal_store = StockageCausal(dossier / "causal_experiences.db")
+    kernel = Kernel()
+    causal = MoteurCausal(kernel=kernel, stockage=causal_store)
+    moteur = MoteurAutonomie(causal=causal, stockage=buts)
+    try:
+        if action == "create":
+            but = moteur.creer_but(
+                str(value or ""),
+                priorite=priorite,
+                max_etapes=max_etapes,
+            )
+            payload = moteur.statut(but.id)
+        elif action == "run":
+            payload = moteur.lancer(
+                str(value or ""),
+                priorite=priorite,
+                max_etapes=max_etapes,
+            ).vers_dict()
+        elif action == "step":
+            payload = moteur.executer_prochaine_etape(
+                str(goal_id or value or "")
+            ).vers_dict()
+        elif action == "status":
+            payload = moteur.statut(goal_id)
+        elif action == "invalidate":
+            identifiant = str(goal_id or value or "")
+            but = moteur.invalider(
+                identifiant,
+                str(raison or "objectif invalidé explicitement"),
+            )
+            payload = moteur.statut(but.id)
+        else:
+            raise ValueError(f"Action de but inconnue : {action}")
+        print(json.dumps(payload, ensure_ascii=False, indent=2))
+        return 0
+    except (KeyError, ValueError) as erreur:
+        print(f"GOAL_ERROR: {erreur}")
+        return 1
+    finally:
+        kernel.close()
+        causal_store.close()
+        buts.close()
 
 
 def growup_scan() -> int:
@@ -345,6 +405,31 @@ def construire_parseur() -> argparse.ArgumentParser:
         help="affiche le dernier épisode causal persistant",
     )
     actions.add_argument(
+        "--goal-create",
+        metavar="MISSION",
+        help="crée un but persistant sans l'exécuter",
+    )
+    actions.add_argument(
+        "--goal-run",
+        metavar="MISSION",
+        help="exécute un but de façon synchrone et bornée",
+    )
+    actions.add_argument(
+        "--goal-step",
+        metavar="GOAL_ID",
+        help="exécute exactement la prochaine étape d'un but",
+    )
+    actions.add_argument(
+        "--goal-status",
+        action="store_true",
+        help="affiche le dernier but ou celui indiqué par --goal-id",
+    )
+    actions.add_argument(
+        "--goal-invalidate",
+        metavar="GOAL_ID",
+        help="invalide explicitement un but non terminal",
+    )
+    actions.add_argument(
         "--growup-scan",
         action="store_true",
         help="regroupe et planifie les expériences sans les promouvoir",
@@ -394,6 +479,20 @@ def construire_parseur() -> argparse.ArgumentParser:
         metavar="SKILL_ID",
         help="restaure la version active précédente",
     )
+    parseur.add_argument("--goal-id", help="identifiant de but pour --goal-status")
+    parseur.add_argument(
+        "--goal-priority",
+        type=int,
+        default=50,
+        help="priorité du but entre 0 et 100",
+    )
+    parseur.add_argument(
+        "--goal-max-steps",
+        type=int,
+        default=3,
+        help="budget borné de 1 à 20 étapes",
+    )
+    parseur.add_argument("--reason", help="raison d'une invalidation explicite")
     parseur.add_argument(
         "--route-target",
         help="cible utilisée avec --route-plan",
@@ -432,6 +531,30 @@ def main(argv: Sequence[str] | None = None) -> int:
         return causal_action("replay", args.causal_replay)
     if args.causal_status:
         return causal_action("status")
+    if args.goal_create:
+        return goal_action(
+            "create",
+            args.goal_create,
+            priorite=args.goal_priority,
+            max_etapes=args.goal_max_steps,
+        )
+    if args.goal_run:
+        return goal_action(
+            "run",
+            args.goal_run,
+            priorite=args.goal_priority,
+            max_etapes=args.goal_max_steps,
+        )
+    if args.goal_step:
+        return goal_action("step", goal_id=args.goal_step)
+    if args.goal_status:
+        return goal_action("status", goal_id=args.goal_id)
+    if args.goal_invalidate:
+        return goal_action(
+            "invalidate",
+            goal_id=args.goal_invalidate,
+            raison=args.reason,
+        )
     if args.growup_scan:
         return growup_scan()
     if args.route_plan:
