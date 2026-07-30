@@ -2,6 +2,6 @@
   "name": "K.A.I.R.O.S.",
   "full_name": "Kernel d'Apprentissage Itératif, Régulation et Optimisation Self-corrective",
   "nature": "moteur symbolique d'apprentissage et de compréhension",
-  "version": "0.12.0-intent-generalization",
+  "version": "0.13.0-self-correction-lab",
   "protected": true
 }
