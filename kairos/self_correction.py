@@ -12,6 +12,7 @@ from pathlib import Path
 from typing import Any
 
 from .cognition import Secau
+from .causal import TesterCausal
 from .information import ConsolidateurRecherche
 from .memory import MemoryRepository
 
@@ -254,6 +255,12 @@ class SelfCorrectionLab:
                 hypothesis_id
             )
             return result.secau.verdict.value
+
+        if payload.get("causal_kind") == "behavior.change":
+            report_id, _ = TesterCausal(repository).tester(hypothesis_id)
+            return Secau(repository).review_causal(
+                hypothesis_id, report_id
+            ).verdict.value
 
         report = repository.latest_report_for(hypothesis_id)
         if report is None:
