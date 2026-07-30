@@ -1,7 +1,7 @@
 {
   "name": "K.A.I.R.O.S.",
   "full_name": "Kernel d'Apprentissage Itératif, Régulation et Optimisation Self-corrective",
-  "nature": "moteur symbolique d'apprentissage, de compréhension et d'expérience causale",
-  "version": "0.14.0-causal-experience",
+  "nature": "moteur symbolique d'apprentissage, de compréhension, d'expérience causale et de buts persistants",
+  "version": "0.15.0-goals-attention",
   "protected": true
 }
