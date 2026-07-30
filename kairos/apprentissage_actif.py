@@ -165,6 +165,19 @@ class ApprentissageActif:
                 statut="nothing_to_learn",
             )
         payload = dict(candidate["payload"])
+        liens_initiaux: tuple[dict[str, Any], ...] = ()
+        if (
+            not payload.get("relation_candidate")
+            and not payload.get("relation_candidates")
+            and payload.get("definition")
+        ):
+            liens_initiaux = self.extracteur.extraire(
+                str(payload.get("name", "")),
+                str(payload.get("definition", "")),
+            )
+            if liens_initiaux:
+                payload["relation_candidates"] = list(liens_initiaux)
+                payload["missing"] = self._manques(payload)
         session = dict(payload.get("active_learning", {}))
         session.update(
             {
@@ -184,7 +197,16 @@ class ApprentissageActif:
         )
         refreshed = self.repository.hypothesis(str(candidate["id"]))
         assert refreshed is not None
-        return self._prochaine_question(refreshed)
+        return self._prochaine_question(
+            refreshed,
+            prefixe=(
+                f"J'ai déjà créé {len(liens_initiaux)} lien(s) candidat(s) "
+                "depuis ton explication. "
+                if liens_initiaux
+                else ""
+            ),
+            liens=liens_initiaux,
+        )
 
     def recevoir(self, reponse: str) -> TourApprentissage:
         """Traite la réponse active, crée des liens candidats puis avance."""
