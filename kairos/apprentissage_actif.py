@@ -389,25 +389,43 @@ class ApprentissageActif:
         restants = self._champs_restants(payload)
         session = dict(payload.get("active_learning", {}))
         if not restants:
-            session["status"] = "ready_for_research"
+            ignores = set(session.get("skipped_fields", []))
+            bloquants = sorted(
+                ignores.intersection({"relation", "examples", "counterexamples"})
+            )
+            if bloquants:
+                session["status"] = "needs_human_input"
+                prochain_statut = "needs_human_input"
+                prochaine_action = "await_creator"
+                evenement = "ACTIVE_LEARNING_BLOCKED"
+                conclusion = (
+                    "Je m'arrête proprement : il manque encore "
+                    + ", ".join(bloquants)
+                    + ". Je conserve les réponses brutes sans inventer de lien."
+                )
+            else:
+                session["status"] = "ready_for_research"
+                prochain_statut = "ready_for_research"
+                prochaine_action = "research_and_test"
+                evenement = "ACTIVE_LEARNING_STRUCTURED"
+                conclusion = (
+                    "Le dossier est structuré. Il reste candidat : je dois encore "
+                    "vérifier les sources, lancer Tester puis obtenir le verdict SECAU."
+                )
             session["pending_field"] = None
             payload["active_learning"] = session
             payload["missing"] = self._manques(payload)
-            payload["next_action"] = "research_and_test"
+            payload["next_action"] = prochaine_action
             self.repository.update_hypothesis_payload(
                 hypothesis_id,
                 payload,
                 score=self._score_structure(payload),
-                event="ACTIVE_LEARNING_STRUCTURED",
+                event=evenement,
             )
             return TourApprentissage(
-                prefixe
-                + (
-                    "Le dossier est structuré. Il reste candidat : je dois encore "
-                    "vérifier les sources, lancer Tester puis obtenir le verdict SECAU."
-                ),
+                prefixe + conclusion,
                 hypothesis_id,
-                "ready_for_research",
+                prochain_statut,
                 liens_crees=liens,
             )
 
