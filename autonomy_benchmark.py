@@ -49,7 +49,7 @@ def main() -> int:
         invalidated = engine.invalider(low.id, "objectif remplacé")
         checks["invalidation_terminal"] = invalidated.statut is StatutBut.INVALIDATED
 
-        persistent = engine.creer_but("cherche print")
+        persistent = engine.creer_but("cherche atome")
         persistent_id = persistent.id
         goals.close()
         goals = StockageButs(root / "goals.db")
