@@ -188,6 +188,22 @@ class Kernel:
 
         self._dernier_plan_route = None
         analyse = self._enrichir_analyse(self.comprendre.analyser(requete))
+        sujet_inconnu = self._sujet_definition_inconnu(requete, analyse)
+        if sujet_inconnu is not None:
+            question = self.moteur_decision.demande.creer_sens(
+                analyse,
+                sujet_inconnu,
+            )
+            decision = Decision(
+                route="clarification",
+                analyse=analyse,
+                reponse=question.texte,
+                question_id=question.id,
+                question=question.texte,
+            )
+            self._derniere_decision = decision
+            return decision
+
         reponse_meta = self.meta_comprehension.repondre(
             analyse,
             self._derniere_decision,
@@ -456,6 +472,26 @@ class Kernel:
         if champ in {"counterexamples", "relations"} and len(mots) < 4:
             return False, "développe la réponse avec au moins quatre mots"
         return True, "réponse exploitable"
+
+    @staticmethod
+    def _sujet_definition_inconnu(
+        requete: str,
+        analyse: Analyse,
+    ) -> str | None:
+        """Détecte une question de définition dont le sujet est réellement inconnu."""
+
+        correspondance = re.match(
+            r"^\s*(?:c['’ ]est\s+quoi|qu['’ ]est[- ]ce\s+que|que\s+signifie)"
+            r"\s+(?:(?:un|une|le|la|les|l['’])\s*)?"
+            r"(?P<sujet>[a-zA-ZÀ-ÿ][a-zA-ZÀ-ÿ0-9_+#'-]*)\s*[?.!]*\s*$",
+            requete,
+            flags=re.IGNORECASE,
+        )
+        if correspondance is None:
+            return None
+        sujet = correspondance.group("sujet").casefold()
+        inconnus = {item.casefold() for item in analyse.jetons_inconnus}
+        return sujet if sujet in inconnus else None
 
     @staticmethod
     def _commande_apprentissage_actif(requete: str) -> str | None:
