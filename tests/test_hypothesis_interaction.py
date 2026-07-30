@@ -9,6 +9,7 @@ from unittest.mock import patch
 
 from kairos import Kernel
 from kairos.apprentissage_naturel import ResultatDialogue
+from kairos.decision import EvenementExperience
 from kairos.hypotheses import GestionnaireHypotheses
 from kairos.memory import MemoryRepository
 
@@ -48,23 +49,33 @@ class HypothesisInteractionTests(unittest.TestCase):
         )
 
     def test_unknown_noun_creates_explanation_not_verb_equivalence(self) -> None:
-        decision = self.kernel.traiter("c'est quoi un xylophore ?")
-        self.assertIsNotNone(decision.question_id)
-        experience = self.kernel.repondre_a(
-            str(decision.question_id),
-            "un xylophore est un instrument musical en bois",
+        experience = EvenementExperience(
+            id="experience_noun",
+            question_id="question_noun",
+            requete_originale="c'est quoi un xylophore ?",
+            question="Je ne connais pas encore le sens de « xylophore » ici.",
+            reponse="un xylophore est un instrument musical en bois",
+            champ="sens",
+            resolution={
+                "field": "sens",
+                "value": "un instrument musical en bois",
+                "status": "hypothesis",
+            },
+            analyse_reponse={"jetons_inconnus": []},
+            statut="recorded_not_confirmed",
+            cree_le="2026-07-30T00:00:00+00:00",
         )
-        info = experience.resolution["hypothesis"]
-        hypothesis = self.repository.hypothesis(info["id"])
-        self.assertEqual("xylophore", info["nom"])
+        info = self.kernel.hypotheses.depuis_experience(
+            experience,
+            acteur="creator",
+        )
+        hypothesis = self.repository.hypothesis(info.id)
+        self.assertEqual("xylophore", info.nom)
         self.assertEqual(
             "interaction.user_explanation",
             hypothesis["payload"]["learning_kind"],
         )
-        self.assertNotIn(
-            "relation_candidate",
-            hypothesis["payload"],
-        )
+        self.assertNotIn("relation_candidate", hypothesis["payload"])
 
     def test_candidate_is_not_promoted_or_reusable(self) -> None:
         experience = self._teach_deploy()
