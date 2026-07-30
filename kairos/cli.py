@@ -13,6 +13,7 @@ from .information import ConsolidateurRecherche
 from .kernel import Kernel
 from .memory import MemoryRepository
 from .modeles import Decision
+from .self_correction import SelfCorrectionLab
 from .skills import SkillFactory, SkillFactoryStore, SkillRegistry
 from .soi import ConnaissanceDeSoi
 
@@ -68,6 +69,23 @@ def smoke_test() -> int:
 
 def _racine() -> Path:
     return Path(__file__).resolve().parent.parent
+
+
+def self_correction(action: str) -> int:
+    """Lance ou inspecte le laboratoire SECAU isolé."""
+
+    lab = SelfCorrectionLab(_racine())
+    if action == "on":
+        payload = lab.run().vers_dict()
+    elif action == "status":
+        payload = lab.status()
+    elif action == "off":
+        payload = lab.off()
+    else:
+        print(f"SELF_CORRECTION_ERROR: action inconnue « {action} »")
+        return 2
+    print(json.dumps(payload, ensure_ascii=False, indent=2))
+    return 0
 
 
 def growup_scan() -> int:
@@ -336,12 +354,19 @@ def construire_parseur() -> argparse.ArgumentParser:
         action="store_true",
         help="autorise la recherche Web HTTPS en lecture seule",
     )
+    parseur.add_argument(
+        "--self-correction",
+        choices=("on", "off", "status"),
+        help="lance ou inspecte le laboratoire SECAU isolé",
+    )
     parseur.add_argument("message", nargs="*")
     return parseur
 
 
 def main(argv: Sequence[str] | None = None) -> int:
     args = construire_parseur().parse_args(argv)
+    if args.self_correction:
+        return self_correction(args.self_correction)
     if args.smoke_test:
         return smoke_test()
     if args.growup_scan:
@@ -384,7 +409,13 @@ def main(argv: Sequence[str] | None = None) -> int:
         allow_network=args.online,
     )
     if args.message:
-        afficher(kernel.traiter(" ".join(args.message)))
+        message = " ".join(args.message)
+        command = SelfCorrectionLab.parse_command(message)
+        if command is not None:
+            kernel.close()
+            return self_correction(command)
+        afficher(kernel.traiter(message))
+        kernel.close()
         return 0
 
     print("K.A.I.R.O.S. prototype — écrivez quit pour quitter.")
@@ -403,6 +434,12 @@ def main(argv: Sequence[str] | None = None) -> int:
         if requete.casefold() == "stop" and not kernel.apprentissage.active:
             return 0
         if not requete:
+            continue
+
+        command = SelfCorrectionLab.parse_command(requete)
+        if command is not None:
+            print("Kairos > laboratoire SECAU")
+            self_correction(command)
             continue
 
         if question_en_attente is not None:
