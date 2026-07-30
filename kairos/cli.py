@@ -8,6 +8,7 @@ from collections.abc import Sequence
 from pathlib import Path
 from typing import Any
 
+from .causal import MoteurCausal, StockageCausal
 from .growup import MoteurGrowUp, StockageGrowUp
 from .information import ConsolidateurRecherche
 from .kernel import Kernel
@@ -86,6 +87,47 @@ def self_correction(action: str) -> int:
         return 2
     print(json.dumps(payload, ensure_ascii=False, indent=2))
     return 0
+
+
+def causal_action(action: str, value: str | None = None) -> int:
+    """Exécute, rejoue ou inspecte les expériences causales."""
+
+    dossier = _racine() / "memory"
+    dossier.mkdir(parents=True, exist_ok=True)
+    stockage = StockageCausal(dossier / "causal_experiences.db")
+    if action == "status":
+        try:
+            dernier = stockage.dernier()
+            payload = {
+                "state": "ready" if dernier is not None else "empty",
+                "last_episode": dernier,
+            }
+            print(json.dumps(payload, ensure_ascii=False, indent=2))
+            return 0
+        finally:
+            stockage.close()
+
+    kernel = Kernel()
+    moteur = MoteurCausal(kernel=kernel, stockage=stockage)
+    try:
+        if action == "run":
+            if not str(value or "").strip():
+                raise ValueError("--causal-run exige une mission.")
+            payload = moteur.executer_message(str(value))
+        elif action == "replay":
+            if not str(value or "").strip():
+                raise ValueError("--causal-replay exige un identifiant.")
+            payload = moteur.rejouer(str(value))
+        else:
+            raise ValueError(f"Action causale inconnue : {action}")
+        print(json.dumps(payload, ensure_ascii=False, indent=2))
+        return 0
+    except (KeyError, ValueError) as erreur:
+        print(f"CAUSAL_ERROR: {erreur}")
+        return 1
+    finally:
+        kernel.close()
+        stockage.close()
 
 
 def growup_scan() -> int:
@@ -288,6 +330,21 @@ def construire_parseur() -> argparse.ArgumentParser:
         help="vérifie le démarrage et quitte avec un code mesurable",
     )
     actions.add_argument(
+        "--causal-run",
+        metavar="MISSION",
+        help="prédit, exécute, observe et évalue une mission interne",
+    )
+    actions.add_argument(
+        "--causal-replay",
+        metavar="EPISODE_ID",
+        help="rejoue un épisode causal et détecte une régression",
+    )
+    actions.add_argument(
+        "--causal-status",
+        action="store_true",
+        help="affiche le dernier épisode causal persistant",
+    )
+    actions.add_argument(
         "--growup-scan",
         action="store_true",
         help="regroupe et planifie les expériences sans les promouvoir",
@@ -369,6 +426,12 @@ def main(argv: Sequence[str] | None = None) -> int:
         return self_correction(args.self_correction)
     if args.smoke_test:
         return smoke_test()
+    if args.causal_run:
+        return causal_action("run", args.causal_run)
+    if args.causal_replay:
+        return causal_action("replay", args.causal_replay)
+    if args.causal_status:
+        return causal_action("status")
     if args.growup_scan:
         return growup_scan()
     if args.route_plan:

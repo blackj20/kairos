@@ -2,12 +2,12 @@
 
 ## Statut
 
-**V0.13 — prototype opérationnel avec laboratoire de self-correction observable.**
+**V0.14 — prototype opérationnel avec expérience causale observable.**
 
 Ce statut signifie que le projet est installable depuis un clone propre,
 démarre même lorsque la mémoire mutable n’existe pas encore, analyse une
 requête, conserve les expériences, organise leur consolidation avec GrowUp et
-peut transformer une relation déjà promue en skill candidate versionnée. La commande `self-correction=on` copie désormais sa mémoire cognitive et lance Tester puis SECAU dans cette copie afin d’observer ses limites sans corrompre la mémoire principale.
+peut transformer une relation déjà promue en skill candidate versionnée. La V0.14 ajoute une boucle `prédire → exécuter → observer → évaluer → rejouer` : elle distingue désormais une exécution techniquement correcte d’une mission réellement accomplie. La commande `self-correction=on` copie sa mémoire cognitive et peut lancer le Tester causal puis SECAU dans cette copie sans corrompre la mémoire principale.
 
 Une candidate V0.5 reste inactive pendant sa génération et sa validation. Son
 activation exige un rapport réussi lié à son empreinte exacte et une approbation
@@ -31,6 +31,9 @@ kairos --secau-status
 python -m unittest discover -s tests -v
 kairos self-correction=on
 kairos self-correction=status
+kairos --causal-run "cherche atome"
+kairos --causal-replay EPISODE_ID
+kairos --causal-status
 python self_correction_benchmark.py
 python intent_generalization_benchmark.py
 python meta_comprehension_benchmark.py
@@ -199,6 +202,20 @@ python user_acceptance_v013.py
 - commande `status` liée au dernier run ;
 - aucun daemon ou processus autonome caché.
 
+### Expérience causale V0.14
+
+- contrats de résultat déclaratifs séparés des phrases utilisateur;
+- prédiction des sorties attendues et des conditions de réussite;
+- exécution uniquement d’un plan `ready` dont le contrat est complet;
+- observation brute sans verdict sémantique;
+- réussite technique et objectif atteint mesurés séparément;
+- épisodes et transitions append-only dans SQLite;
+- replay lié à l’épisode source avec delta et détection de régression;
+- Tester causal exigeant cinq épisodes non vus, ≥ 85 %, amélioration positive et zéro régression;
+- revue SECAU réelle dans la copie du laboratoire;
+- validation comportementale sans création de concept ni mutation de production;
+- première route mesurée : `information.search`.
+
 ## Cycle démontré
 
 ```text
@@ -212,6 +229,10 @@ incompréhension
 → Tester produit le rapport
 → SECAU promeut ou rejette
 → self-correction peut rejouer ce contrôle dans une copie isolée
+→ prédiction du résultat attendu
+→ exécution et observation factuelle
+→ évaluation de la finalité
+→ replay et mesure de la régression
 → plan GrowUp promoted
 → Skill Factory génère une candidate inactive
 → manifeste + permissions + empreinte + scan AST
@@ -245,21 +266,31 @@ La self-correction ne modifie jamais `memory/cognition.db`.
 Une promotion de laboratoire n’est pas une connaissance de production.
 Une candidate sans contrat de test n’est jamais promue artificiellement.
 La self-correction est synchrone, bornée et traçable.
+L’observateur causal ne décide jamais si le but est atteint.
+Une exécution réussie ne vaut pas réussite de la mission.
+Un épisode causal ne peut sauter aucune transition.
+Un replay reste lié à son épisode source.
+Une amélioration comportementale validée en laboratoire ne devient pas une vérité de production.
 ```
 
-## Résultats vérifiés par la CI V0.13
+## Résultats vérifiés par la CI V0.14
 
 Le dernier commit n’est accepté que si toutes les portes suivantes restent
 vertes sous Python 3.11, 3.12 et 3.13 :
 
 | Porte | Résultat |
 |---|---:|
-| Tests automatisés | 175/175 |
+| Tests automatisés | 185/185 |
+| Expérience causale V0.14 | 15/15 |
+| Réussite des formulations causales | 100 % |
+| Régressions causales | 0 |
+| Appels SECAU causaux observés | 1 |
 | Self-correction V0.13 | 13/13 |
 | Appels SECAU internes observés | 2 |
 | Mutations de la mémoire principale | 0 |
 | Acceptation V0.13 via commande installée | 8/8 |
-| Acceptation totale | 48/48 |
+| Acceptation V0.14 via commande installée | 12/12 |
+| Acceptation totale | 60/60 |
 | Généralisation des intentions | 100/100 |
 | Précision d’intention et de route | 100 % |
 | Benchmark filtres cognitifs | 13/13 |
@@ -289,4 +320,4 @@ implicitement et qu’une altération après le rapport est refusée.
 
 ## Prochaine porte
 
-Exécuter le laboratoire sur plusieurs mémoires et mesurer ses divergences réelles. Ensuite seulement, définir une procédure séparée `proposer → comparer → approuver → importer → rollback` pour transférer une conclusion vers la mémoire principale. La V0.13 ne possède volontairement aucun raccourci d’importation. L’autonomie matérielle reste derrière une porte distincte : plan, code candidat, analyse statique, simulateur, tests de réaction, autorisation humaine, journal et rollback.
+**V0.15 — buts, événements et attention.** Représenter un objectif persistant, choisir le prochain épisode utile et interrompre un plan lorsque l’observation invalide sa prédiction. La V0.15 devra s’appuyer sur les épisodes V0.14 et rester synchrone, observable et sans accès externe supplémentaire. Exécuter ensuite le laboratoire sur plusieurs mémoires et mesurer ses divergences réelles. Ensuite seulement, définir une procédure séparée `proposer → comparer → approuver → importer → rollback` pour transférer une conclusion vers la mémoire principale. La V0.13 ne possède volontairement aucun raccourci d’importation. L’autonomie matérielle reste derrière une porte distincte : plan, code candidat, analyse statique, simulateur, tests de réaction, autorisation humaine, journal et rollback.

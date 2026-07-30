@@ -51,7 +51,7 @@ jobs:
       - name: Compile Python sources
         run: |
           python -m compileall -q kairos tests
-          python -m py_compile self_correction_benchmark.py intent_generalization_benchmark.py cognitive_filters_benchmark.py meta_comprehension_benchmark.py benchmark.py holdout.py decision_benchmark.py growup_benchmark.py skill_factory_benchmark.py routing_benchmark.py information_benchmark.py research_secau_benchmark.py user_acceptance.py user_acceptance_additional.py user_acceptance_v05.py user_acceptance_v06.py user_acceptance_v07.py user_acceptance_v08.py user_acceptance_v013.py
+          python -m py_compile causal_benchmark.py self_correction_benchmark.py intent_generalization_benchmark.py cognitive_filters_benchmark.py meta_comprehension_benchmark.py benchmark.py holdout.py decision_benchmark.py growup_benchmark.py skill_factory_benchmark.py routing_benchmark.py information_benchmark.py research_secau_benchmark.py user_acceptance.py user_acceptance_additional.py user_acceptance_v05.py user_acceptance_v06.py user_acceptance_v07.py user_acceptance_v08.py user_acceptance_v013.py user_acceptance_v014.py
 
       - name: Run unit and end-to-end tests
         shell: bash
@@ -66,6 +66,9 @@ jobs:
           name: unittest-python-${{ matrix.python-version }}
           path: unittest.log
           if-no-files-found: error
+
+      - name: Enforce causal experience
+        run: python causal_benchmark.py
 
       - name: Enforce internal self-correction
         run: python self_correction_benchmark.py
@@ -148,6 +151,12 @@ jobs:
           set -o pipefail
           python user_acceptance_v013.py 2>&1 | tee user-acceptance-v013.log
 
+      - name: Run Causal Experience user acceptance
+        shell: bash
+        run: |
+          set -o pipefail
+          python user_acceptance_v014.py 2>&1 | tee user-acceptance-v014.log
+
       - name: Preserve user acceptance report
         if: always()
         uses: actions/upload-artifact@v4
@@ -161,6 +170,8 @@ jobs:
             user-acceptance-v07.log
             user-acceptance-v08.log
             user-acceptance-v013.log
+            user-acceptance-v014.log
+            memory/causal_experiences.db
             memory/self_correction_runs/latest.json
             artifacts/user_acceptance/USER_ACCEPTANCE_REPORT.md
             artifacts/user_acceptance/USER_ACCEPTANCE_REPORT.json

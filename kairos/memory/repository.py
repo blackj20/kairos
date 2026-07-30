@@ -432,6 +432,32 @@ class MemoryRepository:
             self._audit(db, "HYPOTHESIS_REJECTED",
                         {"id": hypothesis_id, "reason": reason})
 
+    def validate_causal_hypothesis(
+        self, hypothesis_id: str, report_id: str
+    ) -> None:
+        """Valide un changement comportemental sans créer une connaissance."""
+
+        hypothesis = self.hypothesis(hypothesis_id)
+        report = self.report(report_id)
+        if hypothesis is None or report is None:
+            raise ValueError("Validation causale impossible sans artefacts.")
+        if hypothesis.get("status") != "candidate":
+            raise ValueError("L'hypothèse causale a déjà été traitée.")
+        if str(report.get("subject_id")) != hypothesis_id or not report.get("passed"):
+            raise ValueError("Le rapport causal ne valide pas cette hypothèse.")
+        if hypothesis["payload"].get("causal_kind") != "behavior.change":
+            raise ValueError("Hypothèse étrangère à l'expérience causale.")
+        with self.transaction() as db:
+            db.execute(
+                "UPDATE hypotheses SET status='validated' WHERE id=?",
+                (hypothesis_id,),
+            )
+            self._audit(
+                db,
+                "CAUSAL_HYPOTHESIS_VALIDATED",
+                {"hypothesis": hypothesis_id, "report": report_id},
+            )
+
     def record_audit(self, event: str, payload: dict[str, Any]) -> None:
         """Expose une écriture d'audit atomique aux organes de contrôle."""
 

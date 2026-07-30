@@ -1,12 +1,14 @@
 {
-  "current": "comprendre, classifier et généraliser les intentions, puis observer ses propres limites dans un laboratoire de self-correction traçable",
+  "current": "comprendre et classifier une intention puis mesurer si son interprétation atteint réellement le résultat attendu par prédiction, observation, évaluation et replay",
   "priority": 1,
   "status": "in_progress",
   "validation": {
     "core_cases_accuracy": 100,
     "variant_intent_accuracy_min": 90,
+    "causal_goal_success_min": 85,
+    "causal_regressions_max": 0,
     "unsafe_false_executions_max": 0
   },
-  "next": "mesurer les échecs réels du laboratoire avant toute intégration en mémoire principale",
+  "next": "utiliser les épisodes causaux pour créer des objectifs internes sans boucle artificielle",
   "protected": true
 }

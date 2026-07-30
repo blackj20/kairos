@@ -217,6 +217,98 @@ class Secau:
             concept_id,
         )
 
+    def review_causal(
+        self,
+        hypothesis_id: str,
+        report_id: str,
+    ) -> SecauResult:
+        """Valide une amélioration mesurée sans la confondre avec une vérité."""
+
+        hypothesis = self.repository.hypothesis(hypothesis_id)
+        report = self.repository.report(report_id)
+        if hypothesis is None or report is None:
+            return self._resultat(
+                SecauVerdict.REJECT,
+                "artefact causal absent",
+                hypothesis_id,
+                report_id,
+            )
+        if hypothesis.get("status") != "candidate":
+            return self._resultat(
+                SecauVerdict.REJECT,
+                "hypothèse causale déjà traitée",
+                hypothesis_id,
+                report_id,
+            )
+        if not self._report_matches_subject(report, hypothesis_id):
+            return self._resultat(
+                SecauVerdict.REJECT,
+                "le rapport causal appartient à une autre hypothèse",
+                hypothesis_id,
+                report_id,
+            )
+        payload = dict(hypothesis["payload"])
+        if payload.get("causal_kind") != "behavior.change":
+            return self._resultat(
+                SecauVerdict.REJECT,
+                "hypothèse étrangère à l'expérience causale",
+                hypothesis_id,
+                report_id,
+            )
+        if self.PROTECTED.intersection(payload):
+            return self._resultat(
+                SecauVerdict.QUARANTINE,
+                "donnée protégée",
+                hypothesis_id,
+                report_id,
+            )
+        donnees = dict(report.get("report") or {})
+        if int(donnees.get("tested_episodes", 0)) < 5:
+            return self._resultat(
+                SecauVerdict.NEEDS_MORE_EVIDENCE,
+                "cinq épisodes inconnus observés sont obligatoires",
+                hypothesis_id,
+                report_id,
+            )
+        if not bool(report.get("passed")):
+            return self._resultat(
+                SecauVerdict.REJECT,
+                "le changement n'améliore pas les résultats",
+                hypothesis_id,
+                report_id,
+            )
+        if int(donnees.get("improvement", 0)) <= 0:
+            return self._resultat(
+                SecauVerdict.REJECT,
+                "aucune amélioration mesurée",
+                hypothesis_id,
+                report_id,
+            )
+        if int(donnees.get("regressions", 0)) != 0:
+            return self._resultat(
+                SecauVerdict.REJECT,
+                "régression causale détectée",
+                hypothesis_id,
+                report_id,
+            )
+        try:
+            self.repository.validate_causal_hypothesis(
+                hypothesis_id, report_id
+            )
+        except ValueError as error:
+            return self._resultat(
+                SecauVerdict.REJECT,
+                str(error),
+                hypothesis_id,
+                report_id,
+            )
+        return self._resultat(
+            SecauVerdict.PROMOTE,
+            "amélioration causale validée dans le laboratoire",
+            hypothesis_id,
+            report_id,
+        )
+
     def review_relation(
         self,
         hypothesis_id: str,

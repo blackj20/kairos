@@ -89,7 +89,7 @@ def main() -> int:
         verifier(
             "Connaissance de son identité",
             ["kairos", "qui", "es", "tu", "?"],
-            ("K.A.I.R.O.S.", "0.13.0"),
+            ("K.A.I.R.O.S.", "0.14.0"),
         ),
         verifier(
             "Connaissance de son objectif courant",
@@ -115,7 +115,7 @@ def main() -> int:
     )
 
     lignes = [
-        "# Rapport d’acceptation complémentaire — K.A.I.R.O.S. V0.5",
+        "# Rapport d’acceptation complémentaire — K.A.I.R.O.S. V0.14",
         "",
         f"Résultat : **{reussis}/{total}** scénarios réussis.",
         "",
