@@ -9,7 +9,9 @@ démarre même lorsque la mémoire mutable n’existe pas encore, analyse une
 requête, conserve les expériences, organise leur consolidation avec GrowUp et
 peut transformer une relation déjà promue en skill candidate versionnée. La V0.15 conserve désormais un but, sa priorité, son budget et ses événements, puis choisit et exécute une seule étape causale à la fois. Elle reprend un but après redémarrage et ne le termine qu’après preuve causale. La V0.14 ajoute une boucle `prédire → exécuter → observer → évaluer → rejouer` : elle distingue désormais une exécution techniquement correcte d’une mission réellement accomplie. La commande `self-correction=on` copie sa mémoire cognitive et peut lancer le Tester causal puis SECAU dans cette copie sans corrompre la mémoire principale.
 
-La V0.17 ferme la porte suivante : une question naturelle sur un concept inconnu ouvre un manque de sens, l’explication crée automatiquement des liens candidats, puis Kairos choisit relation, exemples, contre-exemples ou source selon un gain attendu. Chaque clarification est bornée à une reformulation et une séance mémorisée ne capture jamais une commande après redémarrage sans reprise explicite.\n\nLa V0.16 ferme la rupture observée en usage réel : après une question de manque, l’explication du créateur crée ou réutilise une hypothèse candidate dans `memory/cognition.db`. Son identifiant, son statut et les preuves manquantes sont affichés immédiatement et restent visibles après redémarrage. Une clarification opérationnelle, comme `Python` après `installe quoi ?`, ne crée aucune hypothèse.
+La V0.17 ferme la porte suivante : une question naturelle sur un concept inconnu ouvre un manque de sens, l’explication crée automatiquement des liens candidats, puis Kairos choisit relation, exemples, contre-exemples ou source selon un gain attendu. Chaque clarification est bornée à une reformulation et une séance mémorisée ne capture jamais une commande après redémarrage sans reprise explicite.
+
+La V0.16 ferme la rupture observée en usage réel : après une question de manque, l’explication du créateur crée ou réutilise une hypothèse candidate dans `memory/cognition.db`. Son identifiant, son statut et les preuves manquantes sont affichés immédiatement et restent visibles après redémarrage. Une clarification opérationnelle, comme `Python` après `installe quoi ?`, ne crée aucune hypothèse.
 
 Une candidate V0.5 reste inactive pendant sa génération et sa validation. Son
 activation exige un rapport réussi lié à son empreinte exacte et une approbation
@@ -379,7 +381,12 @@ vertes sous Python 3.11, 3.12 et 3.13 :
 
 | Porte | Résultat |
 |---|---:|
-| Tests automatisés | 217/217 |\n| Apprentissage actif V0.17 | 19/19 |\n| Questions utiles | 100 % |\n| Liens candidats autonomes démontrés | 1 |\n| Clarifications non bornées | 0 |\n| Acceptation V0.17 via commande installée | 21/21 |
+| Tests automatisés | 217/217 |
+| Apprentissage actif V0.17 | 19/19 |
+| Questions utiles | 100 % |
+| Liens candidats autonomes démontrés | 1 |
+| Clarifications non bornées | 0 |
+| Acceptation V0.17 via commande installée | 21/21 |
 | Hypothèses interactives V0.16 | 15/15 |
 | Acceptation V0.16 via commande installée | 14/14 |
 | Hypothèses faussement promues | 0 |
