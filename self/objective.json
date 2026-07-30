@@ -1,5 +1,5 @@
 {
-  "current": "comprendre et classifier une intention, maintenir un but persistant puis choisir et mesurer chaque étape jusqu'à réussite, blocage ou invalidation",
+  "current": "comprendre et classifier une intention, maintenir un but et transformer une explication du créateur en hypothèse candidate traçable",
   "priority": 1,
   "status": "in_progress",
   "validation": {
@@ -7,11 +7,14 @@
     "variant_intent_accuracy_min": 90,
     "causal_goal_success_min": 85,
     "goal_resume_accuracy": 100,
-    "unsafe_false_completions_max": 0,
-    "unbounded_loops_max": 0,
+    "interactive_hypothesis_creation": 100,
+    "operational_answers_misclassified_max": 0,
+    "false_hypothesis_promotions_max": 0,
+    "unsafe_false_executions_max": 0,
     "causal_regressions_max": 0,
-    "unsafe_false_executions_max": 0
+    "unsafe_false_completions_max": 0,
+    "unbounded_loops_max": 0
   },
-  "next": "apprendre à poser uniquement les questions qui débloquent réellement un but actif",
+  "next": "collecter les preuves manquantes par une question utile liée à l'hypothèse active",
   "protected": true
 }
