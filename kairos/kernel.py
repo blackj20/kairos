@@ -275,8 +275,6 @@ class Kernel:
             return experience
         resolution = dict(experience.resolution)
         resolution["hypothesis"] = hypothese.vers_dict()
-        tour = self.apprentissage_actif.demarrer(hypothese.id)
-        resolution["active_learning"] = tour.vers_dict()
         return replace(experience, resolution=resolution)
 
     def enseigner_relation_verbe(
