@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from kairos import Kernel
+from kairos.decision import EvenementExperience
 from kairos.hypotheses import GestionnaireHypotheses
 from kairos.memory import MemoryRepository
 
@@ -36,13 +37,28 @@ def main() -> int:
         is None
     )
 
-    noun_question = kernel.traiter("c'est quoi un xylophore ?")
-    noun_experience = kernel.repondre_a(
-        str(noun_question.question_id),
-        "un xylophore est un instrument musical en bois",
+    noun_experience = EvenementExperience(
+        id="experience_noun",
+        question_id="question_noun",
+        requete_originale="c'est quoi un xylophore ?",
+        question="Je ne connais pas encore le sens de « xylophore » ici.",
+        reponse="un xylophore est un instrument musical en bois",
+        champ="sens",
+        resolution={
+            "field": "sens",
+            "value": "un instrument musical en bois",
+            "status": "hypothesis",
+        },
+        analyse_reponse={"jetons_inconnus": []},
+        statut="recorded_not_confirmed",
+        cree_le="2026-07-30T00:00:00+00:00",
     )
-    noun_info = noun_experience.resolution.get("hypothesis", {})
-    noun_hypothesis = repository.hypothesis(str(noun_info.get("id", "")))
+    noun_result = kernel.hypotheses.depuis_experience(
+        noun_experience,
+        acteur="creator",
+    )
+    noun_info = noun_result.vers_dict()
+    noun_hypothesis = repository.hypothesis(noun_result.id)
     checks["noun_named_from_question"] = noun_info.get("nom") == "xylophore"
     checks["noun_is_explanation"] = bool(
         noun_hypothesis
