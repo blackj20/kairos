@@ -163,6 +163,61 @@ class MemoryRepository:
         digest = "sha256:" + hashlib.sha256(content.encode()).hexdigest()
         return str(row["content_hash"]) == digest
 
+    def candidate_hypotheses(self) -> list[dict[str, Any]]:
+        """Liste toutes les hypothèses encore candidates, sans les modifier."""
+
+        candidates: list[dict[str, Any]] = []
+        rows = self.connection.execute(
+            "SELECT * FROM hypotheses WHERE status='candidate' "
+            "ORDER BY created_at, id"
+        )
+        for row in rows:
+            candidates.append(
+                {
+                    **dict(row),
+                    "payload": json.loads(row["payload_json"]),
+                }
+            )
+        return candidates
+
+    def latest_report_for(self, subject_id: str) -> dict[str, Any] | None:
+        """Retourne le rapport le plus récent lié exactement au candidat."""
+
+        row = self.connection.execute(
+            "SELECT * FROM test_reports WHERE subject_id=? "
+            "ORDER BY created_at DESC, id DESC LIMIT 1",
+            (subject_id,),
+        ).fetchone()
+        if row is None:
+            return None
+        return {**dict(row), "report": json.loads(row["report_json"])}
+
+    def cognitive_counts(self) -> dict[str, int]:
+        """Produit un instantané minimal pour comparer deux mémoires."""
+
+        def count(table: str, where: str = "", params: tuple[Any, ...] = ()) -> int:
+            query = f"SELECT count(*) FROM {table}"
+            if where:
+                query += " WHERE " + where
+            return int(self.connection.execute(query, params).fetchone()[0])
+
+        return {
+            "candidates": count("hypotheses", "status='candidate'"),
+            "promoted_hypotheses": count(
+                "hypotheses", "status='promoted'"
+            ),
+            "rejected_hypotheses": count(
+                "hypotheses", "status='rejected'"
+            ),
+            "concepts": count("concepts", "status='confirmed'"),
+            "relations": count(
+                "semantic_relations", "status='confirmed'"
+            ),
+            "quarantined_relations": count(
+                "semantic_relations", "status='quarantined'"
+            ),
+        }
+
     def research_candidates(self) -> list[dict[str, Any]]:
         """Liste les hypothèses de recherche encore candidates."""
 
