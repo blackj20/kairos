@@ -11,6 +11,7 @@ from typing import Any
 from .autonomie import MoteurAutonomie, StockageButs
 from .causal import MoteurCausal, StockageCausal
 from .growup import MoteurGrowUp, StockageGrowUp
+from .hypotheses import GestionnaireHypotheses
 from .information import ConsolidateurRecherche
 from .kernel import Kernel
 from .memory import MemoryRepository
@@ -44,6 +45,14 @@ def afficher(decision: Decision) -> None:
     )
     print(f"{'Route':<11}: {decision.route}")
     print(f"{'Réponse':<11}: {decision.reponse}")
+    if decision.apprentissage is not None:
+        print(
+            f"{'Hypothèse':<11}: {decision.apprentissage['id']} "
+            f"({decision.apprentissage['statut']})"
+        )
+        manques = decision.apprentissage.get("manques", ())
+        if manques:
+            print(f"{'À compléter':<11}: {', '.join(manque for manque in manques)}")
     if decision.routage is not None:
         print(
             f"{'Plan':<11}: {decision.routage['id']} "
@@ -188,6 +197,40 @@ def goal_action(
         kernel.close()
         causal_store.close()
         buts.close()
+
+
+
+def hypothesis_status(hypothesis_id: str | None = None) -> int:
+    """Affiche les hypothèses candidates et les éléments manquants."""
+
+    dossier = _racine() / "memory"
+    dossier.mkdir(parents=True, exist_ok=True)
+    repository = MemoryRepository(dossier / "cognition.db")
+    try:
+        payload = GestionnaireHypotheses(repository).statut(hypothesis_id)
+        print(json.dumps(payload, ensure_ascii=False, indent=2))
+        return 0
+    except KeyError as erreur:
+        print(f"HYPOTHESIS_ERROR: hypothèse inconnue {erreur}")
+        return 1
+    finally:
+        repository.close()
+
+
+def _demande_hypotheses(texte: str) -> bool:
+    normalise = " ".join(
+        texte.casefold().replace("’", "'").strip(" ?.!").split()
+    )
+    return normalise in {
+        "hypothèses",
+        "hypotheses",
+        "mes hypothèses",
+        "mes hypotheses",
+        "montre mes hypothèses",
+        "montre mes hypotheses",
+        "où en est mon apprentissage",
+        "ou en est mon apprentissage",
+    }
 
 
 def growup_scan() -> int:
@@ -430,6 +473,11 @@ def construire_parseur() -> argparse.ArgumentParser:
         help="invalide explicitement un but non terminal",
     )
     actions.add_argument(
+        "--hypothesis-status",
+        action="store_true",
+        help="affiche les hypothèses candidates et leurs manques",
+    )
+    actions.add_argument(
         "--growup-scan",
         action="store_true",
         help="regroupe et planifie les expériences sans les promouvoir",
@@ -478,6 +526,10 @@ def construire_parseur() -> argparse.ArgumentParser:
         "--skill-rollback",
         metavar="SKILL_ID",
         help="restaure la version active précédente",
+    )
+    parseur.add_argument(
+        "--hypothesis-id",
+        help="identifiant précis utilisé avec --hypothesis-status",
     )
     parseur.add_argument("--goal-id", help="identifiant de but pour --goal-status")
     parseur.add_argument(
@@ -555,6 +607,8 @@ def main(argv: Sequence[str] | None = None) -> int:
             goal_id=args.goal_invalidate,
             raison=args.reason,
         )
+    if args.hypothesis_status:
+        return hypothesis_status(args.hypothesis_id)
     if args.growup_scan:
         return growup_scan()
     if args.route_plan:
@@ -596,6 +650,9 @@ def main(argv: Sequence[str] | None = None) -> int:
     )
     if args.message:
         message = " ".join(args.message)
+        if _demande_hypotheses(message):
+            kernel.close()
+            return hypothesis_status()
         command = SelfCorrectionLab.parse_command(message)
         if command is not None:
             kernel.close()
@@ -622,6 +679,9 @@ def main(argv: Sequence[str] | None = None) -> int:
         if not requete:
             continue
 
+        if _demande_hypotheses(requete):
+            hypothesis_status()
+            continue
         command = SelfCorrectionLab.parse_command(requete)
         if command is not None:
             print("Kairos > laboratoire SECAU")
@@ -630,10 +690,35 @@ def main(argv: Sequence[str] | None = None) -> int:
 
         if question_en_attente is not None:
             experience = kernel.repondre_a(question_en_attente, requete)
-            print(
-                "Kairos > Réponse reliée à l'expérience "
-                f"{experience.id}. Elle n'est pas encore confirmée."
-            )
+            hypothese = experience.resolution.get("hypothesis")
+            if isinstance(hypothese, dict):
+                etat = (
+                    "créée"
+                    if hypothese.get("creee")
+                    else "réutilisée"
+                )
+                print(
+                    f"Kairos > Hypothèse {etat} : {hypothese['id']} "
+                    f"({hypothese['statut']})."
+                )
+                manques = hypothese.get("manques", ())
+                if manques:
+                    print(
+                        "Kairos > Pour la vérifier, il manque : "
+                        + ", ".join(str(item) for item in manques)
+                        + "."
+                    )
+                print(
+                    "Kairos > Consulte-la avec : "
+                    f"kairos --hypothesis-status --hypothesis-id "
+                    f"{hypothese['id']}"
+                )
+            else:
+                print(
+                    "Kairos > Réponse enregistrée comme expérience "
+                    f"{experience.id}. Elle ne contient pas encore "
+                    "d'explication permettant une hypothèse."
+                )
             question_en_attente = None
             continue
 
