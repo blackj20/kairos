@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from dataclasses import asdict, dataclass
+import re
 from typing import Any
 
 from .decision import EvenementExperience
@@ -204,6 +205,9 @@ class GestionnaireHypotheses:
     ) -> str:
         if isinstance(relation, dict):
             return str(relation.get("source", "")).strip()
+        cite = re.search(r"«\s*([^»]+?)\s*»", experience.question)
+        if cite:
+            return cite.group(1).strip()
         inconnus = experience.analyse_reponse.get("jetons_inconnus", [])
         if inconnus:
             return str(inconnus[-1]).strip()
@@ -221,8 +225,6 @@ class GestionnaireHypotheses:
     def _liste(value: object) -> list[str]:
         if not isinstance(value, str):
             return []
-        import re
-
         return [
             item.strip()
             for item in re.split(r"[,;\n]|\bet\b", value)
