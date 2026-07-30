@@ -1,5 +1,6 @@
 """Composants publics du premier prototype K.A.I.R.O.S."""
 
+from .autonomie import MoteurAutonomie, StatutBut, StockageButs
 from .causal import MoteurCausal, StockageCausal
 from .comprendre import Comprendre
 from .contexte import Contexte
@@ -43,6 +44,7 @@ __all__ = [
     "Jeton",
     "Kernel",
     "LectureIntention",
+    "MoteurAutonomie",
     "MoteurCausal",
     "ProfilCognitif",
     "Relier",
@@ -50,6 +52,8 @@ __all__ = [
     "Repondre",
     "SelfCorrectionLab",
     "SelfCorrectionResult",
+    "StatutBut",
+    "StockageButs",
     "StockageCausal",
     "Sens",
     "SensContextuel",
