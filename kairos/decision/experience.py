@@ -87,6 +87,11 @@ class Experience:
     def _proposer_relation_verbe(self, question, analyse) -> dict[str, str] | None:
         """Prépare une relation candidate sans modifier le lexique confirmé."""
 
+        type_requete = str(
+            question.analyse.get("type_requete", {}).get("valeur") or ""
+        )
+        if type_requete != "ordre":
+            return None
         inconnus = question.analyse.get("jetons_inconnus", [])
         if not inconnus:
             return None
