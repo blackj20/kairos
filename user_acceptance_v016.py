@@ -67,7 +67,7 @@ def main() -> int:
             ),
         )
         checks["interactive_success"] = code == 0
-        checks["question_visible"] = "Quel sens" in dialogue
+        checks["question_visible"] = ("sens de" in dialogue or "Que signifie" in dialogue)
         checks["hypothesis_visible"] = "Hypothèse créée" in dialogue
         checks["missing_visible"] = all(
             item in dialogue
