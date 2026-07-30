@@ -73,7 +73,7 @@ def main() -> int:
 
     code, created, _ = payload(
         "--goal-create",
-        "cherche fonction",
+        "cherche atome",
         "--goal-priority",
         "80",
         "--goal-max-steps",
