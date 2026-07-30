@@ -1,5 +1,5 @@
 {
-  "current": "comprendre, classifier et généraliser les intentions françaises au-delà des formulations mémorisées, puis conserver une décision explicable",
+  "current": "comprendre, classifier et généraliser les intentions, puis observer ses propres limites dans un laboratoire de self-correction traçable",
   "priority": 1,
   "status": "in_progress",
   "validation": {
@@ -7,6 +7,6 @@
     "variant_intent_accuracy_min": 90,
     "unsafe_false_executions_max": 0
   },
-  "next": "relier les concepts candidats à GrowUp, Tester et SECAU sans apprentissage immédiat",
+  "next": "mesurer les échecs réels du laboratoire avant toute intégration en mémoire principale",
   "protected": true
 }
