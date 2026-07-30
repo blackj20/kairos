@@ -1,8 +1,10 @@
 {
-  "current": "mesurer si une interprétation atteint réellement son résultat attendu par prédiction, observation, évaluation et replay",
+  "current": "comprendre une intention puis mesurer si son interprétation atteint réellement le résultat attendu par prédiction, observation, évaluation et replay",
   "priority": 1,
   "status": "in_progress",
   "validation": {
+    "core_cases_accuracy": 100,
+    "variant_intent_accuracy_min": 90,
     "causal_goal_success_min": 85,
     "causal_regressions_max": 0,
     "unsafe_false_executions_max": 0
