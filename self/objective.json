@@ -8,7 +8,9 @@
     "causal_goal_success_min": 85,
     "goal_resume_accuracy": 100,
     "unsafe_false_completions_max": 0,
-    "unbounded_loops_max": 0
+    "unbounded_loops_max": 0,
+    "causal_regressions_max": 0,
+    "unsafe_false_executions_max": 0
   },
   "next": "apprendre à poser uniquement les questions qui débloquent réellement un but actif",
   "protected": true
