@@ -62,28 +62,28 @@ class ExtracteurLiens:
         motifs = (
             (
                 "est_un",
-                rf"^(?:(?:{re.escape(sujet_normalise)}|c[' ]?est)\s+)?"
+                rf"^(?:(?:{re.escape(sujet_normalise)}\s+(?:est|c[' ]?est)|c[' ]?est)\s+)?"
                 rf"{self._ARTICLES}\s+{self._CIBLE}$",
             ),
             (
                 "equivalent",
                 rf"^(?:{re.escape(sujet_normalise)}\s+)?"
-                rf"(?:signifie|veut dire|correspond a)\s+{self._CIBLE}$",
+                rf"(?:signifie|veut dire|correspond [aà])\s+{self._CIBLE}$",
             ),
             (
                 "fonction",
                 rf"^(?:{re.escape(sujet_normalise)}\s+)?"
-                rf"(?:sert a|est utilise pour)\s+{self._CIBLE}$",
+                rf"(?:sert [aà]|est utilis[eé] pour)\s+{self._CIBLE}$",
             ),
             (
                 "permet",
                 rf"^(?:{re.escape(sujet_normalise)}\s+)?"
-                rf"(?:permet de|aide a)\s+{self._CIBLE}$",
+                rf"(?:permet de|aide [aà])\s+{self._CIBLE}$",
             ),
             (
                 "lie_a",
                 rf"^(?:{re.escape(sujet_normalise)}\s+)?"
-                rf"(?:est lie a|depend de)\s+{self._CIBLE}$",
+                rf"(?:est li[eé] [aà]|d[eé]pend de)\s+{self._CIBLE}$",
             ),
         )
         liens: list[dict[str, Any]] = []
