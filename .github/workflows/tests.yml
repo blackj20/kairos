@@ -51,7 +51,7 @@ jobs:
       - name: Compile Python sources
         run: |
           python -m compileall -q kairos tests
-          python -m py_compile hypothesis_interaction_benchmark.py autonomy_benchmark.py causal_benchmark.py self_correction_benchmark.py intent_generalization_benchmark.py cognitive_filters_benchmark.py meta_comprehension_benchmark.py benchmark.py holdout.py decision_benchmark.py growup_benchmark.py skill_factory_benchmark.py routing_benchmark.py information_benchmark.py research_secau_benchmark.py user_acceptance.py user_acceptance_additional.py user_acceptance_v05.py user_acceptance_v06.py user_acceptance_v07.py user_acceptance_v08.py user_acceptance_v013.py user_acceptance_v014.py user_acceptance_v015.py user_acceptance_v016.py
+          python -m py_compile active_learning_benchmark.py hypothesis_interaction_benchmark.py autonomy_benchmark.py causal_benchmark.py self_correction_benchmark.py intent_generalization_benchmark.py cognitive_filters_benchmark.py meta_comprehension_benchmark.py benchmark.py holdout.py decision_benchmark.py growup_benchmark.py skill_factory_benchmark.py routing_benchmark.py information_benchmark.py research_secau_benchmark.py user_acceptance.py user_acceptance_additional.py user_acceptance_v05.py user_acceptance_v06.py user_acceptance_v07.py user_acceptance_v08.py user_acceptance_v013.py user_acceptance_v014.py user_acceptance_v015.py user_acceptance_v016.py user_acceptance_v017.py
 
       - name: Run unit and end-to-end tests
         shell: bash
@@ -69,6 +69,9 @@ jobs:
 
       - name: Enforce interactive hypotheses
         run: python hypothesis_interaction_benchmark.py
+
+      - name: Enforce active learning
+        run: python active_learning_benchmark.py
 
       - name: Enforce goals and attention
         run: python autonomy_benchmark.py
@@ -175,6 +178,12 @@ jobs:
           set -o pipefail
           python user_acceptance_v016.py 2>&1 | tee user-acceptance-v016.log
 
+      - name: Run Active Learning user acceptance
+        shell: bash
+        run: |
+          set -o pipefail
+          python user_acceptance_v017.py 2>&1 | tee user-acceptance-v017.log
+
       - name: Preserve user acceptance report
         if: always()
         uses: actions/upload-artifact@v4
@@ -191,6 +200,7 @@ jobs:
             user-acceptance-v014.log
             user-acceptance-v015.log
             user-acceptance-v016.log
+            user-acceptance-v017.log
             memory/goals.db
             memory/causal_experiences.db
             memory/self_correction_runs/latest.json
