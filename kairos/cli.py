@@ -8,6 +8,7 @@ from collections.abc import Sequence
 from pathlib import Path
 from typing import Any
 
+from .apprentissage_actif import ApprentissageActif
 from .autonomie import MoteurAutonomie, StockageButs
 from .causal import MoteurCausal, StockageCausal
 from .growup import MoteurGrowUp, StockageGrowUp
@@ -46,13 +47,25 @@ def afficher(decision: Decision) -> None:
     print(f"{'Route':<11}: {decision.route}")
     print(f"{'Réponse':<11}: {decision.reponse}")
     if decision.apprentissage is not None:
-        print(
-            f"{'Hypothèse':<11}: {decision.apprentissage['id']} "
-            f"({decision.apprentissage['statut']})"
+        apprentissage_id = (
+            decision.apprentissage.get("id")
+            or decision.apprentissage.get("hypothesis_id")
         )
+        statut = decision.apprentissage.get("statut", "en cours")
+        if apprentissage_id:
+            print(
+                f"{'Hypothèse':<11}: {apprentissage_id} "
+                f"({statut})"
+            )
         manques = decision.apprentissage.get("manques", ())
         if manques:
-            print(f"{'À compléter':<11}: {', '.join(manque for manque in manques)}")
+            print(f"{'À compléter':<11}: {', '.join(str(manque) for manque in manques)}")
+        question = decision.apprentissage.get("question")
+        if isinstance(question, dict):
+            print(
+                f"{'Gain':<11}: {question.get('gain_attendu', 0)}% "
+                f"— {question.get('raison', '')}"
+            )
     if decision.routage is not None:
         print(
             f"{'Plan':<11}: {decision.routage['id']} "
@@ -217,6 +230,37 @@ def hypothesis_status(hypothesis_id: str | None = None) -> int:
         repository.close()
 
 
+def active_learning_status() -> int:
+    """Affiche les sessions de consolidation et leur score structurel."""
+
+    dossier = _racine() / "memory"
+    dossier.mkdir(parents=True, exist_ok=True)
+    repository = MemoryRepository(dossier / "cognition.db")
+    try:
+        print(
+            json.dumps(
+                ApprentissageActif(repository).statut(),
+                ensure_ascii=False,
+                indent=2,
+            )
+        )
+        return 0
+    finally:
+        repository.close()
+
+
+def _demande_apprentissage(texte: str) -> bool:
+    normalise = " ".join(
+        texte.casefold().replace("’", "'").strip(" ?.!").split()
+    )
+    return normalise in {
+        "statut apprentissage",
+        "statut de l'apprentissage",
+        "ou en est mon apprentissage",
+        "où en est mon apprentissage",
+    }
+
+
 def _demande_hypotheses(texte: str) -> bool:
     normalise = " ".join(
         texte.casefold().replace("’", "'").strip(" ?.!").split()
@@ -228,8 +272,6 @@ def _demande_hypotheses(texte: str) -> bool:
         "mes hypotheses",
         "montre mes hypothèses",
         "montre mes hypotheses",
-        "où en est mon apprentissage",
-        "ou en est mon apprentissage",
     }
 
 
@@ -478,6 +520,11 @@ def construire_parseur() -> argparse.ArgumentParser:
         help="affiche les hypothèses candidates et leurs manques",
     )
     actions.add_argument(
+        "--learning-status",
+        action="store_true",
+        help="affiche la consolidation active et les scores structurels",
+    )
+    actions.add_argument(
         "--growup-scan",
         action="store_true",
         help="regroupe et planifie les expériences sans les promouvoir",
@@ -609,6 +656,8 @@ def main(argv: Sequence[str] | None = None) -> int:
         )
     if args.hypothesis_status:
         return hypothesis_status(args.hypothesis_id)
+    if args.learning_status:
+        return active_learning_status()
     if args.growup_scan:
         return growup_scan()
     if args.route_plan:
@@ -653,6 +702,9 @@ def main(argv: Sequence[str] | None = None) -> int:
         if _demande_hypotheses(message):
             kernel.close()
             return hypothesis_status()
+        if _demande_apprentissage(message):
+            kernel.close()
+            return active_learning_status()
         command = SelfCorrectionLab.parse_command(message)
         if command is not None:
             kernel.close()
@@ -681,6 +733,9 @@ def main(argv: Sequence[str] | None = None) -> int:
 
         if _demande_hypotheses(requete):
             hypothesis_status()
+            continue
+        if _demande_apprentissage(requete):
+            active_learning_status()
             continue
         command = SelfCorrectionLab.parse_command(requete)
         if command is not None:
@@ -717,6 +772,10 @@ def main(argv: Sequence[str] | None = None) -> int:
                     f"kairos --hypothesis-status --hypothesis-id "
                     f"{hypothese['id']}"
                 )
+                apprentissage_actif = kernel.apprentissage_actif.demarrer(
+                    str(hypothese["id"])
+                )
+                print("Kairos > " + apprentissage_actif.texte)
             else:
                 print(
                     "Kairos > Réponse enregistrée comme expérience "

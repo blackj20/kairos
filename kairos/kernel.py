@@ -10,6 +10,7 @@ from difflib import get_close_matches
 from pathlib import Path
 from typing import Any
 
+from .apprentissage_actif import ApprentissageActif
 from .apprentissage_naturel import DialogueApprentissage
 from .cognition import Reflechir
 from .comprendre import Comprendre
@@ -89,6 +90,7 @@ class Kernel:
             self.cognitive_repository = cognitive_repository
             self._owns_cognitive_repository = False
         self.hypotheses = GestionnaireHypotheses(self.cognitive_repository)
+        self.apprentissage_actif = ApprentissageActif(self.cognitive_repository)
         fournisseur = web_provider
         if fournisseur is None and allow_network:
             fournisseur = WikipediaFR()
@@ -135,7 +137,7 @@ class Kernel:
     def attente_pedagogique(self) -> str | None:
         """Décrit l'aide du tour actif sans imposer un format artificiel."""
 
-        return self.apprentissage.attente
+        return self.apprentissage.attente or self.apprentissage_actif.attente
 
     def traiter(
         self,
@@ -146,6 +148,16 @@ class Kernel:
 
         if self.apprentissage.active:
             return self._traiter_reponse_pedagogique(requete)
+
+        if self.apprentissage_actif.active:
+            analyse = self._enrichir_analyse(self.comprendre.analyser(requete))
+            tour = self.apprentissage_actif.recevoir(requete)
+            return Decision(
+                route="clarification",
+                analyse=analyse,
+                reponse=tour.texte,
+                apprentissage=tour.vers_dict(),
+            )
 
         apprentissage_mot = re.match(
             r"^\s*apprends(?:-moi)?\s+(?:le\s+)?mot\s+(.+?)[?.!]*\s*$",
@@ -163,8 +175,35 @@ class Kernel:
                 reponse=reponse,
             )
 
+        commande_active = self._commande_apprentissage_actif(requete)
+        if commande_active is not None:
+            analyse = self._enrichir_analyse(self.comprendre.analyser(requete))
+            tour = self.apprentissage_actif.demarrer(commande_active or None)
+            return Decision(
+                route="clarification",
+                analyse=analyse,
+                reponse=tour.texte,
+                apprentissage=tour.vers_dict(),
+            )
+
         self._dernier_plan_route = None
         analyse = self._enrichir_analyse(self.comprendre.analyser(requete))
+        sujet_inconnu = self._sujet_definition_inconnu(requete, analyse)
+        if sujet_inconnu is not None:
+            question = self.moteur_decision.demande.creer_sens(
+                analyse,
+                sujet_inconnu,
+            )
+            decision = Decision(
+                route="clarification",
+                analyse=analyse,
+                reponse=question.texte,
+                question_id=question.id,
+                question=question.texte,
+            )
+            self._derniere_decision = decision
+            return decision
+
         reponse_meta = self.meta_comprehension.repondre(
             analyse,
             self._derniere_decision,
@@ -433,6 +472,45 @@ class Kernel:
         if champ in {"counterexamples", "relations"} and len(mots) < 4:
             return False, "développe la réponse avec au moins quatre mots"
         return True, "réponse exploitable"
+
+    @staticmethod
+    def _sujet_definition_inconnu(
+        requete: str,
+        analyse: Analyse,
+    ) -> str | None:
+        """Détecte une question de définition dont le sujet est réellement inconnu."""
+
+        correspondance = re.match(
+            r"^\s*(?:c['’ ]est\s+quoi|qu['’ ]est[- ]ce\s+que|que\s+signifie)"
+            r"\s+(?:(?:un|une|le|la|les|l['’])\s*)?"
+            r"(?P<sujet>[a-zA-ZÀ-ÿ][a-zA-ZÀ-ÿ0-9_+#'-]*)\s*[?.!]*\s*$",
+            requete,
+            flags=re.IGNORECASE,
+        )
+        if correspondance is None:
+            return None
+        sujet = correspondance.group("sujet").casefold()
+        inconnus = {item.casefold() for item in analyse.jetons_inconnus}
+        return sujet if sujet in inconnus else None
+
+    @staticmethod
+    def _commande_apprentissage_actif(requete: str) -> str | None:
+        """Reconnaît quelques formulations naturelles sans masquer le sens."""
+
+        normalisee = " ".join(
+            requete.casefold().replace("’", "'").strip(" ?.!").split()
+        )
+        motifs = (
+            r"^(?:consolide|consolider)(?:\s+(?:l[' ]hypothese\s+)?)?(.*)$",
+            r"^(?:continue d[' ]apprendre|continue l[' ]apprentissage)(?:\s+(?:sur\s+)?)?(.*)$",
+            r"^(?:pose tes questions|pose-moi tes questions)(?:\s+(?:sur\s+)?)?(.*)$",
+            r"^(?:apprends davantage)(?:\s+(?:sur\s+)?)?(.*)$",
+        )
+        for motif in motifs:
+            correspondance = re.match(motif, normalisee)
+            if correspondance is not None:
+                return correspondance.group(1).strip()
+        return None
 
     def _enrichir_analyse(self, analyse: Analyse) -> Analyse:
         """Ajoute les filtres cognitifs sans altérer l'analyse linguistique."""

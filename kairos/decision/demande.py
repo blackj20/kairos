@@ -14,6 +14,7 @@ from .modeles import (
     RouteChoisie,
 )
 from .stockage import StockageDecision
+from ..modeles import Analyse
 
 
 class Demande:
@@ -81,6 +82,48 @@ class Demande:
             )
             self.stockage.sauvegarder_apprentissage(evenement)
 
+        return question
+
+    def creer_sens(self, analyse: Analyse, focus: str) -> QuestionEnAttente:
+        """Ouvre explicitement un manque de sens depuis une question inconnue."""
+
+        sujet = focus.strip()
+        if not sujet:
+            raise ValueError("Une question de sens exige un sujet.")
+        maintenant = datetime.now(timezone.utc).isoformat()
+        question = QuestionEnAttente(
+            id=f"question_{uuid4().hex}",
+            requete_originale=analyse.texte_original,
+            champ_manquant="sens",
+            texte=(
+                f"Je ne connais pas encore « {sujet} ». "
+                "Explique-le naturellement en une phrase : "
+                "qu'est-ce que c'est, que signifie-t-il ou à quoi sert-il ?"
+            ),
+            statut="waiting_answer",
+            score_initial=min(
+                analyse.type_requete.score,
+                analyse.verification.score,
+            ),
+            route_proposee=Route.ETUDIER.value,
+            analyse=analyse.vers_dict(),
+            creee_le=maintenant,
+        )
+        self.stockage.sauvegarder_question(question)
+        self.stockage.sauvegarder_apprentissage(
+            EvenementApprentissage(
+                id=f"learning_{uuid4().hex}",
+                requete=analyse.texte_original,
+                score=question.score_initial,
+                champ="sens",
+                focus=sujet,
+                question_id=question.id,
+                priorite="high",
+                statut="to_study",
+                occurrences=1,
+                cree_le=maintenant,
+            )
+        )
         return question
 
     @staticmethod

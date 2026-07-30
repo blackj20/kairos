@@ -1,5 +1,11 @@
 """Composants publics du premier prototype K.A.I.R.O.S."""
 
+from .apprentissage_actif import (
+    ApprentissageActif,
+    ExtracteurLiens,
+    QuestionUtile,
+    TourApprentissage,
+)
 from .autonomie import MoteurAutonomie, StatutBut, StockageButs
 from .causal import MoteurCausal, StockageCausal
 from .comprendre import Comprendre
@@ -31,6 +37,7 @@ from .verifier_analyse import VerifierAnalyse
 
 __all__ = [
     "Analyse",
+    "ApprentissageActif",
     "CandidatSens",
     "Comprendre",
     "ConnaissanceDeSoi",
@@ -40,6 +47,7 @@ __all__ = [
     "Decision",
     "Estimer",
     "Estimation",
+    "ExtracteurLiens",
     "FiltresCognitifs",
     "GeneralisateurIntention",
     "GestionnaireHypotheses",
@@ -49,6 +57,7 @@ __all__ = [
     "MoteurAutonomie",
     "MoteurCausal",
     "ProfilCognitif",
+    "QuestionUtile",
     "Relier",
     "RelationSemantique",
     "Repondre",
@@ -58,6 +67,7 @@ __all__ = [
     "StatutBut",
     "StockageButs",
     "StockageCausal",
+    "TourApprentissage",
     "Sens",
     "SensContextuel",
     "SensJeton",

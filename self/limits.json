@@ -6,9 +6,15 @@
     "une hypothèse candidate n'est ni confirmée ni réutilisable",
     "sources, tests et validation SECAU restent obligatoires",
     "les doublons d'une même hypothèse interactive sont réutilisés",
+    "une relation extraite automatiquement reste candidate",
+    "une seule reformulation est autorisée par champ",
+    "un champ inexpliqué bloque la consolidation au lieu de produire un faux succès",
+    "une séance mémorisée ne capture aucune commande après redémarrage sans reprise explicite",
+    "RapidFuzz rapproche des formes mais ne fournit aucun sens",
+    "la V0.17 ne vérifie pas encore seule une piste de source",
     "un but ne devient completed qu'après validation causale",
     "la boucle reste synchrone et ne crée aucun daemon",
-    "aucun nouvel accès réseau, shell, processus, PC ou matériel n'est ajouté en V0.16",
+    "aucun nouvel accès réseau, shell, processus, PC ou matériel n'est ajouté en V0.17",
     "aucune compréhension générale du monde"
   ],
   "protected_truth": true

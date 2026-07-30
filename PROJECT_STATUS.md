@@ -2,12 +2,14 @@
 
 ## Statut
 
-**V0.16 — prototype opérationnel avec hypothèses interactives persistantes.**
+**V0.17 — prototype opérationnel avec apprentissage actif naturel et liens candidats autonomes.**
 
 Ce statut signifie que le projet est installable depuis un clone propre,
 démarre même lorsque la mémoire mutable n’existe pas encore, analyse une
 requête, conserve les expériences, organise leur consolidation avec GrowUp et
 peut transformer une relation déjà promue en skill candidate versionnée. La V0.15 conserve désormais un but, sa priorité, son budget et ses événements, puis choisit et exécute une seule étape causale à la fois. Elle reprend un but après redémarrage et ne le termine qu’après preuve causale. La V0.14 ajoute une boucle `prédire → exécuter → observer → évaluer → rejouer` : elle distingue désormais une exécution techniquement correcte d’une mission réellement accomplie. La commande `self-correction=on` copie sa mémoire cognitive et peut lancer le Tester causal puis SECAU dans cette copie sans corrompre la mémoire principale.
+
+La V0.17 ferme la porte suivante : une question naturelle sur un concept inconnu ouvre un manque de sens, l’explication crée automatiquement des liens candidats, puis Kairos choisit relation, exemples, contre-exemples ou source selon un gain attendu. Chaque clarification est bornée à une reformulation et une séance mémorisée ne capture jamais une commande après redémarrage sans reprise explicite.
 
 La V0.16 ferme la rupture observée en usage réel : après une question de manque, l’explication du créateur crée ou réutilise une hypothèse candidate dans `memory/cognition.db`. Son identifiant, son statut et les preuves manquantes sont affichés immédiatement et restent visibles après redémarrage. Une clarification opérationnelle, comme `Python` après `installe quoi ?`, ne crée aucune hypothèse.
 
@@ -307,6 +309,47 @@ Le budget interdit toute répétition infinie.
 La V0.15 ne démarre aucun daemon.
 ```
 
+## Apprentissage actif naturel V0.17
+
+Le parcours installé suivant est vérifié de bout en bout :
+
+```text
+c'est quoi un xylophore ?
+→ manque de sens explicite
+→ explication naturelle du créateur
+→ hypothèse candidate persistante
+→ lien autonome xylophore —est_un→ instrument musical
+→ trois exemples
+→ deux contre-exemples
+→ piste information.search
+→ dossier prêt pour recherche, Tester et SECAU
+```
+
+Questions disponibles et gain maximal :
+
+| Champ | Gain |
+|---|---:|
+| Relation interne | 40 % |
+| Exemples | 25 % |
+| Contre-exemples | 20 % |
+| Piste de source | 15 % |
+
+Une seule reformulation est permise. Si un champ essentiel reste inexpliqué,
+le statut devient `needs_human_input`; Kairos conserve la réponse brute et
+n'invente aucun lien. RapidFuzz fonctionne hors ligne et ne sert qu'au
+rapprochement de formes.
+
+Commandes :
+
+```text
+consolide
+continue d'apprendre
+pose tes questions
+pause
+statut apprentissage
+kairos --learning-status
+```
+
 ## Hypothèses interactives V0.16
 
 Parcours vérifié :
@@ -331,14 +374,19 @@ kairos --hypothesis-status --hypothesis-id HYPOTHESIS_ID
 La phrase naturelle `mes hypothèses` fonctionne aussi dans la console. La
 candidate n’entre ni dans le lexique actif ni dans les connaissances confirmées.
 
-## Résultats vérifiés par la CI V0.16
+## Résultats vérifiés par la CI V0.17
 
 Le dernier commit n’est accepté que si toutes les portes suivantes restent
 vertes sous Python 3.11, 3.12 et 3.13 :
 
 | Porte | Résultat |
 |---|---:|
-| Tests automatisés | 204/204 |
+| Tests automatisés | 217/217 |
+| Apprentissage actif V0.17 | 19/19 |
+| Questions utiles | 100 % |
+| Liens candidats autonomes démontrés | 1 |
+| Clarifications non bornées | 0 |
+| Acceptation V0.17 via commande installée | 21/21 |
 | Hypothèses interactives V0.16 | 15/15 |
 | Acceptation V0.16 via commande installée | 14/14 |
 | Hypothèses faussement promues | 0 |
@@ -357,7 +405,7 @@ vertes sous Python 3.11, 3.12 et 3.13 :
 | Acceptation V0.13 via commande installée | 8/8 |
 | Acceptation V0.14 via commande installée | 12/12 |
 | Acceptation V0.15 via commande installée | 15/15 |
-| Acceptation totale | 89/89 |
+| Acceptation totale | 110/110 |
 | Généralisation des intentions | 100/100 |
 | Précision d’intention et de route | 100 % |
 | Benchmark filtres cognitifs | 13/13 |
@@ -387,4 +435,4 @@ implicitement et qu’une altération après le rapport est refusée.
 
 ## Prochaine porte
 
-**V0.17 — apprentissage actif.** Choisir la meilleure source d’information manquante : mémoire, créateur, documentation ou Web autorisé. Toute question devra être liée à un champ manquant du but actif, apporter un gain attendu mesurable et reprendre ensuite la mission parent. Aucune récursion libre de questions ne sera acceptée. Exécuter ensuite le laboratoire sur plusieurs mémoires et mesurer ses divergences réelles. Ensuite seulement, définir une procédure séparée `proposer → comparer → approuver → importer → rollback` pour transférer une conclusion vers la mémoire principale. La V0.13 ne possède volontairement aucun raccourci d’importation. L’autonomie matérielle reste derrière une porte distincte : plan, code candidat, analyse statique, simulateur, tests de réaction, autorisation humaine, journal et rollback.
+**V0.18 — vérification active.** Choisir la meilleure source d’information manquante : mémoire, créateur, documentation ou Web autorisé. Toute question devra être liée à un champ manquant du but actif, apporter un gain attendu mesurable et reprendre ensuite la mission parent. Aucune récursion libre de questions ne sera acceptée. Exécuter ensuite le laboratoire sur plusieurs mémoires et mesurer ses divergences réelles. Ensuite seulement, définir une procédure séparée `proposer → comparer → approuver → importer → rollback` pour transférer une conclusion vers la mémoire principale. La V0.13 ne possède volontairement aucun raccourci d’importation. L’autonomie matérielle reste derrière une porte distincte : plan, code candidat, analyse statique, simulateur, tests de réaction, autorisation humaine, journal et rollback.

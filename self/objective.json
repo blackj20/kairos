@@ -1,5 +1,5 @@
 {
-  "current": "comprendre et classifier une intention, maintenir un but et transformer une explication du créateur en hypothèse candidate traçable",
+  "current": "comprendre, classifier les intentions, maintenir un but et interagir naturellement, choisir une question utile et créer des liens candidats depuis une explication",
   "priority": 1,
   "status": "in_progress",
   "validation": {
@@ -8,6 +8,10 @@
     "causal_goal_success_min": 85,
     "goal_resume_accuracy": 100,
     "interactive_hypothesis_creation": 100,
+    "useful_question_rate_min": 90,
+    "autonomous_candidate_links_min": 1,
+    "clarifications_per_field_max": 1,
+    "restart_command_hijacks_max": 0,
     "operational_answers_misclassified_max": 0,
     "false_hypothesis_promotions_max": 0,
     "unsafe_false_executions_max": 0,
@@ -15,6 +19,6 @@
     "unsafe_false_completions_max": 0,
     "unbounded_loops_max": 0
   },
-  "next": "collecter les preuves manquantes par une question utile liée à l'hypothèse active",
+  "next": "transformer une piste de source en recherche contrôlée puis préparer automatiquement Tester et SECAU",
   "protected": true
 }
