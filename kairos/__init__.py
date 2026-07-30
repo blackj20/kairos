@@ -1,6 +1,12 @@
 """Composants publics du premier prototype K.A.I.R.O.S."""
 
-from .apprentissage_actif import (\n    ApprentissageActif,\n    ExtracteurLiens,\n    QuestionUtile,\n    TourApprentissage,\n)\nfrom .autonomie import MoteurAutonomie, StatutBut, StockageButs
+from .apprentissage_actif import (
+    ApprentissageActif,
+    ExtracteurLiens,
+    QuestionUtile,
+    TourApprentissage,
+)
+from .autonomie import MoteurAutonomie, StatutBut, StockageButs
 from .causal import MoteurCausal, StockageCausal
 from .comprendre import Comprendre
 from .contexte import Contexte
@@ -30,7 +36,8 @@ from .soi import ConnaissanceDeSoi
 from .verifier_analyse import VerifierAnalyse
 
 __all__ = [
-    "Analyse",\n    "ApprentissageActif",
+    "Analyse",
+    "ApprentissageActif",
     "CandidatSens",
     "Comprendre",
     "ConnaissanceDeSoi",
@@ -39,7 +46,8 @@ __all__ = [
     "Decouper",
     "Decision",
     "Estimer",
-    "Estimation",\n    "ExtracteurLiens",
+    "Estimation",
+    "ExtracteurLiens",
     "FiltresCognitifs",
     "GeneralisateurIntention",
     "GestionnaireHypotheses",
@@ -48,7 +56,8 @@ __all__ = [
     "LectureIntention",
     "MoteurAutonomie",
     "MoteurCausal",
-    "ProfilCognitif",\n    "QuestionUtile",
+    "ProfilCognitif",
+    "QuestionUtile",
     "Relier",
     "RelationSemantique",
     "Repondre",
@@ -57,7 +66,8 @@ __all__ = [
     "SelfCorrectionResult",
     "StatutBut",
     "StockageButs",
-    "StockageCausal",\n    "TourApprentissage",
+    "StockageCausal",
+    "TourApprentissage",
     "Sens",
     "SensContextuel",
     "SensJeton",
