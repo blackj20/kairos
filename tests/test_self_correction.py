@@ -40,6 +40,7 @@ class TestSelfCorrectionLab(unittest.TestCase):
             encoding="utf-8",
         )
         self.source = self.root / "memory" / "cognition.db"
+        self.source.parent.mkdir(parents=True, exist_ok=True)
 
     def tearDown(self) -> None:
         self.temp.cleanup()
