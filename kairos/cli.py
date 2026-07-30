@@ -690,6 +690,10 @@ def main(argv: Sequence[str] | None = None) -> int:
 
         if question_en_attente is not None:
             experience = kernel.repondre_a(question_en_attente, requete)
+            print(
+                "Kairos > Réponse reliée à l'expérience "
+                f"{experience.id}. Elle n'est pas encore confirmée."
+            )
             hypothese = experience.resolution.get("hypothesis")
             if isinstance(hypothese, dict):
                 etat = (
