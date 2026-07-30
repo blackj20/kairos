@@ -135,6 +135,9 @@ class ApprentissageActif:
     def __init__(self, repository: MemoryRepository) -> None:
         self.repository = repository
         self.extracteur = ExtracteurLiens()
+        # Une séance reste persistante, mais seul ce processus peut capter
+        # les réponses. Un redémarrage exige « continue d'apprendre ».
+        self._active_id: str | None = None
 
     @property
     def active(self) -> bool:
@@ -195,6 +198,7 @@ class ApprentissageActif:
             payload,
             event="ACTIVE_LEARNING_STARTED",
         )
+        self._active_id = str(candidate["id"])
         refreshed = self.repository.hypothesis(str(candidate["id"]))
         assert refreshed is not None
         return self._prochaine_question(
@@ -231,6 +235,7 @@ class ApprentissageActif:
                 payload,
                 event="ACTIVE_LEARNING_PAUSED",
             )
+            self._active_id = None
             return TourApprentissage(
                 "Apprentissage mis en pause. Dis « continue d'apprendre » pour reprendre.",
                 hypothesis_id,
@@ -387,6 +392,13 @@ class ApprentissageActif:
         candidates = self.repository.candidate_hypotheses()
         return {
             "active": self.active,
+            "resumable": sum(
+                1
+                for item in candidates
+                if isinstance(item["payload"].get("active_learning"), dict)
+                and item["payload"]["active_learning"].get("status")
+                in {"active", "paused", "needs_human_input"}
+            ),
             "candidates": [
                 {
                     "id": item["id"],
@@ -444,6 +456,7 @@ class ApprentissageActif:
                 score=self._score_structure(payload),
                 event=evenement,
             )
+            self._active_id = None
             return TourApprentissage(
                 prefixe + conclusion,
                 hypothesis_id,
@@ -526,11 +539,17 @@ class ApprentissageActif:
         )
 
     def _candidate_active(self) -> dict[str, Any] | None:
-        for candidate in self.repository.candidate_hypotheses():
-            session = candidate["payload"].get("active_learning", {})
-            if isinstance(session, dict) and session.get("status") == "active":
-                return candidate
-        return None
+        if self._active_id is None:
+            return None
+        candidate = self.repository.hypothesis(self._active_id)
+        if candidate is None or candidate.get("status") != "candidate":
+            self._active_id = None
+            return None
+        session = candidate["payload"].get("active_learning", {})
+        if not isinstance(session, dict) or session.get("status") != "active":
+            self._active_id = None
+            return None
+        return candidate
 
     def _champs_restants(self, payload: dict[str, Any]) -> list[str]:
         session = payload.get("active_learning", {})
