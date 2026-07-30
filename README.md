@@ -4,7 +4,7 @@ K.A.I.R.O.S. est un moteur symbolique, local et explicable. Il analyse une
 requête française, estime son intention, choisit une route, demande les
 informations manquantes et conserve les réponses comme expériences.
 
-La **V0.15** ajoute des **buts persistants, un journal d’événements et un gestionnaire d’attention**. Kairos peut créer un objectif, le reprendre après redémarrage, sélectionner une prochaine étape explicable, appliquer un budget puis terminer, bloquer ou invalider le but selon l’évaluation causale. Cette boucle reste synchrone et bornée : aucun daemon n’est créé. La **V0.14** ajoute une **boucle d’expérience causale observable**. Pour la première fois, Kairos prédit le résultat attendu d’une route, exécute le plan réel lorsqu’il est autorisé, enregistre les faits bruts, puis sépare la réussite technique de l’objectif réellement atteint. Chaque épisode suit une machine d’états append-only et peut être rejoué pour mesurer une amélioration ou une régression. La première route couverte est `information.search`. La **V0.13** ajoute un **laboratoire de self-correction observable**. La commande `self-correction=on` copie la mémoire cognitive, lance réellement Tester puis SECAU sur les candidates compatibles et conserve un rapport complet. Dans cette copie, Kairos peut promouvoir, rejeter ou mettre en quarantaine sans chaînes métier artificielles. La mémoire principale n’est jamais modifiée. La **V0.12** ajoute la **généralisation composable des intentions**. Kairos combine modalité, destinataire, action, négation et contexte pour distinguer une demande polie d'une question sur sa capacité. Cette porte est mesurée sur 100 formulations naturelles indépendantes. La **V0.11** ajoutait des filtres cognitifs et des choix explicables. Kairos distingue désormais intention, besoin, envie et manque, estime un risque opérationnel, applique prudence et direction, puis justifie sa route. Les valeurs restent techniques et traçables : sécurité humaine, vérité, autorisation, intégrité, réversibilité et alignement. Une envie ne crée jamais une permission. La **V0.10** ajoutait la méta-compréhension et un graphe de petites relations françaises. La **V0.9** ajoutait l’apprentissage naturel persistant et un squelette linguistique indexé. Une faute ou un mot inconnu ouvre une clarification bornée, puis Kairos reprend la question principale. La **V0.8** activait la porte **Research Tester → SECAU**. La V0.7 rendait la route **Information Search** exécutable. La V0.6 ajoutait **Action Router** : les verbes fondamentaux pointent vers
+La **V0.16** répare la boucle d’apprentissage interactive : une explication du créateur devient immédiatement une **hypothèse candidate persistante**, traçable jusqu’à la question et à l’expérience. Une simple cible opérationnelle reste une expérience et aucune candidate n’est promue sans preuves, Tester et SECAU. La **V0.15** ajoute des **buts persistants, un journal d’événements et un gestionnaire d’attention**. Kairos peut créer un objectif, le reprendre après redémarrage, sélectionner une prochaine étape explicable, appliquer un budget puis terminer, bloquer ou invalider le but selon l’évaluation causale. Cette boucle reste synchrone et bornée : aucun daemon n’est créé. La **V0.14** ajoute une **boucle d’expérience causale observable**. Pour la première fois, Kairos prédit le résultat attendu d’une route, exécute le plan réel lorsqu’il est autorisé, enregistre les faits bruts, puis sépare la réussite technique de l’objectif réellement atteint. Chaque épisode suit une machine d’états append-only et peut être rejoué pour mesurer une amélioration ou une régression. La première route couverte est `information.search`. La **V0.13** ajoute un **laboratoire de self-correction observable**. La commande `self-correction=on` copie la mémoire cognitive, lance réellement Tester puis SECAU sur les candidates compatibles et conserve un rapport complet. Dans cette copie, Kairos peut promouvoir, rejeter ou mettre en quarantaine sans chaînes métier artificielles. La mémoire principale n’est jamais modifiée. La **V0.12** ajoute la **généralisation composable des intentions**. Kairos combine modalité, destinataire, action, négation et contexte pour distinguer une demande polie d'une question sur sa capacité. Cette porte est mesurée sur 100 formulations naturelles indépendantes. La **V0.11** ajoutait des filtres cognitifs et des choix explicables. Kairos distingue désormais intention, besoin, envie et manque, estime un risque opérationnel, applique prudence et direction, puis justifie sa route. Les valeurs restent techniques et traçables : sécurité humaine, vérité, autorisation, intégrité, réversibilité et alignement. Une envie ne crée jamais une permission. La **V0.10** ajoutait la méta-compréhension et un graphe de petites relations françaises. La **V0.9** ajoutait l’apprentissage naturel persistant et un squelette linguistique indexé. Une faute ou un mot inconnu ouvre une clarification bornée, puis Kairos reprend la question principale. La **V0.8** activait la porte **Research Tester → SECAU**. La V0.7 rendait la route **Information Search** exécutable. La V0.6 ajoutait **Action Router** : les verbes fondamentaux pointent vers
 des routes et des capacités déclarées en JSON. Une route absente peut être
 composée, mais reste candidate et inexécutable jusqu’à validation. Chaque verdict
 SECAU devient également visible dans l’audit.
@@ -32,6 +32,9 @@ SECAU devient également visible dans l’audit.
 - décrire son identité, son objectif, sa version et ses capacités depuis les registres runtime ;
 - bloquer un ordre incomplet ou contradictoire ;
 - poser une question ciblée ;
+- transformer l’explication du créateur en hypothèse candidate persistante ;
+- afficher l’identifiant, le statut et les preuves encore manquantes ;
+- réutiliser une candidate identique au lieu de créer des doublons ;
 - garder l’objectif principal pendant une clarification secondaire ;
 - demander confirmation avant de mémoriser une correction orthographique ;
 - reprendre une séance d’apprentissage après redémarrage ;
@@ -95,7 +98,7 @@ SECAU devient également visible dans l’audit.
 - générer seul une correction causale : la V0.14 sait tester une candidate fournie, pas inventer la modification;
 - mesurer causalement toutes les routes : la V0.14 couvre d’abord `information.search`;
 - inventer seul de nouveaux objectifs utiles : la V0.15 exécute seulement les buts explicitement créés;
-- choisir une question pédagogique optimale : ce sera la porte V0.16.
+- choisir automatiquement la meilleure question pédagogique ou collecter seul les preuves manquantes ;
 
 ## Installation
 
@@ -110,6 +113,8 @@ python -m pip install -e .
 kairos --smoke-test
 kairos --route-plan chercher --route-target atome
 kairos --secau-status
+kairos --hypothesis-status
+kairos --hypothesis-status --hypothesis-id HYPOTHESIS_ID
 kairos --online cherche toi-même atome
 kairos --research-status
 kairos --research-review HYPOTHESIS_ID
@@ -169,6 +174,8 @@ Dialogue d’apprentissage naturel
 ├── Question principale persistante
 ├── Clarification bornée
 ├── Reprise automatique
+├── Hypothèse persistante issue de l’explication
+├── Statut et preuves manquantes visibles
 └── Candidate non confirmée
    ↓
 Décision
@@ -245,15 +252,41 @@ incompréhension
 → question ciblée
 → réponse du créateur
 → expérience non confirmée
+→ hypothèse candidate persistante liée à l’expérience
 → GrowUp collecte et regroupe
 → preuves + exemples + contre-exemples
-→ Réfléchir crée une hypothèse
+→ Réfléchir consolide l’hypothèse
 → Tester produit un rapport
 → SECAU promeut, rejette ou met en quarantaine
 → plan GrowUp éventuellement promoted
 ```
 
 Une expérience seule n’est jamais une preuve suffisante.
+
+## Hypothèses interactives V0.16
+
+Dans la console, la séquence suivante crée une vraie candidate cognitive :
+
+```text
+deploie python
+→ Kairos demande le sens de « deploie »
+
+installer
+→ expérience enregistrée
+→ hypothèse créée : hypothesis_...
+→ statut : candidate
+→ manques : sources, tests, validation_secau
+```
+
+La commande `kairos --hypothesis-status` liste les candidates. La forme naturelle
+`mes hypothèses` donne le même résultat dans la conversation. Après redémarrage,
+la candidate reste disponible dans `memory/cognition.db`.
+
+Une question seule ne crée rien. Une réponse opérationnelle courte à
+`installe quoi ?`, par exemple `Python`, reste une expérience : elle ne devient
+pas une connaissance. Une explication du créateur peut créer ou réutiliser une
+candidate, mais elle reste inutilisable tant que ses preuves, ses tests et la
+validation SECAU manquent.
 
 ## Laboratoire de self-correction V0.13
 
@@ -602,7 +635,7 @@ Une version qui échoue n’annule donc pas le diagnostic des deux autres.
 
 ## Suite logique
 
-La prochaine porte est **V0.16 — apprentissage actif** : choisir entre demander au créateur, consulter la mémoire, rechercher une source ou reconnaître qu’aucune preuve n’est disponible. Chaque question devra identifier le champ manquant qu’elle débloque, rester liée au but actif et ne jamais ouvrir une récursion de questions. Ensuite seulement, une procédure explicite `proposer → comparer → approuver → importer → rollback` pourra transférer une amélioration validée vers la mémoire principale. Aucune conclusion ne rejoindra `cognition.db` tant que ce protocole n’aura pas ses propres tests, son approbation et son rollback. Le corpus V0.12 restera une barrière de non-régression. Une future
+La prochaine porte est **V0.17 — apprentissage actif** : choisir entre demander au créateur, consulter la mémoire, rechercher une source ou reconnaître qu’aucune preuve n’est disponible. Chaque question devra identifier le champ manquant qu’elle débloque, rester liée au but actif et ne jamais ouvrir une récursion de questions. Ensuite seulement, une procédure explicite `proposer → comparer → approuver → importer → rollback` pourra transférer une amélioration validée vers la mémoire principale. Aucune conclusion ne rejoindra `cognition.db` tant que ce protocole n’aura pas ses propres tests, son approbation et son rollback. Le corpus V0.12 restera une barrière de non-régression. Une future
 commande physique devra d’abord produire un plan, compiler une candidate,
 l’exécuter dans un simulateur, vérifier la réaction, demander une autorisation
 humaine et conserver un rollback. Aucun accès Arduino ou shell libre n’est
