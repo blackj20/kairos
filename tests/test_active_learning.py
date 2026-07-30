@@ -105,17 +105,18 @@ class ActiveLearningTests(unittest.TestCase):
         self.assertEqual("nothing_to_learn", result.statut)
         self.assertFalse(self.engine.active)
 
-    def test_kernel_auto_starts_after_creator_explanation(self) -> None:
+    def test_kernel_starts_from_natural_consolidate_command(self) -> None:
         kernel = Kernel(cognitive_repository=self.repository)
         decision = kernel.traiter("deploie python")
         experience = kernel.repondre_a(str(decision.question_id), "installer")
-        active = experience.resolution["active_learning"]
-        self.assertEqual("waiting_answer", active["statut"])
-        self.assertEqual("examples", active["question"]["champ"])
+        hypothesis_id = experience.resolution["hypothesis"]["id"]
+        start = kernel.traiter("consolide")
+        self.assertEqual(hypothesis_id, start.apprentissage["hypothesis_id"])
+        self.assertEqual("examples", start.apprentissage["question"]["champ"])
         followup = kernel.traiter(
             "déployer une API, déployer un site, déployer un service"
         )
-        self.assertIn("contre", followup.reponse.casefold())
+        self.assertIn("ne doit pas", followup.reponse.casefold())
         self.assertEqual("clarification", followup.route)
 
     def test_user_explanation_never_promotes_knowledge(self) -> None:
