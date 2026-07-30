@@ -119,6 +119,31 @@ class ActiveLearningTests(unittest.TestCase):
         self.assertIn("ne doit pas", followup.reponse.casefold())
         self.assertEqual("clarification", followup.route)
 
+    def test_unknown_definition_question_opens_teachable_gap(self) -> None:
+        kernel = Kernel(cognitive_repository=self.repository)
+        decision = kernel.traiter("c'est quoi un xylophore ?")
+        self.assertIsNotNone(decision.question_id)
+        self.assertIn("Explique-le naturellement", decision.reponse)
+        experience = kernel.repondre_a(
+            str(decision.question_id),
+            "un xylophore est un instrument musical",
+        )
+        hypothesis = experience.resolution["hypothesis"]
+        self.assertEqual("xylophore", hypothesis["nom"])
+        self.assertEqual("candidate", hypothesis["statut"])
+
+    def test_full_subject_definition_is_extracted_as_relation(self) -> None:
+        hypothesis_id = self._candidate()
+        self.engine.demarrer(hypothesis_id)
+        result = self.engine.recevoir(
+            "xylophore est un instrument de musique",
+        )
+        self.assertEqual("est_un", result.liens_crees[0]["relation"])
+        self.assertEqual(
+            "instrument de musique",
+            result.liens_crees[0]["target"],
+        )
+
     def test_user_explanation_never_promotes_knowledge(self) -> None:
         hypothesis_id = self._candidate()
         self.engine.demarrer(hypothesis_id)
