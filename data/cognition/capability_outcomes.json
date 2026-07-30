@@ -1,0 +1,63 @@
+{
+  "version": 1,
+  "capabilities": {
+    "memory.search": {
+      "required_outputs": {
+        "memory_sources": "list",
+        "memory_hit": "bool"
+      }
+    },
+    "web.search": {
+      "required_outputs": {
+        "web_sources": "list"
+      }
+    },
+    "sources.compare": {
+      "required_outputs": {
+        "comparison": "dict"
+      }
+    },
+    "knowledge.propose": {
+      "required_outputs": {
+        "candidate_status": "str",
+        "secau_status": "str"
+      }
+    },
+    "response.explain": {
+      "required_outputs": {
+        "response": "str"
+      }
+    }
+  },
+  "routes": {
+    "information.search": {
+      "goal": "obtenir une information vérifiable",
+      "success_conditions": [
+        {
+          "id": "information_found",
+          "any": [
+            {
+              "path": "memory_hit",
+              "operator": "equals",
+              "value": true
+            },
+            {
+              "path": "web_sources",
+              "operator": "non_empty"
+            }
+          ]
+        },
+        {
+          "id": "answer_present",
+          "path": "response",
+          "operator": "non_empty"
+        },
+        {
+          "id": "source_comparison_present",
+          "path": "comparison",
+          "operator": "exists"
+        }
+      ]
+    }
+  }
+}
