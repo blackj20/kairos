@@ -75,6 +75,7 @@ def main() -> int:
             encoding="utf-8",
         )
         source_path = root / "memory" / "cognition.db"
+        source_path.parent.mkdir(parents=True, exist_ok=True)
         source = MemoryRepository(source_path)
         complete = add_research(source, "xylophore", two_domains=True)
         incomplete = add_research(source, "incomplet", two_domains=False)
