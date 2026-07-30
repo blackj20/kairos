@@ -178,6 +178,10 @@ class ActiveLearningTests(unittest.TestCase):
 
             second = MemoryRepository(path)
             second_engine = ApprentissageActif(second)
+            self.assertFalse(second_engine.active)
+            self.assertEqual(1, second_engine.statut()["resumable"])
+            resumed = second_engine.demarrer("mbote")
+            self.assertEqual(hypothesis_id, resumed.hypothesis_id)
             self.assertTrue(second_engine.active)
             self.assertIn("examples", second_engine.attente)
             second.close()
