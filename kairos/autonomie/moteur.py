@@ -167,7 +167,15 @@ class MoteurAutonomie:
             erreurs = {
                 str(item) for item in evaluation.get("erreurs", [])
             }
-            bloquantes = sorted(erreurs & self.ERREURS_BLOQUANTES)
+            panne_retenteable = (
+                not bool(evaluation.get("succes_technique"))
+                and "execution_error" in erreurs
+            )
+            bloquantes = (
+                []
+                if panne_retenteable
+                else sorted(erreurs & self.ERREURS_BLOQUANTES)
+            )
             if bloquantes:
                 but = self.stockage.transition(
                     but.id,
