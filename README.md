@@ -4,14 +4,14 @@ K.A.I.R.O.S. est un moteur symbolique, local et explicable. Il analyse une
 requête française, estime son intention, choisit une route, demande les
 informations manquantes et conserve les réponses comme expériences.
 
-La **V0.13** ajoute un **laboratoire de self-correction observable**. La commande `self-correction=on` copie la mémoire cognitive, lance réellement Tester puis SECAU sur les candidates compatibles et conserve un rapport complet. Dans cette copie, Kairos peut promouvoir, rejeter ou mettre en quarantaine sans chaînes métier artificielles. La mémoire principale n’est jamais modifiée. La **V0.12** ajoute la **généralisation composable des intentions**. Kairos combine modalité, destinataire, action, négation et contexte pour distinguer une demande polie d'une question sur sa capacité. Cette porte est mesurée sur 100 formulations naturelles indépendantes. La **V0.11** ajoutait des filtres cognitifs et des choix explicables. Kairos distingue désormais intention, besoin, envie et manque, estime un risque opérationnel, applique prudence et direction, puis justifie sa route. Les valeurs restent techniques et traçables : sécurité humaine, vérité, autorisation, intégrité, réversibilité et alignement. Une envie ne crée jamais une permission. La **V0.10** ajoutait la méta-compréhension et un graphe de petites relations françaises. La **V0.9** ajoutait l’apprentissage naturel persistant et un squelette linguistique indexé. Une faute ou un mot inconnu ouvre une clarification bornée, puis Kairos reprend la question principale. La **V0.8** activait la porte **Research Tester → SECAU**. La V0.7 rendait la route **Information Search** exécutable. La V0.6 ajoutait **Action Router** : les verbes fondamentaux pointent vers
+La **V0.14** ajoute une **boucle d’expérience causale observable**. Pour la première fois, Kairos prédit le résultat attendu d’une route, exécute le plan réel lorsqu’il est autorisé, enregistre les faits bruts, puis sépare la réussite technique de l’objectif réellement atteint. Chaque épisode suit une machine d’états append-only et peut être rejoué pour mesurer une amélioration ou une régression. La première route couverte est `information.search`. La **V0.13** ajoute un **laboratoire de self-correction observable**. La commande `self-correction=on` copie la mémoire cognitive, lance réellement Tester puis SECAU sur les candidates compatibles et conserve un rapport complet. Dans cette copie, Kairos peut promouvoir, rejeter ou mettre en quarantaine sans chaînes métier artificielles. La mémoire principale n’est jamais modifiée. La **V0.12** ajoute la **généralisation composable des intentions**. Kairos combine modalité, destinataire, action, négation et contexte pour distinguer une demande polie d'une question sur sa capacité. Cette porte est mesurée sur 100 formulations naturelles indépendantes. La **V0.11** ajoutait des filtres cognitifs et des choix explicables. Kairos distingue désormais intention, besoin, envie et manque, estime un risque opérationnel, applique prudence et direction, puis justifie sa route. Les valeurs restent techniques et traçables : sécurité humaine, vérité, autorisation, intégrité, réversibilité et alignement. Une envie ne crée jamais une permission. La **V0.10** ajoutait la méta-compréhension et un graphe de petites relations françaises. La **V0.9** ajoutait l’apprentissage naturel persistant et un squelette linguistique indexé. Une faute ou un mot inconnu ouvre une clarification bornée, puis Kairos reprend la question principale. La **V0.8** activait la porte **Research Tester → SECAU**. La V0.7 rendait la route **Information Search** exécutable. La V0.6 ajoutait **Action Router** : les verbes fondamentaux pointent vers
 des routes et des capacités déclarées en JSON. Une route absente peut être
 composée, mais reste candidate et inexécutable jusqu’à validation. Chaque verdict
 SECAU devient également visible dans l’audit.
 
 > Statut honnête : prototype opérationnel de compréhension symbolique, décision,
-> mémoire, apprentissage supervisé, routage, recherche contrôlée et consolidation
-> par Tester puis SECAU. Ce n’est pas une intelligence générale : les contrôles
+> mémoire, apprentissage supervisé, routage, recherche contrôlée, mesure causale
+> des résultats et consolidation par Tester puis SECAU. Ce n’est pas une intelligence générale : les contrôles
 > prouvent une cohérence traçable, pas une vérité absolue.
 
 ## Ce que Kairos sait faire
@@ -67,7 +67,12 @@ SECAU devient également visible dans l’audit.
 - cloner la mémoire cognitive dans un laboratoire jetable;
 - appeler réellement Tester puis SECAU sur les candidates ayant un contrat de test;
 - exposer les candidates impossibles à tester au lieu d’inventer une validation;
-- comparer l’état avant/après et prouver que la mémoire principale n’a pas changé.
+- comparer l’état avant/après et prouver que la mémoire principale n’a pas changé;
+- prédire les sorties attendues d’une capacité et les conditions de réussite d’une route;
+- enregistrer séparément exécution, observation factuelle et évaluation de l’objectif;
+- distinguer `exécution réussie` de `information réellement trouvée`;
+- rejouer un épisode et détecter une amélioration ou une régression;
+- faire passer une amélioration comportementale par Tester puis SECAU dans le laboratoire, sans créer une vérité sur le monde.
 
 ## Ce que Kairos ne sait pas encore faire
 
@@ -80,7 +85,9 @@ SECAU devient également visible dans l’audit.
 - comprendre toute formulation française ;
 - remplacer un conteneur ou une isolation système forte pour du code non fiable;
 - fusionner automatiquement les conclusions du laboratoire dans sa mémoire principale;
-- tourner en tâche de fond : la self-correction V0.13 est synchrone et bornée.
+- tourner en tâche de fond : la self-correction V0.13 est synchrone et bornée;
+- générer seul une correction causale : la V0.14 sait tester une candidate fournie, pas inventer la modification;
+- mesurer causalement toutes les routes : la V0.14 couvre d’abord `information.search`.
 
 ## Installation
 
@@ -100,6 +107,9 @@ kairos --research-status
 kairos --research-review HYPOTHESIS_ID
 kairos self-correction=on
 kairos self-correction=status
+kairos --causal-run "cherche atome"
+kairos --causal-replay EPISODE_ID
+kairos --causal-status
 ```
 
 Lancer l’interface :
@@ -160,6 +170,14 @@ Action Router
 ├── Registre de capacités
 ├── Contrôle des permissions
 └── Exécution seulement si ready
+   ↓
+Expérience causale V0.14
+├── Prédiction depuis les contrats de résultat
+├── Exécution du plan réel autorisé
+├── Observation factuelle sans jugement
+├── Évaluation technique et finalité séparées
+├── Replay lié à l’épisode source
+└── Tester causal → SECAU dans le laboratoire
    ↓
 Expérience non confirmée
    ↓
@@ -230,6 +248,26 @@ kairos --self-correction on
 `on` exécute immédiatement un cycle borné. Il ne démarre pas un daemon. La base `memory/cognition.db` est copiée dans `memory/self_correction_runs/`; Tester et SECAU travaillent uniquement sur cette copie. Les promotions du laboratoire sont donc observables, mais non réutilisables par la mémoire principale.
 
 La liberté porte sur les relations et hypothèses explorées, pas sur les effets externes. Réseau, shell, processus, matériel et écriture en production restent fermés. Les seules limites de laboratoire sont des limites de mesure : nombre de cycles, nombre de candidates et durée maximale. Une candidate sans contrat de test est signalée comme `skipped`; Kairos ne fabrique pas un test pour obtenir artificiellement 100 %.
+
+## Expérience causale V0.14
+
+```text
+Comprendre → Prédire → Planifier → Exécuter → Observer → Évaluer → Replay
+```
+
+Les contrats déclaratifs de `data/cognition/capability_outcomes.json` décrivent les sorties attendues des capacités et les conditions de réussite des routes. L’observateur enregistre uniquement les faits d’exécution. L’évaluateur décide ensuite si le contrat technique est respecté et si la mission est réellement accomplie.
+
+Exemple : une recherche peut terminer sans exception tout en échouant à trouver une information. Kairos conserve alors `technical_success=true` et `goal_reached=false`, avec la cause localisée. Le stockage `memory/causal_experiences.db` interdit de sauter une transition d’état et relie chaque replay à son épisode source.
+
+Une candidate d’amélioration comportementale exige au moins cinq épisodes non vus, au moins 85 % de réussite, une amélioration strictement positive et zéro régression. Tester puis SECAU peuvent la valider dans la copie de laboratoire. Cette validation ne crée aucun concept confirmé et ne modifie jamais la mémoire principale.
+
+Commandes :
+
+```bash
+kairos --causal-run "cherche atome"
+kairos --causal-replay EPISODE_ID
+kairos --causal-status
+```
 
 ## Cycle Skill Factory V0.5
 
@@ -448,6 +486,7 @@ memory/growup.db              groupes, plans et audit GrowUp
 memory/skills.db              candidates, rapports et audit Skill Factory
 memory/skill_registry.json    versions actives et historique de rollback
 memory/self_correction_runs/  copies de laboratoire et rapports V0.13
+memory/causal_experiences.db   épisodes et transitions causales V0.14
 skills/candidates/            artefacts générés mais inactifs
 skills/active/                copies versionnées explicitement activées
 ```
@@ -473,6 +512,11 @@ La self-correction ne travaille que sur une copie de cognition.db.
 Une promotion de laboratoire ne devient jamais une vérité de production.
 Une candidate sans contrat de test est exposée, jamais validée artificiellement.
 `self-correction=on` est synchrone, borné et observable.
+L’observation causale ne contient aucun jugement sur la réussite du but.
+Une réussite technique ne prouve jamais que la mission est accomplie.
+Une transition causale ne peut pas sauter un état.
+Un replay référence toujours l’épisode source.
+Une validation comportementale de laboratoire ne crée aucune vérité du monde.
 ```
 
 ## Validation reproductible
@@ -482,6 +526,7 @@ kairos --smoke-test
 kairos --growup-scan
 kairos --skill-factory-scan
 python -m unittest discover -s tests -v
+python causal_benchmark.py
 python self_correction_benchmark.py
 python intent_generalization_benchmark.py
 python cognitive_filters_benchmark.py
@@ -496,6 +541,7 @@ python user_acceptance.py
 python user_acceptance_additional.py
 python user_acceptance_v06.py
 python user_acceptance_v013.py
+python user_acceptance_v014.py
 ```
 
 La CI exécute ces portes sous Python 3.11, 3.12 et 3.13 avec `fail-fast: false`.
@@ -503,7 +549,7 @@ Une version qui échoue n’annule donc pas le diagnostic des deux autres.
 
 ## Suite logique
 
-La prochaine porte doit mesurer plusieurs exécutions réelles de `self-correction=on`, comparer les divergences du laboratoire et définir un protocole explicite d’importation. Aucune conclusion ne rejoindra `cognition.db` tant que ce protocole n’aura pas ses propres tests, son approbation et son rollback. Le corpus V0.12 restera une barrière de non-régression. Une future
+La prochaine porte est **V0.15 — buts, événements et attention** : représenter un objectif persistant, choisir le prochain épisode utile et interrompre proprement un plan lorsque les observations l’invalident. Elle devra réutiliser les résultats causaux V0.14, sans daemon caché ni accès externe supplémentaire. Ensuite seulement, une procédure explicite `proposer → comparer → approuver → importer → rollback` pourra transférer une amélioration validée vers la mémoire principale. Aucune conclusion ne rejoindra `cognition.db` tant que ce protocole n’aura pas ses propres tests, son approbation et son rollback. Le corpus V0.12 restera une barrière de non-régression. Une future
 commande physique devra d’abord produire un plan, compiler une candidate,
 l’exécuter dans un simulateur, vérifier la réaction, demander une autorisation
 humaine et conserver un rollback. Aucun accès Arduino ou shell libre n’est
