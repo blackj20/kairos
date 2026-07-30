@@ -36,6 +36,24 @@ def main() -> int:
         is None
     )
 
+    noun_question = kernel.traiter("c'est quoi un xylophore ?")
+    noun_experience = kernel.repondre_a(
+        str(noun_question.question_id),
+        "un xylophore est un instrument musical en bois",
+    )
+    noun_info = noun_experience.resolution.get("hypothesis", {})
+    noun_hypothesis = repository.hypothesis(str(noun_info.get("id", "")))
+    checks["noun_named_from_question"] = noun_info.get("nom") == "xylophore"
+    checks["noun_is_explanation"] = bool(
+        noun_hypothesis
+        and noun_hypothesis["payload"].get("learning_kind")
+        == "interaction.user_explanation"
+    )
+    checks["noun_not_verb_equivalence"] = bool(
+        noun_hypothesis
+        and "relation_candidate" not in noun_hypothesis["payload"]
+    )
+
     second = kernel.traiter("deploie docker")
     repeated = kernel.repondre_a(str(second.question_id), "installer")
     checks["candidate_reused"] = (
@@ -56,7 +74,7 @@ def main() -> int:
             "validation_secau",
         ]
     )
-    checks["single_candidate"] = len(repository.candidate_hypotheses()) == 1
+    checks["expected_candidates"] = len(repository.candidate_hypotheses()) == 2
     checks["audit_trace"] = any(
         event["event"] == "HYPOTHESIS_CREATED"
         for event in repository.audit_events()
