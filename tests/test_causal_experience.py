@@ -159,6 +159,7 @@ class CausalSecauTests(unittest.TestCase):
                 encoding="utf-8",
             )
             production_path = root / "memory" / "cognition.db"
+            production_path.parent.mkdir(parents=True, exist_ok=True)
             repository = MemoryRepository(production_path)
             hypothesis_id = repository.add_hypothesis(
                 {
