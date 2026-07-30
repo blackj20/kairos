@@ -116,6 +116,62 @@ class MemoryRepository:
             self._audit(db, "HYPOTHESIS_CREATED", {"id": hypothesis_id})
         return hypothesis_id
 
+    def update_hypothesis_payload(
+        self,
+        hypothesis_id: str,
+        payload: dict[str, Any],
+        *,
+        score: int | None = None,
+        event: str = "HYPOTHESIS_ENRICHED",
+    ) -> None:
+        """Enrichit atomiquement une candidate sans changer son statut."""
+
+        if not event.strip():
+            raise ValueError("La mise à jour exige un événement d'audit.")
+        current = self.connection.execute(
+            "SELECT status, score, created_from_experience_id "
+            "FROM hypotheses WHERE id=?",
+            (hypothesis_id,),
+        ).fetchone()
+        if current is None:
+            raise KeyError(hypothesis_id)
+        if str(current["status"]) != "candidate":
+            raise ValueError("Seule une hypothèse candidate peut être enrichie.")
+        experience_id = str(payload.get("created_from_experience_id", "")).strip()
+        if (
+            experience_id
+            and experience_id != str(current["created_from_experience_id"])
+        ):
+            raise ValueError("L'expérience d'origine d'une hypothèse est immuable.")
+        nouveau_score = (
+            int(current["score"])
+            if score is None
+            else max(0, min(100, int(score)))
+        )
+        serialise = dict(payload)
+        serialise.pop("id", None)
+        with self.transaction() as db:
+            changed = db.execute(
+                "UPDATE hypotheses SET payload_json=?, score=? "
+                "WHERE id=? AND status='candidate'",
+                (
+                    json.dumps(serialise, ensure_ascii=False),
+                    nouveau_score,
+                    hypothesis_id,
+                ),
+            ).rowcount
+            if changed != 1:
+                raise RuntimeError("La candidate n'a pas pu être enrichie.")
+            self._audit(
+                db,
+                event,
+                {
+                    "id": hypothesis_id,
+                    "score": nouveau_score,
+                    "next_action": serialise.get("next_action"),
+                },
+            )
+
     def search(self, query: dict[str, Any]) -> list[dict[str, Any]]:
         term = f"%{str(query.get('text', '')).casefold()}%"
         domain = query.get("domain")
