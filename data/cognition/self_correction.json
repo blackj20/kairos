@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "mode": "isolated_research_lab",
+  "max_cycles": 10,
+  "max_candidates": 100,
+  "max_seconds": 30,
+  "auto_promote_in_lab": true,
+  "production_commit": false,
+  "permissions": {
+    "network": false,
+    "shell": false,
+    "process": false,
+    "hardware": false,
+    "production_memory_write": false,
+    "laboratory_memory_write": true
+  }
+}

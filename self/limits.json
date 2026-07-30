@@ -1,10 +1,10 @@
 {
   "known": [
-    "la généralisation V0.12 reste symbolique et limitée aux indices français déclarés",
-    "un score de 100 % décrit le corpus de 100 cas, pas toutes les phrases françaises possibles",
-    "les filtres définissent des critères opérationnels et non des émotions réelles",
-    "aucune envie simulée ne donne une autorisation",
-    "aucune action physique ou irréversible ne peut contourner confirmation, permissions et sandbox",
+    "la self-correction V0.13 modifie seulement une copie de laboratoire",
+    "un verdict SECAU en laboratoire ne modifie pas la mémoire principale",
+    "une candidate sans contrat Tester est signalée au lieu d'être inventée",
+    "aucun réseau, shell, processus ou matériel n'est autorisé par le laboratoire",
+    "les limites de cycles, temps et volume protègent l'expérience des boucles infinies",
     "aucune compréhension générale du monde"
   ],
   "protected_truth": true

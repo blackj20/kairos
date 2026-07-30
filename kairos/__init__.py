@@ -21,6 +21,7 @@ from .modeles import (
     Verification,
 )
 from .repondre import Repondre
+from .self_correction import SelfCorrectionLab, SelfCorrectionResult
 from .sens import Sens
 from .soi import ConnaissanceDeSoi
 from .verifier_analyse import VerifierAnalyse
@@ -45,6 +46,8 @@ __all__ = [
     "Relier",
     "RelationSemantique",
     "Repondre",
+    "SelfCorrectionLab",
+    "SelfCorrectionResult",
     "Sens",
     "SensContextuel",
     "SensJeton",

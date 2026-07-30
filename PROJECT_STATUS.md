@@ -2,12 +2,12 @@
 
 ## Statut
 
-**V0.12 — prototype opérationnel avec généralisation composable des intentions françaises.**
+**V0.13 — prototype opérationnel avec laboratoire de self-correction observable.**
 
 Ce statut signifie que le projet est installable depuis un clone propre,
 démarre même lorsque la mémoire mutable n’existe pas encore, analyse une
 requête, conserve les expériences, organise leur consolidation avec GrowUp et
-peut transformer une relation déjà promue en skill candidate versionnée.
+peut transformer une relation déjà promue en skill candidate versionnée. La commande `self-correction=on` copie désormais sa mémoire cognitive et lance Tester puis SECAU dans cette copie afin d’observer ses limites sans corrompre la mémoire principale.
 
 Une candidate V0.5 reste inactive pendant sa génération et sa validation. Son
 activation exige un rapport réussi lié à son empreinte exacte et une approbation
@@ -29,6 +29,9 @@ kairos --skill-factory-scan
 kairos --route-plan chercher --route-target atome
 kairos --secau-status
 python -m unittest discover -s tests -v
+kairos self-correction=on
+kairos self-correction=status
+python self_correction_benchmark.py
 python intent_generalization_benchmark.py
 python meta_comprehension_benchmark.py
 python benchmark.py
@@ -41,6 +44,7 @@ python user_acceptance.py
 python user_acceptance_additional.py
 python user_acceptance_v05.py
 python user_acceptance_v06.py
+python user_acceptance_v013.py
 ```
 
 ## Portes validées
@@ -135,8 +139,8 @@ python user_acceptance_v06.py
 - réponses libres guidées par un exemple, sans format artificiel obligatoire ;
 - candidate structurée mais non réutilisable avant Tester et SECAU ;
 - 39 concepts courants décrits par sens, catégorie et route éventuelle ;
-- 192 formes verbales, 31 entités et 114 formes courantes pré-indexées ;
-- 174,61 analyses par seconde mesurées sur Python 3.11 ;
+- 209 formes verbales, 31 entités et 114 formes courantes pré-indexées ;
+- 145,45 analyses par seconde mesurées sur Python 3.11 lors du run V0.13 ;
 - commande `stop` transmise à la séance active avant de quitter la console.
 
 ### Méta-compréhension relationnelle V0.10
@@ -182,6 +186,19 @@ python user_acceptance_v06.py
 - corpus indépendant de 100 formulations réparties en sept familles ;
 - zéro fausse exécution exigée.
 
+### Laboratoire de self-correction V0.13
+
+- déclenchement exact par `self-correction=on` dans la conversation ou la CLI ;
+- copie SQLite de `memory/cognition.db` avant toute revue ;
+- Tester puis SECAU réellement appelés pour les candidates compatibles ;
+- promotion, rejet, attente ou quarantaine possibles uniquement dans la copie ;
+- candidate sans contrat de test signalée sans résultat inventé ;
+- limites de mesure configurables : cycles, candidates et durée ;
+- aucun accès réseau, shell, processus, matériel ou mémoire principale ;
+- rapport JSON persistant avec compteurs avant/après et motif d’arrêt ;
+- commande `status` liée au dernier run ;
+- aucun daemon ou processus autonome caché.
+
 ## Cycle démontré
 
 ```text
@@ -194,6 +211,7 @@ incompréhension
 → Réfléchir crée l’hypothèse
 → Tester produit le rapport
 → SECAU promeut ou rejette
+→ self-correction peut rejouer ce contrôle dans une copie isolée
 → plan GrowUp promoted
 → Skill Factory génère une candidate inactive
 → manifeste + permissions + empreinte + scan AST
@@ -223,40 +241,34 @@ Le rollback restaure toutes les métadonnées de la version précédente.
 Une envie, un besoin ou un score cognitif ne crée jamais une permission.
 Une action nuisible explicite est refusée avant tout routage.
 Une action irréversible ou physique exige une confirmation explicite.
+La self-correction ne modifie jamais `memory/cognition.db`.
+Une promotion de laboratoire n’est pas une connaissance de production.
+Une candidate sans contrat de test n’est jamais promue artificiellement.
+La self-correction est synchrone, bornée et traçable.
 ```
 
-## Résultats vérifiés par la CI V0.12
+## Résultats vérifiés par la CI V0.13
 
 Le dernier commit n’est accepté que si toutes les portes suivantes restent
 vertes sous Python 3.11, 3.12 et 3.13 :
 
-| Porte | Seuil |
+| Porte | Résultat |
 |---|---:|
-| Tests automatisés | 168/168 |
-| Acceptation historique et V0.4 | 18/18 |
-| Acceptation CLI Skill Factory | 11/11 |
-| Acceptation totale | 40/40 |
-| Smoke test | réussi |
-| Scan GrowUp installé | réussi |
-| Scan Skill Factory installé | réussi |
-| Généralisation des intentions V0.12 | 100/100 |
-| Précision d'intention V0.12 | 100 % |
-| Précision de route V0.12 | 100 % |
-| Benchmark filtres cognitifs V0.11 | 13/13 |
-| Benchmark méta-compréhension V0.10 | 11/11 |
-| Benchmark squelette | ≥ 100 analyses/s (143,76 mesurées lors du run final) |
-| Benchmark Comprendre | réussi |
-| Benchmark holdout | réussi |
-| Benchmark Décision | réussi |
-| Benchmark GrowUp | réussi |
-| Benchmark Skill Factory | réussi |
+| Tests automatisés | 175/175 |
+| Self-correction V0.13 | 13/13 |
+| Appels SECAU internes observés | 2 |
+| Mutations de la mémoire principale | 0 |
+| Acceptation V0.13 via commande installée | 8/8 |
+| Acceptation totale | 48/48 |
+| Généralisation des intentions | 100/100 |
+| Précision d’intention et de route | 100 % |
+| Benchmark filtres cognitifs | 13/13 |
+| Benchmark méta-compréhension | 11/11 |
+| Benchmark squelette | 145,45 analyses/s |
 | Benchmark Action Router | 15/15 |
 | Benchmark Information Search | 8/8 |
 | Benchmark Research SECAU | 10/10 |
-| Promotions non testées | 0 |
-| Promotions frauduleuses | 0 |
-| Fausses exécutions de route | 0 |
-| Fausses exécutions | 0 autorisée |
+| Fausses exécutions ou promotions | 0 |
 
 ## Parcours V0.5 acceptés
 
@@ -277,4 +289,4 @@ implicitement et qu’une altération après le rapport est refusée.
 
 ## Prochaine porte
 
-La prochaine étape doit relier les concepts candidats issus des explications au cycle GrowUp → Tester → SECAU. Le corpus V0.12 reste obligatoire pour empêcher toute régression d'intention. L'autonomie matérielle viendra seulement après une porte séparée : plan, génération de code candidate, analyse statique, simulateur, tests de réaction, autorisation humaine, journal et rollback.
+Exécuter le laboratoire sur plusieurs mémoires et mesurer ses divergences réelles. Ensuite seulement, définir une procédure séparée `proposer → comparer → approuver → importer → rollback` pour transférer une conclusion vers la mémoire principale. La V0.13 ne possède volontairement aucun raccourci d’importation. L’autonomie matérielle reste derrière une porte distincte : plan, code candidat, analyse statique, simulateur, tests de réaction, autorisation humaine, journal et rollback.
