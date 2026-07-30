@@ -179,7 +179,7 @@ class ActiveLearningTests(unittest.TestCase):
             second = MemoryRepository(path)
             second_engine = ApprentissageActif(second)
             self.assertTrue(second_engine.active)
-            self.assertIn("relation", second_engine.attente)
+            self.assertIn("examples", second_engine.attente)
             second.close()
 
     def test_origin_cannot_be_rewritten(self) -> None:
