@@ -2,10 +2,12 @@
   "known": [
     "un score linguistique élevé ne prouve pas qu'un objectif est atteint",
     "Observer enregistre des faits et ne décide jamais du succès",
-    "une amélioration comportementale n'est pas une connaissance du monde",
-    "SECAU causal exige cinq épisodes inconnus, 85 % de réussite et zéro régression",
+    "un but ne devient completed qu'après validation causale",
+    "un budget d'étapes bloque les répétitions infinies",
+    "un but invalidé ou terminal ne peut plus être exécuté",
+    "la boucle V0.15 est synchrone et ne crée aucun daemon",
     "la self-correction modifie seulement une copie de laboratoire",
-    "aucun moteur autonome, réseau, shell, processus ou matériel n'est ajouté en V0.14",
+    "aucun nouvel accès réseau, shell, processus, PC ou matériel n'est ajouté en V0.15",
     "aucune compréhension générale du monde"
   ],
   "protected_truth": true

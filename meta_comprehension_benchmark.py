@@ -15,7 +15,7 @@ def main() -> int:
     self_answer = kernel.traiter("explique-toi")
     verifier("self_route", self_answer.route == "self.explain")
     verifier("self_target", self_answer.analyse.cible.valeur == "self:kairos")
-    verifier("runtime_version", "0.14.0" in self_answer.reponse)
+    verifier("runtime_version", "0.15.0" in self_answer.reponse)
 
     relations = kernel.comprendre.analyser(
         "Kairos est un moteur symbolique"

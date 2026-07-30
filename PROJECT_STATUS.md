@@ -2,12 +2,12 @@
 
 ## Statut
 
-**V0.14 — prototype opérationnel avec expérience causale observable.**
+**V0.15 — prototype opérationnel avec buts persistants et attention explicable.**
 
 Ce statut signifie que le projet est installable depuis un clone propre,
 démarre même lorsque la mémoire mutable n’existe pas encore, analyse une
 requête, conserve les expériences, organise leur consolidation avec GrowUp et
-peut transformer une relation déjà promue en skill candidate versionnée. La V0.14 ajoute une boucle `prédire → exécuter → observer → évaluer → rejouer` : elle distingue désormais une exécution techniquement correcte d’une mission réellement accomplie. La commande `self-correction=on` copie sa mémoire cognitive et peut lancer le Tester causal puis SECAU dans cette copie sans corrompre la mémoire principale.
+peut transformer une relation déjà promue en skill candidate versionnée. La V0.15 conserve désormais un but, sa priorité, son budget et ses événements, puis choisit et exécute une seule étape causale à la fois. Elle reprend un but après redémarrage et ne le termine qu’après preuve causale. La V0.14 ajoute une boucle `prédire → exécuter → observer → évaluer → rejouer` : elle distingue désormais une exécution techniquement correcte d’une mission réellement accomplie. La commande `self-correction=on` copie sa mémoire cognitive et peut lancer le Tester causal puis SECAU dans cette copie sans corrompre la mémoire principale.
 
 Une candidate V0.5 reste inactive pendant sa génération et sa validation. Son
 activation exige un rapport réussi lié à son empreinte exacte et une approbation
@@ -34,6 +34,10 @@ kairos self-correction=status
 kairos --causal-run "cherche atome"
 kairos --causal-replay EPISODE_ID
 kairos --causal-status
+kairos --goal-create "cherche atome"
+kairos --goal-run "cherche atome"
+kairos --goal-step GOAL_ID
+kairos --goal-status --goal-id GOAL_ID
 python self_correction_benchmark.py
 python intent_generalization_benchmark.py
 python meta_comprehension_benchmark.py
@@ -216,6 +220,20 @@ python user_acceptance_v013.py
 - validation comportementale sans création de concept ni mutation de production;
 - première route mesurée : `information.search`.
 
+### Buts persistants et attention V0.15
+
+- machine d’états `pending → active → completed|blocked|invalidated`;
+- priorité de 0 à 100 et budget strict de 1 à 20 étapes;
+- journal d’événements append-only;
+- sélection d’attention explicable sans effet externe;
+- exécution d’une seule étape causale par cycle;
+- reprise depuis SQLite après redémarrage;
+- panne technique retentable uniquement dans la limite du budget;
+- route incomplète ou information absente bloquée sans fausse terminaison;
+- but terminé uniquement avec `objectif_atteint=true`;
+- invalidation explicite empêchant toute future exécution;
+- aucune tâche de fond et aucun nouvel accès externe.
+
 ## Cycle démontré
 
 ```text
@@ -233,6 +251,10 @@ incompréhension
 → exécution et observation factuelle
 → évaluation de la finalité
 → replay et mesure de la régression
+→ création d’un but persistant
+→ choix explicable de l’attention
+→ une étape causale bornée
+→ terminaison, blocage ou invalidation
 → plan GrowUp promoted
 → Skill Factory génère une candidate inactive
 → manifeste + permissions + empreinte + scan AST
@@ -271,16 +293,25 @@ Une exécution réussie ne vaut pas réussite de la mission.
 Un épisode causal ne peut sauter aucune transition.
 Un replay reste lié à son épisode source.
 Une amélioration comportementale validée en laboratoire ne devient pas une vérité de production.
+Un but ne devient completed qu’après validation causale.
+Le gestionnaire d’attention choisit mais n’exécute rien.
+Un but terminal ne peut plus être repris.
+Le budget interdit toute répétition infinie.
+La V0.15 ne démarre aucun daemon.
 ```
 
-## Résultats vérifiés par la CI V0.14
+## Résultats vérifiés par la CI V0.15
 
 Le dernier commit n’est accepté que si toutes les portes suivantes restent
 vertes sous Python 3.11, 3.12 et 3.13 :
 
 | Porte | Résultat |
 |---|---:|
-| Tests automatisés | 185/185 |
+| Tests automatisés | 195/195 |
+| Buts et attention V0.15 | 15/15 |
+| Terminaison du but connu | 100 % |
+| Fausses terminaisons | 0 |
+| Boucles non bornées | 0 |
 | Expérience causale V0.14 | 15/15 |
 | Réussite des formulations causales | 100 % |
 | Régressions causales | 0 |
@@ -290,7 +321,8 @@ vertes sous Python 3.11, 3.12 et 3.13 :
 | Mutations de la mémoire principale | 0 |
 | Acceptation V0.13 via commande installée | 8/8 |
 | Acceptation V0.14 via commande installée | 12/12 |
-| Acceptation totale | 60/60 |
+| Acceptation V0.15 via commande installée | 15/15 |
+| Acceptation totale | 75/75 |
 | Généralisation des intentions | 100/100 |
 | Précision d’intention et de route | 100 % |
 | Benchmark filtres cognitifs | 13/13 |
@@ -320,4 +352,4 @@ implicitement et qu’une altération après le rapport est refusée.
 
 ## Prochaine porte
 
-**V0.15 — buts, événements et attention.** Représenter un objectif persistant, choisir le prochain épisode utile et interrompre un plan lorsque l’observation invalide sa prédiction. La V0.15 devra s’appuyer sur les épisodes V0.14 et rester synchrone, observable et sans accès externe supplémentaire. Exécuter ensuite le laboratoire sur plusieurs mémoires et mesurer ses divergences réelles. Ensuite seulement, définir une procédure séparée `proposer → comparer → approuver → importer → rollback` pour transférer une conclusion vers la mémoire principale. La V0.13 ne possède volontairement aucun raccourci d’importation. L’autonomie matérielle reste derrière une porte distincte : plan, code candidat, analyse statique, simulateur, tests de réaction, autorisation humaine, journal et rollback.
+**V0.16 — apprentissage actif.** Choisir la meilleure source d’information manquante : mémoire, créateur, documentation ou Web autorisé. Toute question devra être liée à un champ manquant du but actif, apporter un gain attendu mesurable et reprendre ensuite la mission parent. Aucune récursion libre de questions ne sera acceptée. Exécuter ensuite le laboratoire sur plusieurs mémoires et mesurer ses divergences réelles. Ensuite seulement, définir une procédure séparée `proposer → comparer → approuver → importer → rollback` pour transférer une conclusion vers la mémoire principale. La V0.13 ne possède volontairement aucun raccourci d’importation. L’autonomie matérielle reste derrière une porte distincte : plan, code candidat, analyse statique, simulateur, tests de réaction, autorisation humaine, journal et rollback.
