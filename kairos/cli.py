@@ -772,14 +772,10 @@ def main(argv: Sequence[str] | None = None) -> int:
                     f"kairos --hypothesis-status --hypothesis-id "
                     f"{hypothese['id']}"
                 )
-                apprentissage_actif = experience.resolution.get(
-                    "active_learning"
+                apprentissage_actif = kernel.apprentissage_actif.demarrer(
+                    str(hypothese["id"])
                 )
-                if isinstance(apprentissage_actif, dict):
-                    print(
-                        "Kairos > "
-                        + str(apprentissage_actif.get("texte", ""))
-                    )
+                print("Kairos > " + apprentissage_actif.texte)
             else:
                 print(
                     "Kairos > Réponse enregistrée comme expérience "
