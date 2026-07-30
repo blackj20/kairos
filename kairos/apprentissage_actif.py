@@ -62,8 +62,9 @@ class ExtracteurLiens:
         motifs = (
             (
                 "est_un",
-                rf"^(?:(?:{re.escape(sujet_normalise)}\s+(?:est|c[' ]?est)|c[' ]?est)\s+)?"
-                rf"{self._ARTICLES}\s+{self._CIBLE}$",
+                rf"^(?:(?:(?:{self._ARTICLES}\s+)?"
+                rf"{re.escape(sujet_normalise)}\s+(?:est|c[' ]?est)\s+)"
+                rf"|(?:c[' ]?est\s+))?{self._ARTICLES}\s+{self._CIBLE}$",
             ),
             (
                 "equivalent",
