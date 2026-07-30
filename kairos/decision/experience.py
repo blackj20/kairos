@@ -87,6 +87,15 @@ class Experience:
     def _proposer_relation_verbe(self, question, analyse) -> dict[str, str] | None:
         """Prépare une relation candidate sans modifier le lexique confirmé."""
 
+        originale = question.requete_originale.casefold()
+        interrogation_definition = (
+            "?" in originale
+            or "c'est quoi" in originale
+            or "qu'est-ce" in originale
+            or "que signifie" in originale
+        )
+        if interrogation_definition:
+            return None
         inconnus = question.analyse.get("jetons_inconnus", [])
         if not inconnus:
             return None

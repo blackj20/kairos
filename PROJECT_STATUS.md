@@ -2,12 +2,14 @@
 
 ## Statut
 
-**V0.15 — prototype opérationnel avec buts persistants et attention explicable.**
+**V0.16 — prototype opérationnel avec hypothèses interactives persistantes.**
 
 Ce statut signifie que le projet est installable depuis un clone propre,
 démarre même lorsque la mémoire mutable n’existe pas encore, analyse une
 requête, conserve les expériences, organise leur consolidation avec GrowUp et
 peut transformer une relation déjà promue en skill candidate versionnée. La V0.15 conserve désormais un but, sa priorité, son budget et ses événements, puis choisit et exécute une seule étape causale à la fois. Elle reprend un but après redémarrage et ne le termine qu’après preuve causale. La V0.14 ajoute une boucle `prédire → exécuter → observer → évaluer → rejouer` : elle distingue désormais une exécution techniquement correcte d’une mission réellement accomplie. La commande `self-correction=on` copie sa mémoire cognitive et peut lancer le Tester causal puis SECAU dans cette copie sans corrompre la mémoire principale.
+
+La V0.16 ferme la rupture observée en usage réel : après une question de manque, l’explication du créateur crée ou réutilise une hypothèse candidate dans `memory/cognition.db`. Son identifiant, son statut et les preuves manquantes sont affichés immédiatement et restent visibles après redémarrage. Une clarification opérationnelle, comme `Python` après `installe quoi ?`, ne crée aucune hypothèse.
 
 Une candidate V0.5 reste inactive pendant sa génération et sa validation. Son
 activation exige un rapport réussi lié à son empreinte exacte et une approbation
@@ -241,9 +243,10 @@ incompréhension
 → question ciblée
 → réponse du créateur
 → expérience non confirmée
+→ hypothèse candidate persistante liée à l’expérience
 → GrowUp collecte et regroupe
 → preuves + exemples + contre-exemples
-→ Réfléchir crée l’hypothèse
+→ Réfléchir consolide l’hypothèse
 → Tester produit le rapport
 → SECAU promeut ou rejette
 → self-correction peut rejouer ce contrôle dans une copie isolée
@@ -268,6 +271,10 @@ incompréhension
 ## Invariants
 
 ```text
+Une question seule ne crée jamais d’hypothèse.
+Une réponse opérationnelle ne devient jamais une connaissance.
+Une explication du créateur peut créer une candidate, jamais une promotion.
+Une candidate interactive reste liée à son expérience d’origine.
 Une expérience seule n’est jamais une vérité confirmée.
 GrowUp.analyser() ne modifie jamais une connaissance confirmée.
 Un plan non promoted ne génère aucune skill.
@@ -300,14 +307,42 @@ Le budget interdit toute répétition infinie.
 La V0.15 ne démarre aucun daemon.
 ```
 
-## Résultats vérifiés par la CI V0.15
+## Hypothèses interactives V0.16
+
+Parcours vérifié :
+
+```text
+deploie python
+→ question sur le sens de « deploie »
+→ réponse du créateur : installer
+→ expérience enregistrée
+→ hypothesis_... créée avec statut candidate
+→ sources, tests et validation_secau signalés comme manquants
+→ même candidate retrouvée après redémarrage
+```
+
+Commandes disponibles :
+
+```bash
+kairos --hypothesis-status
+kairos --hypothesis-status --hypothesis-id HYPOTHESIS_ID
+```
+
+La phrase naturelle `mes hypothèses` fonctionne aussi dans la console. La
+candidate n’entre ni dans le lexique actif ni dans les connaissances confirmées.
+
+## Résultats vérifiés par la CI V0.16
 
 Le dernier commit n’est accepté que si toutes les portes suivantes restent
 vertes sous Python 3.11, 3.12 et 3.13 :
 
 | Porte | Résultat |
 |---|---:|
-| Tests automatisés | 195/195 |
+| Tests automatisés | 204/204 |
+| Hypothèses interactives V0.16 | 15/15 |
+| Acceptation V0.16 via commande installée | 14/14 |
+| Hypothèses faussement promues | 0 |
+| Réponses opérationnelles mal classées | 0 |
 | Buts et attention V0.15 | 15/15 |
 | Terminaison du but connu | 100 % |
 | Fausses terminaisons | 0 |
@@ -322,7 +357,7 @@ vertes sous Python 3.11, 3.12 et 3.13 :
 | Acceptation V0.13 via commande installée | 8/8 |
 | Acceptation V0.14 via commande installée | 12/12 |
 | Acceptation V0.15 via commande installée | 15/15 |
-| Acceptation totale | 75/75 |
+| Acceptation totale | 89/89 |
 | Généralisation des intentions | 100/100 |
 | Précision d’intention et de route | 100 % |
 | Benchmark filtres cognitifs | 13/13 |
@@ -352,4 +387,4 @@ implicitement et qu’une altération après le rapport est refusée.
 
 ## Prochaine porte
 
-**V0.16 — apprentissage actif.** Choisir la meilleure source d’information manquante : mémoire, créateur, documentation ou Web autorisé. Toute question devra être liée à un champ manquant du but actif, apporter un gain attendu mesurable et reprendre ensuite la mission parent. Aucune récursion libre de questions ne sera acceptée. Exécuter ensuite le laboratoire sur plusieurs mémoires et mesurer ses divergences réelles. Ensuite seulement, définir une procédure séparée `proposer → comparer → approuver → importer → rollback` pour transférer une conclusion vers la mémoire principale. La V0.13 ne possède volontairement aucun raccourci d’importation. L’autonomie matérielle reste derrière une porte distincte : plan, code candidat, analyse statique, simulateur, tests de réaction, autorisation humaine, journal et rollback.
+**V0.17 — apprentissage actif.** Choisir la meilleure source d’information manquante : mémoire, créateur, documentation ou Web autorisé. Toute question devra être liée à un champ manquant du but actif, apporter un gain attendu mesurable et reprendre ensuite la mission parent. Aucune récursion libre de questions ne sera acceptée. Exécuter ensuite le laboratoire sur plusieurs mémoires et mesurer ses divergences réelles. Ensuite seulement, définir une procédure séparée `proposer → comparer → approuver → importer → rollback` pour transférer une conclusion vers la mémoire principale. La V0.13 ne possède volontairement aucun raccourci d’importation. L’autonomie matérielle reste derrière une porte distincte : plan, code candidat, analyse statique, simulateur, tests de réaction, autorisation humaine, journal et rollback.

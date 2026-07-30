@@ -8,6 +8,7 @@ from .decouper import Decouper
 from .estimation import Estimer
 from .filtres_cognitifs import FiltresCognitifs, ProfilCognitif
 from .generalisation_intention import GeneralisateurIntention, LectureIntention
+from .hypotheses import GestionnaireHypotheses, ResultatHypothese
 from .kernel import Kernel
 from .relations_phrase import Relier
 from .modeles import (
@@ -41,6 +42,7 @@ __all__ = [
     "Estimation",
     "FiltresCognitifs",
     "GeneralisateurIntention",
+    "GestionnaireHypotheses",
     "Jeton",
     "Kernel",
     "LectureIntention",
@@ -50,6 +52,7 @@ __all__ = [
     "Relier",
     "RelationSemantique",
     "Repondre",
+    "ResultatHypothese",
     "SelfCorrectionLab",
     "SelfCorrectionResult",
     "StatutBut",

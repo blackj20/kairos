@@ -1,13 +1,14 @@
 {
   "known": [
-    "un score linguistique élevé ne prouve pas qu'un objectif est atteint",
-    "Observer enregistre des faits et ne décide jamais du succès",
+    "une question seule ne crée jamais une hypothèse",
+    "seule une explication du créateur peut créer une candidate interactive",
+    "une cible opérationnelle comme python n'est pas une connaissance",
+    "une hypothèse candidate n'est ni confirmée ni réutilisable",
+    "sources, tests et validation SECAU restent obligatoires",
+    "les doublons d'une même hypothèse interactive sont réutilisés",
     "un but ne devient completed qu'après validation causale",
-    "un budget d'étapes bloque les répétitions infinies",
-    "un but invalidé ou terminal ne peut plus être exécuté",
-    "la boucle V0.15 est synchrone et ne crée aucun daemon",
-    "la self-correction modifie seulement une copie de laboratoire",
-    "aucun nouvel accès réseau, shell, processus, PC ou matériel n'est ajouté en V0.15",
+    "la boucle reste synchrone et ne crée aucun daemon",
+    "aucun nouvel accès réseau, shell, processus, PC ou matériel n'est ajouté en V0.16",
     "aucune compréhension générale du monde"
   ],
   "protected_truth": true

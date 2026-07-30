@@ -17,6 +17,7 @@ from .connaissances import Connaissances
 from .corrections import MemoireCorrections
 from .decision import EvenementExperience, MoteurDecision
 from .filtres_cognitifs import FiltresCognitifs
+from .hypotheses import GestionnaireHypotheses
 from .information import CapacitesInformation, FournisseurRecherche, WikipediaFR
 from .memory import MemoryRepository
 from .meta_comprehension import MetaComprehension
@@ -87,6 +88,7 @@ class Kernel:
         else:
             self.cognitive_repository = cognitive_repository
             self._owns_cognitive_repository = False
+        self.hypotheses = GestionnaireHypotheses(self.cognitive_repository)
         fournisseur = web_provider
         if fournisseur is None and allow_network:
             fournisseur = WikipediaFR()
@@ -237,11 +239,20 @@ class Kernel:
     ) -> EvenementExperience:
         """Lie une réponse à sa question sans confirmer une connaissance."""
 
-        return self.moteur_decision.repondre_a(
+        experience = self.moteur_decision.repondre_a(
             question_id,
             reponse,
             acteur,
         )
+        hypothese = self.hypotheses.depuis_experience(
+            experience,
+            acteur=acteur,
+        )
+        if hypothese is None:
+            return experience
+        resolution = dict(experience.resolution)
+        resolution["hypothesis"] = hypothese.vers_dict()
+        return replace(experience, resolution=resolution)
 
     def enseigner_relation_verbe(
         self,
@@ -376,10 +387,26 @@ class Kernel:
 
         analyse = self._enrichir_analyse(self.comprendre.analyser(requete))
         resultat = self.apprentissage.traiter(requete)
+        apprentissage = None
+        reponse = resultat.texte
+        if resultat.candidate is not None:
+            hypothese = self.hypotheses.depuis_dialogue(resultat.candidate)
+            apprentissage = hypothese.vers_dict()
+            manques = ", ".join(hypothese.manques)
+            action = (
+                "créée"
+                if hypothese.creee
+                else "déjà existante, donc réutilisée"
+            )
+            reponse += (
+                f"\nHypothèse {action} : {hypothese.id}. "
+                f"Statut : candidate. Manques : {manques}."
+            )
         return Decision(
             route="repondre",
             analyse=analyse,
-            reponse=resultat.texte,
+            reponse=reponse,
+            apprentissage=apprentissage,
         )
 
     @staticmethod
