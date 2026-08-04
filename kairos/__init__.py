@@ -15,6 +15,13 @@ from .estimation import Estimer
 from .filtres_cognitifs import FiltresCognitifs, ProfilCognitif
 from .generalisation_intention import GeneralisateurIntention, LectureIntention
 from .hypotheses import GestionnaireHypotheses, ResultatHypothese
+from .interne import (
+    MoteurInterne,
+    QuestionInterne,
+    RapportCycleInterne,
+    TacheInterne,
+    TypeTravail,
+)
 from .kernel import Kernel
 from .relations_phrase import Relier
 from .modeles import (
@@ -56,8 +63,11 @@ __all__ = [
     "LectureIntention",
     "MoteurAutonomie",
     "MoteurCausal",
+    "MoteurInterne",
     "ProfilCognitif",
+    "QuestionInterne",
     "QuestionUtile",
+    "RapportCycleInterne",
     "Relier",
     "RelationSemantique",
     "Repondre",
@@ -67,7 +77,9 @@ __all__ = [
     "StatutBut",
     "StockageButs",
     "StockageCausal",
+    "TacheInterne",
     "TourApprentissage",
+    "TypeTravail",
     "Sens",
     "SensContextuel",
     "SensJeton",

@@ -1,7 +1,7 @@
 {
   "name": "K.A.I.R.O.S.",
   "full_name": "Kernel d'Apprentissage Itératif, Régulation et Optimisation Self-corrective",
-  "nature": "moteur symbolique d'apprentissage, de compréhension, d'expérience causale et de buts persistants et d'hypothèses interactives",
-  "version": "0.17.0-active-learning",
+  "nature": "moteur symbolique local d'apprentissage, de compréhension, d'expérience causale, de buts persistants, d'hypothèses interactives et de consolidation interne hors ligne",
+  "version": "0.18.0-internal-engine",
   "protected": true
 }

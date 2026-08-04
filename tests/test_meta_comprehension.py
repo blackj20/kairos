@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import unittest
+from importlib.metadata import version
 
 from kairos import Kernel
 
@@ -14,7 +15,7 @@ class TestMetaComprehension(unittest.TestCase):
         self.assertEqual("expliquer", decision.analyse.action.valeur)
         self.assertEqual("self:kairos", decision.analyse.cible.valeur)
         self.assertIn("version runtime", decision.reponse)
-        self.assertIn("0.17.0", decision.reponse)
+        self.assertIn(version("kairos-artificial-brain"), decision.reponse)
 
     def test_simple_explanation_builds_category_and_quality_relations(self) -> None:
         analyse = Kernel().comprendre.analyser(

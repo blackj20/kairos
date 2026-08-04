@@ -6,6 +6,7 @@ import json
 import subprocess
 import time
 from dataclasses import asdict, dataclass
+from importlib.metadata import version
 from pathlib import Path
 
 
@@ -70,6 +71,7 @@ def verifier(
 
 
 def main() -> int:
+    runtime_version = version("kairos-artificial-brain")
     resultats = [
         verifier(
             "Faute historique atoms → atome",
@@ -89,7 +91,7 @@ def main() -> int:
         verifier(
             "Connaissance de son identité",
             ["kairos", "qui", "es", "tu", "?"],
-            ("K.A.I.R.O.S.", "0.17.0"),
+            ("K.A.I.R.O.S.", runtime_version),
         ),
         verifier(
             "Connaissance de son objectif courant",
@@ -101,6 +103,7 @@ def main() -> int:
     total = len(resultats)
     reussis = sum(resultat.succes for resultat in resultats)
     payload = {
+        "version": runtime_version,
         "resume": {
             "total": total,
             "reussis": reussis,
@@ -115,7 +118,7 @@ def main() -> int:
     )
 
     lignes = [
-        "# Rapport d’acceptation complémentaire — K.A.I.R.O.S. V0.16",
+        f"# Rapport d’acceptation complémentaire — K.A.I.R.O.S. V{runtime_version}",
         "",
         f"Résultat : **{reussis}/{total}** scénarios réussis.",
         "",

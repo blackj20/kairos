@@ -1,0 +1,9 @@
+{
+  "mode": "offline_first",
+  "max_candidates": 32,
+  "max_seconds": 12,
+  "run_lab": true,
+  "ask_one_question": true,
+  "network": false,
+  "production_promotion": false
+}
