@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import unittest
+from importlib.metadata import version
 
 from kairos import Kernel
 
@@ -11,7 +12,7 @@ class TestReponsesSurSoi(unittest.TestCase):
     def test_identity_is_answered_from_protected_self_memory(self) -> None:
         decision = Kernel().traiter("qui es tu ?")
         self.assertIn("K.A.I.R.O.S.", decision.reponse)
-        self.assertIn("0.17.0", decision.reponse)
+        self.assertIn(version("kairos-artificial-brain"), decision.reponse)
 
     def test_current_objective_is_answered_from_protected_self_memory(self) -> None:
         decision = Kernel().traiter("quel est ton objectif ?")
