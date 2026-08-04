@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "kairos-artificial-brain"
-version = "0.17.0"
+version = "0.18.0"
 description = "Prototype local, symbolique et explicable de K.A.I.R.O.S."
 readme = "README.md"
 requires-python = ">=3.11"
@@ -24,6 +24,7 @@ classifiers = [
 
 [project.scripts]
 kairos = "kairos.cli:main"
+kairos-internal = "kairos.interne.__main__:main"
 
 [tool.setuptools.packages.find]
 include = ["kairos*"]
